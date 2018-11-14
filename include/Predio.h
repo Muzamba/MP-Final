@@ -1,13 +1,13 @@
 #pragma once
-#include "Head.h"
+#include "Objeto.h"
 
-class Predio : Objeto {
+class Predio : public Objeto {
 public:
-    Predio();
+    Predio() : Objeto() {}
     void destroy();
     ~Predio();
 
-private:
+protected:
     int vida;
     Menu menu();
 };

@@ -1,12 +1,12 @@
 #pragma once
-#include "Head.h"
+#include "Predio.h"
 
-class Fabrica : Predio {
+class Fabrica : public Predio {
 public:
-    Fabrica();
+    Fabrica() : Predio() {}
     void geraUnidade();
     ~Fabrica();
-private:
+protected:
     int tempoEspera;
     int nivel;
     int tipo;

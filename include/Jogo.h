@@ -1,20 +1,23 @@
 #pragma once
-#include "Head.h"
+#include <SDL2/SDL.h>
 
-class Jogo{
+class Jogo {
 public:
     Jogo();
-    void init();
+    void init(const char* titulo, int x_pos, int y_pos, int width, int height);
     void load();
     void fim();
 
     void update();
     void handleEvents();
-    void render();
+    void renderizar();
+    bool isOn();
     ~Jogo();
 
-private:
+protected:
     int tempo;
     bool on;
+    SDL_Window *janela;
+    SDL_Renderer *render;
 
 };

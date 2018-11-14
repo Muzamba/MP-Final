@@ -1,11 +1,14 @@
-//#pragma once
+#pragma once
 
 #include <iostream>
-#include "Fabrica.h"
-#include "GeraRecursos.h"
+#include <SDL2/SDL.h>
 #include "Jogo.h"
-#include "Menu.h"
 #include "Objeto.h"
-#include "Player.h"
+#include "Menu.h"
 #include "Predio.h"
 #include "Unidade.h"
+#include "Fabrica.h"
+#include "GeraRecursos.h"
+#include "Player.h"
+
+

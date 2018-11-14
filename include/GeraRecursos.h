@@ -1,9 +1,9 @@
 #pragma once
-#include "Head.h"
+#include "Predio.h"
 
-class GeraRecursos : Predio {
+class GeraRecursos : public Predio {
 public:
-    GeraRecursos();
+    GeraRecursos() : Predio() {} 
     void mudaTaxa();
     ~GeraRecursos();
 private:

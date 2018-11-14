@@ -1,9 +1,9 @@
 #pragma once
-#include "Head.h"
+
 
 class Player {
 public:
-private:
+protected:
     //Lista de unidades
     //Lista de predios
     int dinheiro;
@@ -14,6 +14,6 @@ private:
 
     int pontos;
     
-    Predio BASE(); //Predio();
+    Predio BASE = Predio();
 
 };

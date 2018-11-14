@@ -1,15 +1,15 @@
 #pragma once
-#include "Head.h"
+#include "Objeto.h"
 
-class Unidade : Objeto {
+class Unidade : public Objeto {
 public:
-    Unidade();
+    Unidade() : Objeto() {}
     void anda();
     void ataca();
     void mudaImagem();
     void destroy();
     ~Unidade();
-private:
+protected:
     int vida;
     int velocidade;
     int dano;

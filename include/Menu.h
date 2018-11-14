@@ -1,11 +1,11 @@
 #pragma once
-#include "Head.h"
+#include "Objeto.h"
 
-class Menu : Objeto {
+class Menu : public Objeto {
 public:
-    Menu();
+    Menu() : Objeto() {}
     ~Menu();
 
-private:
+protected:
 
 };
