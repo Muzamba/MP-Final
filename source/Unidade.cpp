@@ -7,6 +7,10 @@ void Unidade::anda() {
 }
 
 void Unidade::destroy(std::vector<Unidade> *unidades) {
+    // Não tentar remover se estiver vazio
+    if (unidades->empty()) {
+        return;
+    }
     for (auto it = unidades->begin(); it != unidades->end(); it++) {
         // Percorre a lista de unidades para remover a tropa que será destruida
         if (it->pos_X == Unidade::pos_X && it->pos_Y == Unidade::pos_Y) {
