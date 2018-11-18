@@ -43,9 +43,25 @@ bool Player::compra_GeraRecurso(int recurso) {
     return success;
 }
 
-bool possui_recursos_fabrica(int recurso, int dinheiro){
+bool Player::possui_recursos_fabrica(UNIDADE tipo){
+    int recurso = 0;
+    switch (tipo){
+        case UNIDADE::PAPEL:
+            recurso = Player::getCelulose();
+            break;
+        case UNIDADE ::PEDRA:
+            recurso = Player::getPedregulho();
+            break;
+        case UNIDADE ::TESOURA:
+            recurso = Player::getMetal();
+            break;
+        default:
+            printf("ERRO : Recurso Invalido : compra_fabrica \n");
+            return false;
+    }
+
     if( recurso >= PRECO_RECURSO_FABRICA ){
-        if ( dinheiro >= PRECO_DINHEIRO_FABRICA ){
+        if ( Player::dinheiro >= PRECO_DINHEIRO_FABRICA ){
             return true;
         }else{
             /* Mensagem de não ter dinheiro */
@@ -77,24 +93,7 @@ void Player::retira_recurso_fabrica(UNIDADE tipo){
 }
 
 bool Player::compra_Fabrica(UNIDADE tipo) {
-    bool success = true;
-    int recurso = 0;
-    switch (tipo){
-        case UNIDADE::PAPEL:
-            recurso = Player::getCelulose();
-            break;
-        case UNIDADE ::PEDRA:
-            recurso = Player::getPedregulho();
-            break;
-        case UNIDADE ::TESOURA:
-            recurso = Player::getMetal();
-            break;
-        default:
-            printf("ERRO : Recurso Invalido : compra_fabrica \n");
-            return false;
-    }
-
-    if(possui_recursos_fabrica(recurso, Player::dinheiro)){
+    if(possui_recursos_fabrica(tipo)){
         /* Retira o dinheiro da compra */
         Player::retira_recurso_fabrica(tipo);
         /* Cria a fabrica */
@@ -107,9 +106,6 @@ bool Player::compra_Fabrica(UNIDADE tipo) {
     }
 }
 
-bool Player::compra_Unidade() {
-
-}
 
 /** Função atualizar_Recursos
  * @brief A função percorre a lista de geraRecursos e soma os recursos gerados nos atributos do player
