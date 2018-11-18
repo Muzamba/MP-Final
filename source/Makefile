@@ -1,23 +1,24 @@
 IDIR =../include
 CC=g++
-CFLAGS=-I$(IDIR) -ftest-coverage -fprofile-arcs
+CFLAGS=-I$(IDIR)
 
-ODIR=obj
+
+ODIR= obj
 LDIR =../lib
 
-LIBS=-lm -lSDL2
+LIBS=-lm
 
-_DEPS = Fabrica.h Menu.h Predio.h Unidade.h GeraRecursos.h Jogo.h Objeto.h Head.h Player.h
+_DEPS = Unidade.h Head.h Fabrica.h Objeto.h Player.h Predio.h GeraRecursos.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ = teste.o
+_OBJ = Player.o Objeto.o Unidade.o Predio.o Fabrica.o GeraRecursos.o teste/testeGeraRecursos.o teste/testePlayer.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 
 $(ODIR)/%.o: %.cpp $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-teste: $(OBJ)
+test: $(OBJ)
 	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
 
 .PHONY: clean

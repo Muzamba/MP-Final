@@ -1,7 +1,7 @@
 // Copyright 2018 João Pedro Assis
 #pragma once
 #include "Predio.h"
-
+#include "Head.h"
 /*struct Referencias {
 int T_ESPERA_INICIAL = 20;
 int NIVEL = 1;
@@ -10,16 +10,12 @@ int NIVEL = 1;
 Referencias ref;*/
 
 typedef int FABRICA;
-typedef int UNIDADE;
+typedef int UNIDADES;
 
-enum TIPO {PAPEL, PEDRA, TESOURA};
-/**
- * @brief 
- * 
- */
+
 class Fabrica : public Predio {
  public:
-    Fabrica(int X, int Y, TIPO tipo)
+    Fabrica(int X, int Y, UNIDADE tipo)
     : Predio(X, Y) {
        Fabrica::tipo = tipo;
        Fabrica::tempoEspera = 20;
@@ -47,9 +43,9 @@ class Fabrica : public Predio {
 
     // ---------------------- Variáveis das Unidades geradas ------------------
 
-    UNIDADE vida;
-    UNIDADE dano;
-    UNIDADE velocidade;
+    UNIDADES vida;
+    UNIDADES dano;
+    UNIDADES velocidade;
 
     void upgrade();
 };

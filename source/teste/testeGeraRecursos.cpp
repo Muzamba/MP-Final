@@ -15,10 +15,12 @@
  *  taxa = TAXA_COLETA
  */
 TEST_CASE("Construtor da Classe"){
-    GeraRecursos geradora( RECURSO::PEDREGULHO );
+    GeraRecursos geradora(0,0, RECURSO::PEDREGULHO );
     REQUIRE(geradora.getNivel() == 0);
     REQUIRE(geradora.getTaxa() == TAXA_COLETA);
     REQUIRE(geradora.getTipo() == RECURSO::PEDREGULHO);
+    REQUIRE(geradora.get_x() == 0);
+    REQUIRE(geradora.get_y() == 0);
 }
 /*
 TEST_CASE("Produzir Recurso "){

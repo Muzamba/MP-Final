@@ -9,10 +9,10 @@
 #define PRECO_DINHEIRO_GERA 100
 class GeraRecursos : public Predio {
 public:
-    GeraRecursos(int tipo);
+    GeraRecursos(int X, int Y, int tipo);
 
     /* Precisa da classe player pronto */
-    void produzirRecurso();
+    int produzirRecurso();
 
     ~GeraRecursos();
 
@@ -27,8 +27,6 @@ public:
     int getTipo() const;
 
     void setTipo(int tipo);
-
-    //~GeraRecursos();
 
 private:
     int nivel = 0; //Nivel incial 0

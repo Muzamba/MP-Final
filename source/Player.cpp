@@ -1,4 +1,6 @@
 #include "../include/Player.h"
+#include <stdio.h>
+
 /* "Copyright [2018] <Pedro>" */
 
 /**Construtor da classe Player
@@ -31,7 +33,7 @@ bool Player::compra_GeraRecurso(int recurso) {
         Player::pedregulho -= PRECO_RECURSO_GERA;
         Player::dinheiro -= PRECO_DINHEIRO_GERA;
         /* Compra */
-        GeraRecursos geradora(recurso);  /* Cria uma geradora de tal recurso */ // MELHORAR CONSTRUTOR
+        GeraRecursos geradora(0,0, recurso);  /* Cria uma geradora de tal recurso */ // MELHORAR CONSTRUTOR
         Player::lista_GeraRecursos.push_back(geradora);  /* Adiciona a geradora na lista GeraRecursos */
         // ~geradora Free geradora
         success = true;
@@ -41,7 +43,31 @@ bool Player::compra_GeraRecurso(int recurso) {
     return success;
 }
 
+/** Função atualizar_Recursos
+ * @brief A função percorre a lista de geraRecursos e soma os recursos gerados nos atributos do player
+ * */
+void Player::atualizar_Recursos(){
+    for (auto &lista_GeraRecurso : lista_GeraRecursos) {
+        switch (lista_GeraRecurso.getTipo()){
+            case RECURSO::PEDREGULHO:
+                Player::pedregulho += lista_GeraRecurso.produzirRecurso();
+                break;
+            case RECURSO::METAL:
+                Player::metal += lista_GeraRecurso.produzirRecurso();
+                break;
+            case RECURSO::CELULOSE:
+                Player::celulose += lista_GeraRecurso.produzirRecurso();
+                break;
+            default:
+                printf("tipo geraRecurso %d == %d \n", RECURSO::PEDREGULHO ,lista_GeraRecurso.getTipo());
+                printf("ERRO: atualizar_Recursos\n");
+                return;
+        }
 
+    }
+}
+
+/* get e setters*/
 int Player::getPedregulho() const {
     return pedregulho;
 }

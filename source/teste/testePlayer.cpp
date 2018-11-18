@@ -4,7 +4,7 @@
 #include"../include/Player.h"
 #include"../include/catch.hpp"
 
-TEST_CASE("Construtor da classe Player"){
+TEST_CASE("Construtor da classe Player", "Player"){
     Player cpu;
     REQUIRE(cpu.getCelulose() == RECURSO_INICIAL);
     REQUIRE(cpu.getPedregulho() == RECURSO_INICIAL);
@@ -32,4 +32,20 @@ TEST_CASE("Compra_GeraRecursos", "Player"){
         REQUIRE(jogador.getDinheiro() == 1000 - PRECO_DINHEIRO_GERA);
         REQUIRE(jogador.getPedregulho() == 1000 - PRECO_RECURSO_GERA);
     }
+}
+
+TEST_CASE("Atualizar Recursos", "Player"){
+    Player jogador;
+    /* Player com muitos recursos */
+    jogador.setPedregulho(5000);
+    jogador.setDinheiro(5000);
+    /* Compra 3 gerarRecursos */
+    for(int i = 0;i < 3;i ++){
+        jogador.compra_GeraRecurso(RECURSO::PEDREGULHO);
+    }
+    /* Atualizar Recursos */
+    jogador.atualizar_Recursos();
+    /* Pedregulho inicial - 3 * preco da geraRecurso + 3 * a taxa_coleta */
+    REQUIRE(jogador.getPedregulho() == 5000 - (3*PRECO_RECURSO_GERA) + (3*TAXA_COLETA));
+
 }

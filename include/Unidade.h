@@ -3,9 +3,9 @@
 
 class Unidade : public Objeto {
 public:
-	Unidade (int tipo);
-    Unidade() : Objeto() {}
-    void anda();
+	Unidade(int X, int Y, int vida, int velocidade, int dano);
+
+	void anda();
     void ataca();
     void mudaImagem();
     void destroy();
@@ -23,12 +23,13 @@ public:
 
 	int getVelocidade() const;
 
+	~Unidade();
+
 	void setVelocidade(int velocidade);
 
 	int getDano() const;
 
 	void setDano(int dano);
-    ~Unidade();
 
 protected:
     int vida;

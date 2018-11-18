@@ -1,0 +1,2 @@
+/usr/bin/ar qc libObjeto.a  CMakeFiles/Objeto.dir/source/Objeto.cpp.o
+/usr/bin/ranlib libObjeto.a

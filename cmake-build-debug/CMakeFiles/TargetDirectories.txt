@@ -1,0 +1,9 @@
+/home/pedro/UNB/MP/MP-Final/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/pedro/UNB/MP/MP-Final/cmake-build-debug/CMakeFiles/Fabrica.dir
+/home/pedro/UNB/MP/MP-Final/cmake-build-debug/CMakeFiles/Player.dir
+/home/pedro/UNB/MP/MP-Final/cmake-build-debug/CMakeFiles/Objeto.dir
+/home/pedro/UNB/MP/MP-Final/cmake-build-debug/CMakeFiles/Teste.dir
+/home/pedro/UNB/MP/MP-Final/cmake-build-debug/CMakeFiles/Teste2.dir
+/home/pedro/UNB/MP/MP-Final/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/pedro/UNB/MP/MP-Final/cmake-build-debug/CMakeFiles/GeraRecursos.dir
+/home/pedro/UNB/MP/MP-Final/cmake-build-debug/CMakeFiles/Predio.dir

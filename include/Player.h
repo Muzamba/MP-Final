@@ -20,7 +20,7 @@ class Player {
 
     bool compra_Unidade();
 
-    bool atualizar_recursos();
+    void atualizar_Recursos();
 
     int pedregulho;  // Pedra
     int celulose;    // Papel

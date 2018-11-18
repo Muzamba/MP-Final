@@ -8,28 +8,13 @@
  * @brief acrescenta o recurso dessa determinada geradora(de acordo com a taxa) para o jogador passado de parametro
  * @param jogador - Jogador no qual sera adicionado o recurso
  */
-/*void GeraRecursos::produzirRecurso(Player jogador){
-    switch(GeraRecursos::getTipo()){
-        case RECURSO::CELULOSE:
-            jogador.setCelulose(jogador.getCelulose() + GeraRecursos::getTaxa());
-            return;
-        case RECURSO ::PEDREGULHO:
-            jogador.setPedregulho(jogador.getPedregulho() + GeraRecursos::getTaxa());
-            return;
-        case RECURSO ::METAL:
-            jogador.setMetal(jogador.getMetal() + GeraRecursos::getTaxa());
-            return;
-        default:
-            printf("Gerando Recurso Errado - func:produzirRecurso");
-            return;
-    }
-}*/
+int GeraRecursos::produzirRecurso(){
+    return GeraRecursos::taxa;
+}
 
-/** Construtor meio ruim*
- *
- */
-GeraRecursos::GeraRecursos(int tipo) : tipo(tipo) {
-    tipo = tipo;
+/* Constructor */
+GeraRecursos::GeraRecursos(int X, int Y, int tipo) : Predio(X, Y), tipo(tipo) {
+    GeraRecursos::tipo = tipo;
 }
 
 /* Destructor */

@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/Teste.dir/source/teste/testeGeraRecursos.cpp.o  -o Teste 
