@@ -12,6 +12,7 @@ int main() {
     jogo = new Jogo();
 
     jogo->init("teste", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720);
+    jogo->loadMidia();
 
 
     while(jogo->isOn()) {

@@ -1,10 +1,14 @@
 #pragma once
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include "Head.h"
 
 class Jogo {
 public:
     Jogo();
     void init(const char* titulo, int x_pos, int y_pos, int width, int height);
+    bool loadMidia();
+    SDL_Texture* loadTexture(const char* nome);
     void load();
     void fim();
 
@@ -17,7 +21,8 @@ public:
 protected:
     int tempo;
     bool on;
-    SDL_Window *janela;
-    SDL_Renderer *render;
+    SDL_Window* janela = NULL;
+    SDL_Texture* texturas[TEXTURAS::TEX_TOTAL];
+    SDL_Renderer* render = NULL;
 
 };
