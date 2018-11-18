@@ -3,9 +3,9 @@
 //
 
 #define CATCH_CONFIG_MAIN
-#include"../include/Head.h"
-#include"../include/GeraRecursos.h"
-#include"../include/catch.hpp"
+#include"Head.h"
+#include"GeraRecursos.h"
+#include"catch.hpp"
 
 /** Teste Construtor
  *  -----------------

@@ -1,6 +1,6 @@
 #define CATCH_CONFIG_MAIN
-#include"../lib/catch.hpp"
-#include "../include/Unidade.h"
+#include"catch.hpp"
+#include "Unidade.h"
 
 TEST_CASE("Unidades") {
 	SECTION("Anda") {

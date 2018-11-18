@@ -1,8 +1,8 @@
 // Copyright 2018 João Pedro Assis
 #define CATCH_CONFIG_MAIN
-#include "../../include/Predio.h"
-#include "../../include/Objeto.h"
-#include "../../lib/catch.hpp"
+#include "Predio.h"
+#include "Objeto.h"
+#include "catch.hpp"
 
 TEST_CASE("Compile") {
     SECTION("Compile") {

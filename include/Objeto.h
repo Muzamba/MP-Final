@@ -1,7 +1,5 @@
 // Copyright 2018 João Pedro Assis
 #pragma once
-#include "Objeto.h"
-
 /**
  * @class Objeto Objeto.h 
  * 

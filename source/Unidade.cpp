@@ -4,17 +4,6 @@ void Unidade::anda() {
 	Unidade::pos_X += velocidade;
 }
 
-Unidade :: Unidade(int tipo){
-	switch (tipo) { // 0 - Papel | 1 - Pedra | 2 - Tesoura
-		case 0:
-			break;
-		case 1:
-			break;
-		case 2:
-			break;
-	}
-}
-
 int Unidade::getPreco_recursos() const {
     return preco_recursos;
 }
@@ -53,4 +42,11 @@ int Unidade::getDano() const {
 
 void Unidade::setDano(int dano) {
     Unidade::dano = dano;
+}
+
+Unidade::Unidade(int X, int Y, int vida, int velocidade, int dano) : Objeto(X, Y), vida(vida), velocidade(velocidade),
+                                                                     dano(dano) {}
+
+Unidade::~Unidade() {
+
 }

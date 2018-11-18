@@ -25,11 +25,9 @@
     }
 }*/
 
-/** Construtor meio ruim*
- *
- */
-GeraRecursos::GeraRecursos(int tipo) : tipo(tipo) {
-    tipo = tipo;
+/* Constructor */
+GeraRecursos::GeraRecursos(int X, int Y, int tipo) : Predio(X, Y), tipo(tipo) {
+    GeraRecursos::tipo = tipo;
 }
 
 /* Destructor */

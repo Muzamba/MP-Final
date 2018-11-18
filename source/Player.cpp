@@ -31,7 +31,7 @@ bool Player::compra_GeraRecurso(int recurso) {
         Player::pedregulho -= PRECO_RECURSO_GERA;
         Player::dinheiro -= PRECO_DINHEIRO_GERA;
         /* Compra */
-        GeraRecursos geradora(recurso);  /* Cria uma geradora de tal recurso */ // MELHORAR CONSTRUTOR
+        GeraRecursos geradora(0,0, recurso);  /* Cria uma geradora de tal recurso */ // MELHORAR CONSTRUTOR
         Player::lista_GeraRecursos.push_back(geradora);  /* Adiciona a geradora na lista GeraRecursos */
         // ~geradora Free geradora
         success = true;

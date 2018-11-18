@@ -1,8 +1,8 @@
 //
 // Created by pedro on 15/11/18.
 //
-#include"../include/Player.h"
-#include"../include/catch.hpp"
+#include"Player.h"
+#include"catch.hpp"
 
 TEST_CASE("Construtor da classe Player"){
     Player cpu;
