@@ -22,6 +22,8 @@ TEST_CASE("Construtor da Classe"){
     REQUIRE(geradora.get_x() == 0);
     REQUIRE(geradora.get_y() == 0);
 }
+
+
 /*
 TEST_CASE("Produzir Recurso "){
     GeraRecursos geradora( RECURSO::PEDREGULHO );

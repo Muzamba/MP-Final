@@ -34,6 +34,25 @@ TEST_CASE("Compra_GeraRecursos", "Player"){
     }
 }
 
+TEST_CASE("Compra_Fabrica", "Player"){
+    Player jogador;
+    SECTION(" Jogador sem dinheiro "){
+        jogador.setDinheiro(0);
+        REQUIRE(!jogador.compra_Fabrica(UNIDADE::PEDRA));
+    }
+    SECTION(" Jogador sem recurso"){
+        jogador.setPedregulho(0);
+        REQUIRE(!jogador.compra_Fabrica(UNIDADE::PEDRA));
+    }
+    SECTION("Jogador com recurso e dinheiro suficiente"){
+        jogador.setPedregulho(1000);
+        jogador.setDinheiro(1000);
+        REQUIRE(jogador.compra_Fabrica(UNIDADE::PEDRA));
+        REQUIRE(jogador.getDinheiro() == 1000 - PRECO_DINHEIRO_FABRICA);
+        REQUIRE(jogador.getPedregulho() == 1000 - PRECO_RECURSO_FABRICA);
+    }
+}
+
 TEST_CASE("Atualizar Recursos", "Player"){
     Player jogador;
     /* Player com muitos recursos */

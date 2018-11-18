@@ -43,6 +43,74 @@ bool Player::compra_GeraRecurso(int recurso) {
     return success;
 }
 
+bool possui_recursos_fabrica(int recurso, int dinheiro){
+    if( recurso >= PRECO_RECURSO_FABRICA ){
+        if ( dinheiro >= PRECO_DINHEIRO_FABRICA ){
+            return true;
+        }else{
+            /* Mensagem de não ter dinheiro */
+            return false;
+        }
+    } else {
+        /* Mensagem de não ter recurso */
+        return false;
+    }
+}
+
+void Player::retira_recurso_fabrica(UNIDADE tipo){
+    /* Retira recurso */
+    switch (tipo){
+        case UNIDADE::PAPEL:
+            Player::celulose -= PRECO_RECURSO_FABRICA;
+            break;
+        case UNIDADE ::PEDRA:
+            Player::pedregulho -= PRECO_RECURSO_FABRICA;
+            break;
+        case UNIDADE ::TESOURA:
+            Player::metal -= PRECO_RECURSO_FABRICA;
+            break;
+        default:
+            printf("ERRO : Recurso Invalido : compra_fabrica \n");
+    }
+    /* retira dinheiro*/
+    Player::dinheiro -= PRECO_DINHEIRO_FABRICA;
+}
+
+bool Player::compra_Fabrica(UNIDADE tipo) {
+    bool success = true;
+    int recurso = 0;
+    switch (tipo){
+        case UNIDADE::PAPEL:
+            recurso = Player::getCelulose();
+            break;
+        case UNIDADE ::PEDRA:
+            recurso = Player::getPedregulho();
+            break;
+        case UNIDADE ::TESOURA:
+            recurso = Player::getMetal();
+            break;
+        default:
+            printf("ERRO : Recurso Invalido : compra_fabrica \n");
+            return false;
+    }
+
+    if(possui_recursos_fabrica(recurso, Player::dinheiro)){
+        /* Retira o dinheiro da compra */
+        Player::retira_recurso_fabrica(tipo);
+        /* Cria a fabrica */
+        Fabrica fbrc(0,0, tipo);
+        /* Adiciona a fabrica na lista da classe Player*/
+        Player::lista_Fabrica.push_back(fbrc);
+        return true;
+    }else{
+        return false;
+    }
+}
+
+bool Player::compra_Unidade() {
+
+}
+
 /** Função atualizar_Recursos
  * @brief A função percorre a lista de geraRecursos e soma os recursos gerados nos atributos do player
  * */
