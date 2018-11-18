@@ -58,6 +58,7 @@ class Player {
     int getPontos() const;
 
     void setPontos(int pontos);
+
 };
 
 #endif  // INCLUDE_PLAYER_H_

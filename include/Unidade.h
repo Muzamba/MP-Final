@@ -1,41 +1,70 @@
 #pragma once
 #include "Objeto.h"
+#include <vector>
+// "Copyright [2018] <Waliff Cordeiro>"
+
+/**
+ * @class Unidade Unidade.h
+ *
+ * @brief Classe Unidade, responsável pelas ações das unidades
+ * como movimentação, ataque, mudança de imagem e destruição dos personagens
+ *
+ * A classe de testes possui seis variáveis:
+ * pos_x, pos_y. tipo da unidade, vida, velocidade e dano
+ * Tais atributos inicializam a classe e contém características de suas heranças
+ * por qualquer instância que precisar de tais atributos
+ */
 
 class Unidade : public Objeto {
-public:
-	Unidade (int tipo);
-    Unidade() : Objeto() {}
+ public:
+    Unidade(int X, int Y, int tipo, int vida, int velocidade, int dano);
+
+    virtual ~Unidade();
+
+    /**
+     * @brief Movimenta personagem
+     * Recebe a coordenada do personagem e
+     * de acordo com sua velocidade, retorna sua nova posição
+     *
+     */
     void anda();
-    void ataca();
+
+    void ataca_predio();
+
     void mudaImagem();
-    void destroy();
-	int getPreco_recursos() const;
 
-	void setPreco_recursos(int preco_recursos);
+    void destroy(std::vector<Unidade> *unidades);
 
-	int getPreco_dinheiro() const;
+    int getPreco_recursos() const;
 
-	void setPreco_dinheiro(int preco_dinheiro);
+    void setPreco_recursos(int preco_recursos);
 
-	int getVida() const;
+    int getPreco_dinheiro() const;
 
-	void setVida(int vida);
+    void setPreco_dinheiro(int preco_dinheiro);
 
-	int getVelocidade() const;
+    int getVida() const;
 
-	void setVelocidade(int velocidade);
+    void setVida(int vida);
 
-	int getDano() const;
+    int getVelocidade() const;
 
-	void setDano(int dano);
-    ~Unidade();
+    void setVelocidade(int velocidade);
 
-protected:
+    int getDano() const;
+
+    void setDano(int dano);
+
+ protected:
+    int tipo;
+
     int vida;
-	int preco_recursos;
-	int preco_dinheiro;
-	int velocidade;
-	int dano;
 
+    int preco_recursos;
 
+    int preco_dinheiro;
+
+    int velocidade;
+
+    int dano;
 };
