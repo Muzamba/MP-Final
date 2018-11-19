@@ -4,6 +4,7 @@
 // "Copyright [year] <Pedro>"
 
 #include <vector>
+#include "Head.h"
 #include "GeraRecursos.h"
 #include "Fabrica.h"
 #include "Unidade.h"
@@ -14,9 +15,9 @@
 class Player {
  public:
     /* funcionalidades */
-    bool compra_GeraRecurso(int recurso);
+    bool compra_GeraRecurso(RECURSO tipo);
 
-    bool compra_Fabrica(int tipo);
+    bool compra_Fabrica(UNIDADE tipo);
 
     bool compra_Unidade();
 
@@ -58,6 +59,16 @@ class Player {
     int getPontos() const;
 
     void setPontos(int pontos);
+
+ private:
+    /* Metodos auxiliares */
+    void retira_recurso_fabrica(UNIDADE tipo);
+
+    bool possui_recursos_fabrica(UNIDADE tipo);
+
+    void retira_recurso_geraRecurso(RECURSO tipo);
+
+    bool possui_recursos_geraRecurso(RECURSO tipo);
 };
 
 #endif  // INCLUDE_PLAYER_H_

@@ -26,7 +26,7 @@ Player::Player() {
  *         false : se nao for possivel comprar
  */
 bool Player::compra_GeraRecurso(RECURSO tipo) {
-    if(possui_recursos_geraRecurso(tipo)){
+    if (possui_recursos_geraRecurso(tipo)) {
         /* Retira o dinheiro da compra */
         Player::retira_recurso_geraRecurso(tipo);
         /* Cria a fabrica */
@@ -34,21 +34,21 @@ bool Player::compra_GeraRecurso(RECURSO tipo) {
         /* Adiciona a fabrica na lista da classe Player*/
         Player::lista_GeraRecursos.push_back(geradora);
         return true;
-    }else{
+    } else {
         return false;
     }
 }
 
 bool Player::compra_Fabrica(UNIDADE tipo) {
-    if(possui_recursos_fabrica(tipo)){
+    if (possui_recursos_fabrica(tipo)) {
         /* Retira o dinheiro da compra */
         Player::retira_recurso_fabrica(tipo);
         /* Cria a fabrica */
-        Fabrica fbrc(0,0, tipo);
+        Fabrica fbrc(0, 0, tipo);
         /* Adiciona a fabrica na lista da classe Player*/
         Player::lista_Fabrica.push_back(fbrc);
         return true;
-    }else{
+    } else {
         return false;
     }
 }
@@ -56,9 +56,9 @@ bool Player::compra_Fabrica(UNIDADE tipo) {
 /** Função atualizar_Recursos
  * @brief A função percorre a lista de geraRecursos e soma os recursos gerados nos atributos do player
  * */
-void Player::atualizar_Recursos(){
+void Player::atualizar_Recursos() {
     for (auto &lista_GeraRecurso : lista_GeraRecursos) {
-        switch (lista_GeraRecurso.getTipo()){
+        switch (lista_GeraRecurso.getTipo()) {
             case RECURSO::PEDREGULHO:
                 Player::pedregulho += lista_GeraRecurso.produzirRecurso();
                 break;
@@ -69,11 +69,9 @@ void Player::atualizar_Recursos(){
                 Player::celulose += lista_GeraRecurso.produzirRecurso();
                 break;
             default:
-                printf("tipo geraRecurso %d == %d \n", RECURSO::PEDREGULHO ,lista_GeraRecurso.getTipo());
                 printf("ERRO: atualizar_Recursos\n");
                 return;
         }
-
     }
 }
 
@@ -118,14 +116,12 @@ void Player::setPontos(int pontos) {
     Player::pontos = pontos;
 }
 
-Player::~Player() {
-
-}
+Player::~Player() {}
 
 /* Metodos auxiliares */
-bool Player::possui_recursos_fabrica(UNIDADE tipo){
+bool Player::possui_recursos_fabrica(UNIDADE tipo) {
     int recurso = 0;
-    switch (tipo){
+    switch (tipo) {
         case UNIDADE::PAPEL:
             recurso = Player::getCelulose();
             break;
@@ -140,10 +136,10 @@ bool Player::possui_recursos_fabrica(UNIDADE tipo){
             return false;
     }
 
-    if( recurso >= PRECO_RECURSO_FABRICA ){
-        if ( Player::dinheiro >= PRECO_DINHEIRO_FABRICA ){
+    if ( recurso >= PRECO_RECURSO_FABRICA ) {
+        if ( Player::dinheiro >= PRECO_DINHEIRO_FABRICA ) {
             return true;
-        }else{
+        } else {
             /* Mensagem de não ter dinheiro */
             return false;
         }
@@ -153,9 +149,9 @@ bool Player::possui_recursos_fabrica(UNIDADE tipo){
     }
 }
 
-void Player::retira_recurso_fabrica(UNIDADE tipo){
+void Player::retira_recurso_fabrica(UNIDADE tipo) {
     /* Retira recurso */
-    switch (tipo){
+    switch (tipo) {
         case UNIDADE::PAPEL:
             Player::celulose -= PRECO_RECURSO_FABRICA;
             break;
@@ -172,9 +168,9 @@ void Player::retira_recurso_fabrica(UNIDADE tipo){
     Player::dinheiro -= PRECO_DINHEIRO_FABRICA;
 }
 
-bool Player::possui_recursos_geraRecurso(RECURSO tipo){
+bool Player::possui_recursos_geraRecurso(RECURSO tipo) {
     int recurso = 0;
-    switch (tipo){
+    switch (tipo) {
         case RECURSO::CELULOSE :
             recurso = Player::getCelulose();
             break;
@@ -189,10 +185,10 @@ bool Player::possui_recursos_geraRecurso(RECURSO tipo){
             return false;
     }
 
-    if( recurso >= PRECO_RECURSO_GERA ){
-        if ( Player::dinheiro >= PRECO_DINHEIRO_GERA ){
+    if ( recurso >= PRECO_RECURSO_GERA ) {
+        if ( Player::dinheiro >= PRECO_DINHEIRO_GERA ) {
             return true;
-        }else{
+        } else {
             /* Mensagem de não ter dinheiro */
             return false;
         }
@@ -202,9 +198,9 @@ bool Player::possui_recursos_geraRecurso(RECURSO tipo){
     }
 }
 
-void Player::retira_recurso_geraRecurso(RECURSO tipo){
+void Player::retira_recurso_geraRecurso(RECURSO tipo) {
     /* Retira recurso */
-    switch (tipo){
+    switch (tipo) {
         case RECURSO ::CELULOSE:
             Player::celulose -= PRECO_RECURSO_GERA;
             break;

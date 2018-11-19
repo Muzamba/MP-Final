@@ -9,6 +9,9 @@ int NIVEL = 1;
 
 Referencias ref;*/
 
+#define PRECO_RECURSO_FABRICA 50
+#define PRECO_DINHEIRO_FABRICA 100
+
 typedef int FABRICA;
 typedef int UNIDADES;
 
@@ -38,8 +41,8 @@ class Fabrica : public Predio {
     FABRICA tempoEspera;  // T de espera para uma unidade ser gerada
     FABRICA nivel;  // Nível da fábrica (nível maior, menor tempo de espera)
     FABRICA tipo;  // Variável não deve ser alterada
-    FABRICA preco;
-    FABRICA recursos;
+    FABRICA preco_recurso;
+    FABRICA preco_dinheiro;
 
     // ---------------------- Variáveis das Unidades geradas ------------------
 

@@ -7,8 +7,9 @@
 #define TAXA_COLETA 5
 #define PRECO_RECURSO_GERA 50
 #define PRECO_DINHEIRO_GERA 100
+
 class GeraRecursos : public Predio {
-public:
+ public:
     GeraRecursos(int X, int Y, int tipo);
 
     /* Precisa da classe player pronto */
@@ -28,7 +29,7 @@ public:
 
     void setTipo(int tipo);
 
-private:
+ private:
     int nivel = 0; //Nivel incial 0
     int taxa = TAXA_COLETA; //Taxa de coleta inicial TAXA_COLETA
     int tipo; //Selecionado pelo construtor
