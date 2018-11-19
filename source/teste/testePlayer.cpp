@@ -13,8 +13,6 @@ TEST_CASE("Construtor da classe Player", "Player"){
     REQUIRE(cpu.getMetal() == RECURSO_INICIAL);
 }
 
-/* Testar depois posicao ja ocupada
- * Testar depois maximo de predios*/
 TEST_CASE("Compra_GeraRecursos", "Player"){
     Player jogador;
     SECTION(" Jogador sem dinheiro "){
