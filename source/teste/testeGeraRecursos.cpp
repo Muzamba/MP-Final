@@ -7,6 +7,7 @@
 #include"../include/GeraRecursos.h"
 #include"../include/catch.hpp"
 
+// "Copyright [year] <Pedro>"
 /** Teste Construtor
  *  -----------------
  *  Testa se as variaveis são incializadas da seguinte forma:
@@ -14,8 +15,8 @@
  *  tipo = RECURSO[tipo]
  *  taxa = TAXA_COLETA
  */
-TEST_CASE("Construtor da Classe"){
-    GeraRecursos geradora(0,0, RECURSO::PEDREGULHO );
+TEST_CASE("Construtor da Classe") {
+    GeraRecursos geradora(0, 0, RECURSO::PEDREGULHO);
     REQUIRE(geradora.getNivel() == 0);
     REQUIRE(geradora.getTaxa() == TAXA_COLETA);
     REQUIRE(geradora.getTipo() == RECURSO::PEDREGULHO);
@@ -24,13 +25,13 @@ TEST_CASE("Construtor da Classe"){
 }
 
 
-TEST_CASE("Produzir Recurso "){
-    GeraRecursos geradora(0, 0, RECURSO::PEDREGULHO );
+TEST_CASE("Produzir Recurso ") {
+    GeraRecursos geradora(0, 0, RECURSO::PEDREGULHO);
     int qte_recurso = geradora.produzirRecurso();
-    REQUIRE( qte_recurso == geradora.getTaxa() );
+    REQUIRE(qte_recurso == geradora.getTaxa());
 }
 
-TEST_CASE("Testando Enum"){
+TEST_CASE("Testando Enum") {
     REQUIRE(RECURSO::CELULOSE == 0);
     REQUIRE(RECURSO::PEDREGULHO == 1);
     REQUIRE(RECURSO::METAL == 2);
