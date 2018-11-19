@@ -8,9 +8,6 @@
 #include "GeraRecursos.h"
 #include "Fabrica.h"
 #include "Unidade.h"
-#define RECURSO_INICIAL 50
-#define DINHEIRO_INICIAL 200
-
 
 class Player {
  public:

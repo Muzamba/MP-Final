@@ -9,8 +9,7 @@ int NIVEL = 1;
 
 Referencias ref;*/
 
-#define PRECO_RECURSO_FABRICA 50
-#define PRECO_DINHEIRO_FABRICA 100
+
 
 typedef int FABRICA;
 typedef int UNIDADES;

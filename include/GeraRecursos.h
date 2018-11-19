@@ -4,10 +4,6 @@
 #include "Head.h"
 #include "Predio.h"
 
-#define TAXA_COLETA 5
-#define PRECO_RECURSO_GERA 50
-#define PRECO_DINHEIRO_GERA 100
-
 class GeraRecursos : public Predio {
  public:
     GeraRecursos(int X, int Y, int tipo);
