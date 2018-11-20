@@ -6,12 +6,6 @@
 
 #IncludeRegexTransform: 
 
-../include/Fabrica.h
-Predio.h
-../include/Predio.h
-Head.h
-../include/Head.h
-
 ../include/GeraRecursos.h
 Head.h
 ../include/Head.h
@@ -19,28 +13,12 @@ Predio.h
 ../include/Predio.h
 
 ../include/Head.h
-Jogo.h
-../include/Jogo.h
 
-../include/Jogo.h
+../include/Objeto.h
 SDL2/SDL.h
 -
-Fabrica.h
-../include/Fabrica.h
-GeraRecursos.h
-../include/GeraRecursos.h
-Unidade.h
-../include/Unidade.h
-
-../include/Objeto.h
-Objeto.h
-../include/Objeto.h
 
 ../include/Predio.h
-Objeto.h
-../include/Objeto.h
-
-../include/Unidade.h
 Objeto.h
 ../include/Objeto.h
 

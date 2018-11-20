@@ -67,6 +67,10 @@ class Player {
     void retira_recurso_geraRecurso(RECURSO tipo);
 
     bool possui_recursos_geraRecurso(RECURSO tipo);
+
+    bool verifica_espaco_predio(int x, int y);
+
+    bool verifica_espaco_ocupado(int x, int y);
 };
 
 #endif  // INCLUDE_PLAYER_H_

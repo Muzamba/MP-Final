@@ -20,10 +20,10 @@ TEST_CASE("Construtor da classe Player", "Player") {
 
 TEST_CASE("Compra_GeraRecursos", "Player") {
     Player jogador;
-    int x= 0, y = 0;
+    int x = 0, y = 0;
     SECTION(" Jogador sem dinheiro ") {
         jogador.setDinheiro(0);
-        REQUIRE(!jogador.compra_GeraRecurso(x, y ,RECURSO::PEDREGULHO));
+        REQUIRE(!jogador.compra_GeraRecurso(x, y, RECURSO::PEDREGULHO));
     }
     SECTION(" Jogador sem recurso") {
         jogador.setPedregulho(0);
@@ -40,13 +40,17 @@ TEST_CASE("Compra_GeraRecursos", "Player") {
 
 TEST_CASE("Compra_Fabrica", "Player") {
     Player jogador;
-    int x= 0, y = 0;
+    int x = 2, y = 0;
     SECTION(" Jogador sem dinheiro ") {
         jogador.setDinheiro(0);
         REQUIRE(!jogador.compra_Fabrica(x, y, UNIDADE::PEDRA));
     }
     SECTION(" Jogador sem recurso") {
         jogador.setPedregulho(0);
+        REQUIRE(!jogador.compra_Fabrica(x, y, UNIDADE::PEDRA));
+    }
+    SECTION("Coluna de tropa") {
+        y = 5;
         REQUIRE(!jogador.compra_Fabrica(x, y, UNIDADE::PEDRA));
     }
     SECTION("Jogador com recurso e dinheiro suficiente") {

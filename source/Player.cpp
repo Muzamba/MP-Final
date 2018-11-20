@@ -30,8 +30,7 @@ bool Player::compra_GeraRecurso(int x, int y, RECURSO tipo) {
     /* Verifica se o jogador tem recursos suficientes */
     if (possui_recursos_geraRecurso(tipo)) {
         /*  Verifica se a matriz de posicao esta vazia */
-        if(jogo->matriz_geraRecurso[x][y] == NULL)
-        {
+        if (verifica_espaco_ocupado(x, y) && verifica_espaco_predio(x, y)) {
             /* Retira o dinheiro da compra */
             Player::retira_recurso_geraRecurso(tipo);
             /* Adiciona a fabrica na lista da classe Player*/
@@ -47,14 +46,16 @@ bool Player::compra_Fabrica(int x, int y, UNIDADE tipo) {
     if (possui_recursos_fabrica(tipo)) {
         /* Retira o dinheiro da compra */
         /*  Verifica se a matriz de posicao esta vazia */
-        if (jogo->matriz_fabrica[x][y] == NULL) {
+        if (verifica_espaco_ocupado(x, y) && verifica_espaco_predio(x, y)) {
             /* Retira o dinheiro da compra */
             Player::retira_recurso_fabrica(tipo);
             /* Adiciona a fabrica na lista da classe Player*/
             jogo->matriz_fabrica[x][y] = new Fabrica(x, y, tipo);
+            return true;
+        } else { /* Se a posicao e invalida */
+            return false;
         }
-        return true;
-    } else {
+    } else { /* Se o jogador nao tiver recursos suficientes */
         return false;
     }
 }
@@ -221,4 +222,14 @@ void Player::retira_recurso_geraRecurso(RECURSO tipo) {
     }
     /* retira dinheiro*/
     Player::dinheiro -= PRECO_DINHEIRO_GERA;
+}
+
+bool Player::verifica_espaco_predio(int x, int y) {
+    return y < 2;
+}
+
+bool Player::verifica_espaco_ocupado(int x, int y) {
+    return jogo->matriz_fabrica[x][y] == NULL &&
+    jogo->matriz_geraRecurso[x][y] == NULL &&
+    jogo->matriz_unidade[x][y] == NULL;
 }
