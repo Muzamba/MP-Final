@@ -1,7 +1,6 @@
 // Copyright 2018 João Pedro Assis
-#ifndef OBJETO
-#define OBJETO
-
+#pragma once
+#include <SDL2/SDL.h>
 /**
  * @class Objeto Objeto.h 
  * 
@@ -21,10 +20,10 @@ class Objeto {
      * @param X - Coordenada X
      * @param Y - Coordenada Y
      */
-    Objeto(int X, int Y);
+    Objeto(int X, int Y,int W,int H);
 
     // por fazer
-    void render();
+    void render(SDL_Renderer* r);
 
     /**
      * @brief Retorna a coordenada Y da posição do objeto
@@ -52,11 +51,14 @@ class Objeto {
      */
     void set_y(int Y);
 
+    void mudaTextura(SDL_Texture* textura);
+
     ~Objeto();
 
  protected:
+    SDL_Texture* textura = NULL;
+    SDL_Rect* srcRect = NULL;
+    SDL_Rect* destRect = NULL;
     int pos_X;
     int pos_Y;
 };
-
-#endif

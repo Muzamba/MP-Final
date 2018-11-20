@@ -1,7 +1,31 @@
+#include <Predio.h>
 #include "../include/Unidade.h"
+// "Copyright [2018] <Waliff Cordeiro>"
 
 void Unidade::anda() {
-	Unidade::pos_X += velocidade;
+    // Atualiza a posição de acordo com a velocidade da unidade
+    Unidade::pos_X += velocidade;
+}
+
+/*void Unidade::ataca_predio(Predio predio, Player jogador){
+    predio.set_vida(predio.get_vida()-Unidade::dano);
+    if (predio.get_vida() <= 0) {
+        predio.destroy();
+    }
+}*/
+
+void Unidade::destroy(std::vector<Unidade> *unidades) {
+    // Não tentar remover se estiver vazio
+    if (unidades->empty()) {
+        return;
+    }
+    for (auto it = unidades->begin(); it != unidades->end(); it++) {
+        // Percorre a lista de unidades para remover a tropa que será destruida
+        if (it->pos_X == Unidade::pos_X && it->pos_Y == Unidade::pos_Y) {
+            unidades->erase(it);  // Remove a unidade
+        }
+    }
+    // Remover imagem
 }
 
 int Unidade::getPreco_recursos() const {
@@ -44,9 +68,9 @@ void Unidade::setDano(int dano) {
     Unidade::dano = dano;
 }
 
-Unidade::Unidade(int X, int Y, int vida, int velocidade, int dano) : Objeto(X, Y), vida(vida), velocidade(velocidade),
-                                                                     dano(dano) {}
+Unidade::Unidade(int X, int Y, int tipo, int vida, int velocidade, int dano) :
+Objeto(X, Y), tipo(tipo), vida(vida),
+velocidade(velocidade), dano(dano) {}
 
 Unidade::~Unidade() {
-
 }

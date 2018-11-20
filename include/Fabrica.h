@@ -1,5 +1,6 @@
 // Copyright 2018 João Pedro Assis
-#pragma once
+#ifndef EPADAD
+#define EPADAD
 #include "Predio.h"
 #include "Head.h"
 /*struct Referencias {
@@ -51,3 +52,5 @@ class Fabrica : public Predio {
 
     void upgrade();
 };
+
+#endif

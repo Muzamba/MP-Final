@@ -111,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named Jogo
+
+# Build rule for target.
+Jogo: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 Jogo
+.PHONY : Jogo
+
+# fast build rule for target.
+Jogo/fast:
+	$(MAKE) -f CMakeFiles/Jogo.dir/build.make CMakeFiles/Jogo.dir/build
+.PHONY : Jogo/fast
+
+#=============================================================================
 # Target rules for targets named Fabrica
 
 # Build rule for target.
@@ -254,6 +267,33 @@ source/GeraRecursos.s: source/GeraRecursos.cpp.s
 source/GeraRecursos.cpp.s:
 	$(MAKE) -f CMakeFiles/GeraRecursos.dir/build.make CMakeFiles/GeraRecursos.dir/source/GeraRecursos.cpp.s
 .PHONY : source/GeraRecursos.cpp.s
+
+source/Jogo.o: source/Jogo.cpp.o
+
+.PHONY : source/Jogo.o
+
+# target to build an object file
+source/Jogo.cpp.o:
+	$(MAKE) -f CMakeFiles/Jogo.dir/build.make CMakeFiles/Jogo.dir/source/Jogo.cpp.o
+.PHONY : source/Jogo.cpp.o
+
+source/Jogo.i: source/Jogo.cpp.i
+
+.PHONY : source/Jogo.i
+
+# target to preprocess a source file
+source/Jogo.cpp.i:
+	$(MAKE) -f CMakeFiles/Jogo.dir/build.make CMakeFiles/Jogo.dir/source/Jogo.cpp.i
+.PHONY : source/Jogo.cpp.i
+
+source/Jogo.s: source/Jogo.cpp.s
+
+.PHONY : source/Jogo.s
+
+# target to generate assembly for a file
+source/Jogo.cpp.s:
+	$(MAKE) -f CMakeFiles/Jogo.dir/build.make CMakeFiles/Jogo.dir/source/Jogo.cpp.s
+.PHONY : source/Jogo.cpp.s
 
 source/Objeto.o: source/Objeto.cpp.o
 
@@ -430,6 +470,7 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
+	@echo "... Jogo"
 	@echo "... Fabrica"
 	@echo "... Player"
 	@echo "... Objeto"
@@ -444,6 +485,9 @@ help:
 	@echo "... source/GeraRecursos.o"
 	@echo "... source/GeraRecursos.i"
 	@echo "... source/GeraRecursos.s"
+	@echo "... source/Jogo.o"
+	@echo "... source/Jogo.i"
+	@echo "... source/Jogo.s"
 	@echo "... source/Objeto.o"
 	@echo "... source/Objeto.i"
 	@echo "... source/Objeto.s"

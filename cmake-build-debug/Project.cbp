@@ -27,6 +27,58 @@
 					<DistClean command="/usr/bin/make -j8 -f &quot;/home/pedro/UNB/MP/MP-Final/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
+			<Target title="Jogo">
+				<Option output="/home/pedro/UNB/MP/MP-Final/cmake-build-debug/libJogo.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/pedro/UNB/MP/MP-Final/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/pedro/UNB/MP/MP-Final/include"/>
+					<Add directory="/home/pedro/UNB/MP/MP-Final/lib"/>
+					<Add directory="/home/pedro/UNB/MP/MP-Final/source"/>
+					<Add directory="/usr/include/c++/7"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
+					<Add directory="/usr/include/c++/7/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/pedro/UNB/MP/MP-Final/cmake-build-debug/Makefile&quot;  VERBOSE=1 Jogo"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/pedro/UNB/MP/MP-Final/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/pedro/UNB/MP/MP-Final/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/pedro/UNB/MP/MP-Final/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Jogo/fast">
+				<Option output="/home/pedro/UNB/MP/MP-Final/cmake-build-debug/libJogo.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/pedro/UNB/MP/MP-Final/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/pedro/UNB/MP/MP-Final/include"/>
+					<Add directory="/home/pedro/UNB/MP/MP-Final/lib"/>
+					<Add directory="/home/pedro/UNB/MP/MP-Final/source"/>
+					<Add directory="/usr/include/c++/7"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
+					<Add directory="/usr/include/c++/7/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/pedro/UNB/MP/MP-Final/cmake-build-debug/Makefile&quot;  VERBOSE=1 Jogo/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/pedro/UNB/MP/MP-Final/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/pedro/UNB/MP/MP-Final/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/pedro/UNB/MP/MP-Final/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
 			<Target title="Fabrica">
 				<Option output="/home/pedro/UNB/MP/MP-Final/cmake-build-debug/libFabrica.a" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/pedro/UNB/MP/MP-Final/cmake-build-debug"/>
@@ -408,6 +460,9 @@
 		<Unit filename="/home/pedro/UNB/MP/MP-Final/include/GeraRecursos.h">
 			<Option target="GeraRecursos"/>
 		</Unit>
+		<Unit filename="/home/pedro/UNB/MP/MP-Final/include/Jogo.h">
+			<Option target="Jogo"/>
+		</Unit>
 		<Unit filename="/home/pedro/UNB/MP/MP-Final/include/Objeto.h">
 			<Option target="Objeto"/>
 		</Unit>
@@ -417,14 +472,14 @@
 		<Unit filename="/home/pedro/UNB/MP/MP-Final/include/Predio.h">
 			<Option target="Predio"/>
 		</Unit>
-		<Unit filename="/home/pedro/UNB/MP/MP-Final/include/eqwqw.h">
-			<Option target="Fabrica"/>
-		</Unit>
 		<Unit filename="/home/pedro/UNB/MP/MP-Final/source/Fabrica.cpp">
 			<Option target="Fabrica"/>
 		</Unit>
 		<Unit filename="/home/pedro/UNB/MP/MP-Final/source/GeraRecursos.cpp">
 			<Option target="GeraRecursos"/>
+		</Unit>
+		<Unit filename="/home/pedro/UNB/MP/MP-Final/source/Jogo.cpp">
+			<Option target="Jogo"/>
 		</Unit>
 		<Unit filename="/home/pedro/UNB/MP/MP-Final/source/Objeto.cpp">
 			<Option target="Objeto"/>

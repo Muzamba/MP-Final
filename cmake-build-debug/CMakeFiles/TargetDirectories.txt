@@ -1,4 +1,5 @@
 /home/pedro/UNB/MP/MP-Final/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/pedro/UNB/MP/MP-Final/cmake-build-debug/CMakeFiles/Jogo.dir
 /home/pedro/UNB/MP/MP-Final/cmake-build-debug/CMakeFiles/Fabrica.dir
 /home/pedro/UNB/MP/MP-Final/cmake-build-debug/CMakeFiles/Player.dir
 /home/pedro/UNB/MP/MP-Final/cmake-build-debug/CMakeFiles/Objeto.dir

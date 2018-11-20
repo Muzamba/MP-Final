@@ -3,20 +3,21 @@
 
 // "Copyright [year] <Pedro>"
 
-#include <vector>
 #include "Head.h"
+#include <vector>
 #include "GeraRecursos.h"
 #include "Fabrica.h"
 #include "Unidade.h"
+#include "Jogo.h"
 
 class Player {
  public:
     /* funcionalidades */
-    bool compra_GeraRecurso(RECURSO tipo);
+    bool compra_GeraRecurso(int x, int y, RECURSO tipo);
 
-    bool compra_Fabrica(UNIDADE tipo);
+    bool compra_Fabrica(int x, int y, UNIDADE tipo);
 
-    bool compra_Unidade();
+    bool compra_Unidade(Fabrica fabrica);
 
     void atualizar_Recursos();
 

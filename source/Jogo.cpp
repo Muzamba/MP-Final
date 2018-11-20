@@ -1,11 +1,24 @@
 #include "Jogo.h"
 #include <iostream>
+#include "Head.h"
 
 Jogo::Jogo(){
+    matriz_fabrica = new Fabrica **[6];
+    matriz_unidade = new Unidade **[6];
+    matriz_geraRecurso = new GeraRecursos**[6];
+    for(int i=0; i < 6; i++){
+        matriz_fabrica[i] = new Fabrica *[12];
+        matriz_unidade[i] = new Unidade *[12];
+        matriz_geraRecurso[i] = new GeraRecursos *[12];
+    }
+    for(int i=0; i< 6; i++){
+        for(int j=0; j < 12; j++) {
+            matriz_fabrica[i][j] = NULL;
+            matriz_unidade[i][j] = NULL;
+            matriz_geraRecurso[i][j] = NULL;
+        }
+    }
 }
-Jogo::~Jogo(){
-}
-
 
 void Jogo::init(const char* nome, int x, int y, int w, int h) {
     

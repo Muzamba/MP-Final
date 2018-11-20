@@ -10,4 +10,5 @@ add_library(GeraRecursos source/GeraRecursos.cpp include/GeraRecursos.h source/P
 add_library(Predio source/Predio.cpp include/Predio.h)
 add_library(Objeto source/Objeto.cpp include/Objeto.h)
 add_library(Player source/Player.cpp include/Player.h)
-add_library(Fabrica source/Fabrica.cpp include/Fabrica.h include/eqwqw.h)
+add_library(Fabrica source/Fabrica.cpp include/Fabrica.h)
+add_library(Jogo source/Jogo.cpp include/Jogo.h)

@@ -3,6 +3,7 @@
 
 /* "Copyright [2018] <Pedro>" */
 
+extern Jogo *jogo;
 /**Construtor da classe Player
  * -------------------------
  * Seta todos os atributos para os valores inciais, e os pontos para 0
@@ -25,28 +26,33 @@ Player::Player() {
  * @return true : se for possivel comprar
  *         false : se nao for possivel comprar
  */
-bool Player::compra_GeraRecurso(RECURSO tipo) {
+bool Player::compra_GeraRecurso(int x, int y, RECURSO tipo) {
+    /* Verifica se o jogador tem recursos suficientes */
     if (possui_recursos_geraRecurso(tipo)) {
-        /* Retira o dinheiro da compra */
-        Player::retira_recurso_geraRecurso(tipo);
-        /* Cria a fabrica */
-        GeraRecursos geradora(0, 0, tipo);
-        /* Adiciona a fabrica na lista da classe Player*/
-        Player::lista_GeraRecursos.push_back(geradora);
+        /*  Verifica se a matriz de posicao esta vazia */
+        if(jogo->matriz_geraRecurso[x][y] == NULL)
+        {
+            /* Retira o dinheiro da compra */
+            Player::retira_recurso_geraRecurso(tipo);
+            /* Adiciona a fabrica na lista da classe Player*/
+            jogo->matriz_geraRecurso[x][y] = new GeraRecursos(x, y, tipo);
+        }
         return true;
     } else {
         return false;
     }
 }
 
-bool Player::compra_Fabrica(UNIDADE tipo) {
+bool Player::compra_Fabrica(int x, int y, UNIDADE tipo) {
     if (possui_recursos_fabrica(tipo)) {
         /* Retira o dinheiro da compra */
-        Player::retira_recurso_fabrica(tipo);
-        /* Cria a fabrica */
-        Fabrica fbrc(0, 0, tipo);
-        /* Adiciona a fabrica na lista da classe Player*/
-        Player::lista_Fabrica.push_back(fbrc);
+        /*  Verifica se a matriz de posicao esta vazia */
+        if (jogo->matriz_fabrica[x][y] == NULL) {
+            /* Retira o dinheiro da compra */
+            Player::retira_recurso_fabrica(tipo);
+            /* Adiciona a fabrica na lista da classe Player*/
+            jogo->matriz_fabrica[x][y] = new Fabrica(x, y, tipo);
+        }
         return true;
     } else {
         return false;
