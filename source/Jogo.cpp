@@ -26,6 +26,17 @@ void Jogo::init(const char* nome, int x, int y, int w, int h) {
 				printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
 			    on = false;
 			}
+
+            if( TTF_Init() == -1 )
+				{
+					printf( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError() );
+					on = false;
+				}
+            mapa = new Objeto(0, 0, 1280,720);
+            bIniciar = new Botao_Iniciar(500, 300, 300, 120);
+            menuInicial = new Objeto(0, 0, 1280, 720);
+            menu_inicial = true;
+            //cTempo = new SDL_Color()
         }
         on = true;
     } else {
@@ -40,19 +51,41 @@ bool Jogo::isOn(){
 void Jogo::handleEvents(){
     SDL_Event evento;
     SDL_PollEvent(&evento);
+    OPERACOES operacao = NADA;
     switch(evento.type) {
         case SDL_QUIT:
             on = false;
             break;
+        case SDL_MOUSEBUTTONDOWN:
+        case SDL_MOUSEBUTTONUP:
+        case SDL_MOUSEMOTION:
+            if(menu_inicial){
+                operacao = bIniciar->handleEvent(&evento, texturas[BOTAO_INICIAR], texturas[BOTAO_INICIAR_S], texturas[BOTAO_INICIAR_P]);
+            }
 
         default:
         break;
+    }
+
+    switch (operacao) {
+        case INICIA_JOGO:
+            menu_inicial = false;
+            break;
+
+        default:
+            break;
     }
 }
 
 void Jogo::renderizar(){
     SDL_RenderClear(render);
     //Adione aqui as coisas para renderizar
+    if(menu_inicial){
+        menuInicial->render(render);
+        bIniciar->render(render);
+    }else {
+        mapa->render(render);
+    }
     SDL_RenderPresent(render);
 }
 
@@ -65,6 +98,15 @@ void Jogo::fim() {
     janela = NULL;
     SDL_DestroyRenderer(render);
     render = NULL;
+    TTF_CloseFont( font );
+	font = NULL;
+
+    delete bIniciar;
+    delete menuInicial;
+    delete mapa;
+
+
+    TTF_Quit();
     IMG_Quit();
     SDL_Quit();
     std::cout << "Jogo fechado" << std::endl;
@@ -74,6 +116,9 @@ void Jogo::load(){
 }
 
 void Jogo::update(){
+    sTempo.clear();
+    sTempo.push_back(tempo);
+    SDL_Surface* textSurface = TTF_RenderText_Solid( font, .c_str(), textColor );
 
 }
 
@@ -165,6 +210,41 @@ bool Jogo::loadMidia() {
 		printf( "Failed to load texture castelo_vermelho.png!\n" );
 		success = false;
 	}
+
+    texturas[TEXTURAS::MENU_PRINCIPAL] = loadTexture( "imagens/menu_inicial.png" );
+	if( texturas[TEXTURAS::MENU_PRINCIPAL] == NULL ) {
+		printf( "Failed to load texture menu_inicial.png!\n" );
+		success = false;
+	}
+
+    texturas[TEXTURAS::BOTAO_INICIAR] = loadTexture( "imagens/botao1.png" );
+	if( texturas[TEXTURAS::BOTAO_INICIAR] == NULL ) {
+		printf( "Failed to load texture bota1.png!\n" );
+		success = false;
+	}
+
+    texturas[TEXTURAS::BOTAO_INICIAR_S] = loadTexture( "imagens/botao1S.png" );
+	if( texturas[TEXTURAS::BOTAO_INICIAR_S] == NULL ) {
+		printf( "Failed to load texture botao1S.png!\n" );
+		success = false;
+	}
+
+    texturas[TEXTURAS::BOTAO_INICIAR_P] = loadTexture( "imagens/botao1P.png" );
+	if( texturas[TEXTURAS::BOTAO_INICIAR_P] == NULL ) {
+		printf( "Failed to load texture botao1P.png!\n" );
+		success = false;
+	}
+
+    texturas[TEXTURAS::MAPA] = loadTexture( "imagens/Mapa_template.png" );
+	if( texturas[TEXTURAS::MAPA] == NULL ) {
+		printf( "Failed to load texture Mapa_template.png!\n" );
+		success = false;
+	}
+     font = TTF_OpenFont( "fonts/lazy.ttf", 28 );
+
+    bIniciar->mudaTextura(texturas[BOTAO_INICIAR]);
+    menuInicial->mudaTextura(texturas[MENU_PRINCIPAL]);
+    mapa->mudaTextura(texturas[MAPA]);
 
 	return success;
 

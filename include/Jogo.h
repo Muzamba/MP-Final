@@ -1,7 +1,10 @@
 #pragma once
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
+#include <string>
 #include "Head.h"
+#include "Botao.h"
 
 class Jogo {
 public:
@@ -19,7 +22,16 @@ public:
     ~Jogo();
 
 protected:
-    int tempo;
+
+    SDL_Color cTempo{0, 0, 0, 255};
+    SDL_Texture* tTempo = NULL;
+    std::string sTempo;
+    TTF_Font* font;
+    bool menu_inicial = false;
+    Botao_Iniciar* bIniciar = NULL;
+    Objeto* menuInicial = NULL;
+    Objeto* mapa = NULL;
+    int tempo = 0;
     bool on;
     SDL_Window* janela = NULL;
     SDL_Texture* texturas[TEXTURAS::TEX_TOTAL];

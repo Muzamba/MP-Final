@@ -1,9 +1,8 @@
-Jankenpo:	source/obj/main.o source/obj/Fabrica.o source/obj/Predio.o source/obj/Unidade.o source/obj/GeraRecursos.o source/obj/Jogo.o source/obj/Objeto.o source/obj/Player.o
-	g++ source/obj/main.o source/obj/Fabrica.o source/obj/Predio.o source/obj/Unidade.o source/obj/GeraRecursos.o source/obj/Jogo.o source/obj/Objeto.o source/obj/Player.o -o Jankenpo -lSDL2 -lSDL2_image -Iinclude
+Jankenpo:	source/obj/main.o source/obj/Fabrica.o source/obj/Predio.o source/obj/Unidade.o source/obj/GeraRecursos.o source/obj/Jogo.o source/obj/Objeto.o source/obj/Player.o source/obj/Botao.o
+	g++ source/obj/main.o source/obj/Fabrica.o source/obj/Predio.o source/obj/Unidade.o source/obj/GeraRecursos.o source/obj/Jogo.o source/obj/Objeto.o source/obj/Player.o source/obj/Botao.o -o Jankenpo -lSDL2 -lSDL2_image -Iinclude
 	
 source/obj/main.o:	source/main.cpp
 	g++ -c source/main.cpp -o source/obj/main.o -Iinclude
-
 	
 source/obj/Fabrica.o:	include/Fabrica.h source/Fabrica.cpp
 	g++ -c source/Fabrica.cpp -o source/obj/Fabrica.o -Iinclude
@@ -25,3 +24,6 @@ source/obj/Objeto.o:	include/Objeto.h source/Objeto.cpp
 	
 source/obj/Player.o:	include/Player.h source/Player.cpp
 	g++ -c source/Player.cpp -o source/obj/Player.o -Iinclude
+
+source/obj/Botao.o:	include/Botao.h source/Botao.cpp
+	g++ -c source/Botao.cpp -o source/obj/Botao.o -Iinclude
