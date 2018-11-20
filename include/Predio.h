@@ -1,5 +1,6 @@
 // Copyright 2018 João Pedro Assis
-#pragma once
+#ifndef PREDIO
+#define PREDIO
 #include "Objeto.h"
 // #include "Menu.h"
 
@@ -51,3 +52,4 @@ class Predio : public Objeto {
     //  Menu menu();
 };
 
+#endif

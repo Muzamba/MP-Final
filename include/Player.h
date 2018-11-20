@@ -3,24 +3,23 @@
 
 // "Copyright [year] <Pedro>"
 
+#include "Head.h"
 #include <vector>
 #include "GeraRecursos.h"
 #include "Fabrica.h"
 #include "Unidade.h"
-#define RECURSO_INICIAL 50
-#define DINHEIRO_INICIAL 200
-
+#include "Jogo.h"
 
 class Player {
  public:
     /* funcionalidades */
-    bool compra_GeraRecurso(int recurso);
+    bool compra_GeraRecurso(int x, int y, RECURSO tipo);
 
-    bool compra_Fabrica(int tipo);
+    bool compra_Fabrica(int x, int y, UNIDADE tipo);
 
-    bool compra_Unidade();
+    bool compra_Unidade(Fabrica fabrica);
 
-    bool atualizar_recursos();
+    void atualizar_Recursos();
 
     int pedregulho;  // Pedra
     int celulose;    // Papel
@@ -58,6 +57,20 @@ class Player {
     int getPontos() const;
 
     void setPontos(int pontos);
+
+ private:
+    /* Metodos auxiliares */
+    void retira_recurso_fabrica(UNIDADE tipo);
+
+    bool possui_recursos_fabrica(UNIDADE tipo);
+
+    void retira_recurso_geraRecurso(RECURSO tipo);
+
+    bool possui_recursos_geraRecurso(RECURSO tipo);
+
+    bool verifica_espaco_predio(int x, int y);
+
+    bool verifica_espaco_ocupado(int x, int y);
 };
 
 #endif  // INCLUDE_PLAYER_H_

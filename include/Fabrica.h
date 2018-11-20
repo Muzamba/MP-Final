@@ -1,5 +1,6 @@
 // Copyright 2018 João Pedro Assis
-#pragma once
+#ifndef EPADAD
+#define EPADAD
 #include "Predio.h"
 #include "Head.h"
 /*struct Referencias {
@@ -8,6 +9,8 @@ int NIVEL = 1;
 };
 
 Referencias ref;*/
+
+
 
 typedef int FABRICA;
 typedef int UNIDADES;
@@ -38,8 +41,8 @@ class Fabrica : public Predio {
     FABRICA tempoEspera;  // T de espera para uma unidade ser gerada
     FABRICA nivel;  // Nível da fábrica (nível maior, menor tempo de espera)
     FABRICA tipo;  // Variável não deve ser alterada
-    FABRICA preco;
-    FABRICA recursos;
+    FABRICA preco_recurso;
+    FABRICA preco_dinheiro;
 
     // ---------------------- Variáveis das Unidades geradas ------------------
 
@@ -49,3 +52,5 @@ class Fabrica : public Predio {
 
     void upgrade();
 };
+
+#endif

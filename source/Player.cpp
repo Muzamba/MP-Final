@@ -1,6 +1,9 @@
 #include "../include/Player.h"
+#include <stdio.h>
+
 /* "Copyright [2018] <Pedro>" */
 
+extern Jogo *jogo;
 /**Construtor da classe Player
  * -------------------------
  * Seta todos os atributos para os valores inciais, e os pontos para 0
@@ -23,25 +26,63 @@ Player::Player() {
  * @return true : se for possivel comprar
  *         false : se nao for possivel comprar
  */
-bool Player::compra_GeraRecurso(int recurso) {
-    bool success = true;  // Incializa a flag de sucesso
-    /* Se tiver recursos e dinheiro para comprar*/
-    if (Player::pedregulho > PRECO_RECURSO_GERA && Player::dinheiro > PRECO_DINHEIRO_GERA) {
-        /* Retira os recusos da compra */
-        Player::pedregulho -= PRECO_RECURSO_GERA;
-        Player::dinheiro -= PRECO_DINHEIRO_GERA;
-        /* Compra */
-        GeraRecursos geradora(0,0, recurso);  /* Cria uma geradora de tal recurso */ // MELHORAR CONSTRUTOR
-        Player::lista_GeraRecursos.push_back(geradora);  /* Adiciona a geradora na lista GeraRecursos */
-        // ~geradora Free geradora
-        success = true;
-    } else {/* Se o dinheiro ou recurso for insuficiente */
-        success = false;
+bool Player::compra_GeraRecurso(int x, int y, RECURSO tipo) {
+    /* Verifica se o jogador tem recursos suficientes */
+    if (possui_recursos_geraRecurso(tipo)) {
+        /*  Verifica se a matriz de posicao esta vazia */
+        if (verifica_espaco_ocupado(x, y) && verifica_espaco_predio(x, y)) {
+            /* Retira o dinheiro da compra */
+            Player::retira_recurso_geraRecurso(tipo);
+            /* Adiciona a fabrica na lista da classe Player*/
+            jogo->matriz_geraRecurso[x][y] = new GeraRecursos(x, y, tipo);
+        }
+        return true;
+    } else {
+        return false;
     }
-    return success;
 }
 
+bool Player::compra_Fabrica(int x, int y, UNIDADE tipo) {
+    if (possui_recursos_fabrica(tipo)) {
+        /* Retira o dinheiro da compra */
+        /*  Verifica se a matriz de posicao esta vazia */
+        if (verifica_espaco_ocupado(x, y) && verifica_espaco_predio(x, y)) {
+            /* Retira o dinheiro da compra */
+            Player::retira_recurso_fabrica(tipo);
+            /* Adiciona a fabrica na lista da classe Player*/
+            jogo->matriz_fabrica[x][y] = new Fabrica(x, y, tipo);
+            return true;
+        } else { /* Se a posicao e invalida */
+            return false;
+        }
+    } else { /* Se o jogador nao tiver recursos suficientes */
+        return false;
+    }
+}
 
+/** Função atualizar_Recursos
+ * @brief A função percorre a lista de geraRecursos e soma os recursos gerados nos atributos do player
+ * */
+void Player::atualizar_Recursos() {
+    for (auto &lista_GeraRecurso : lista_GeraRecursos) {
+        switch (lista_GeraRecurso.getTipo()) {
+            case RECURSO::PEDREGULHO:
+                Player::pedregulho += lista_GeraRecurso.produzirRecurso();
+                break;
+            case RECURSO::METAL:
+                Player::metal += lista_GeraRecurso.produzirRecurso();
+                break;
+            case RECURSO::CELULOSE:
+                Player::celulose += lista_GeraRecurso.produzirRecurso();
+                break;
+            default:
+                printf("ERRO: atualizar_Recursos\n");
+                return;
+        }
+    }
+}
+
+/* get e setters*/
 int Player::getPedregulho() const {
     return pedregulho;
 }
@@ -82,6 +123,113 @@ void Player::setPontos(int pontos) {
     Player::pontos = pontos;
 }
 
-Player::~Player() {
+Player::~Player() {}
 
+/* Metodos auxiliares */
+bool Player::possui_recursos_fabrica(UNIDADE tipo) {
+    int recurso = 0;
+    switch (tipo) {
+        case UNIDADE::PAPEL:
+            recurso = Player::getCelulose();
+            break;
+        case UNIDADE ::PEDRA:
+            recurso = Player::getPedregulho();
+            break;
+        case UNIDADE ::TESOURA:
+            recurso = Player::getMetal();
+            break;
+        default:
+            printf("ERRO : Recurso Invalido : compra_fabrica \n");
+            return false;
+    }
+
+    if ( recurso >= PRECO_RECURSO_FABRICA ) {
+        if ( Player::dinheiro >= PRECO_DINHEIRO_FABRICA ) {
+            return true;
+        } else {
+            /* Mensagem de não ter dinheiro */
+            return false;
+        }
+    } else {
+        /* Mensagem de não ter recurso */
+        return false;
+    }
+}
+
+void Player::retira_recurso_fabrica(UNIDADE tipo) {
+    /* Retira recurso */
+    switch (tipo) {
+        case UNIDADE::PAPEL:
+            Player::celulose -= PRECO_RECURSO_FABRICA;
+            break;
+        case UNIDADE ::PEDRA:
+            Player::pedregulho -= PRECO_RECURSO_FABRICA;
+            break;
+        case UNIDADE ::TESOURA:
+            Player::metal -= PRECO_RECURSO_FABRICA;
+            break;
+        default:
+            printf("ERRO : Recurso Invalido : compra_fabrica \n");
+    }
+    /* retira dinheiro*/
+    Player::dinheiro -= PRECO_DINHEIRO_FABRICA;
+}
+
+bool Player::possui_recursos_geraRecurso(RECURSO tipo) {
+    int recurso = 0;
+    switch (tipo) {
+        case RECURSO::CELULOSE :
+            recurso = Player::getCelulose();
+            break;
+        case RECURSO::PEDREGULHO :
+            recurso = Player::getPedregulho();
+            break;
+        case RECURSO::METAL :
+            recurso = Player::getMetal();
+            break;
+        default:
+            printf("ERRO : Recurso Invalido : compra_fabrica \n");
+            return false;
+    }
+
+    if ( recurso >= PRECO_RECURSO_GERA ) {
+        if ( Player::dinheiro >= PRECO_DINHEIRO_GERA ) {
+            return true;
+        } else {
+            /* Mensagem de não ter dinheiro */
+            return false;
+        }
+    } else {
+        /* Mensagem de não ter recurso */
+        return false;
+    }
+}
+
+void Player::retira_recurso_geraRecurso(RECURSO tipo) {
+    /* Retira recurso */
+    switch (tipo) {
+        case RECURSO ::CELULOSE:
+            Player::celulose -= PRECO_RECURSO_GERA;
+            break;
+        case RECURSO ::PEDREGULHO:
+            Player::pedregulho -= PRECO_RECURSO_GERA;
+            break;
+        case RECURSO :: METAL:
+            Player::metal -= PRECO_RECURSO_GERA;
+            break;
+        default:
+            printf("ERRO : Recurso Invalido : compra_fabrica \n");
+    }
+    /* retira dinheiro*/
+    Player::dinheiro -= PRECO_DINHEIRO_GERA;
+}
+
+bool Player::verifica_espaco_predio(int x, int y) {
+    return y < 2;
+}
+
+bool Player::verifica_espaco_ocupado(int x, int y) {
+    return jogo->matriz_fabrica[x][y] == NULL &&
+    jogo->matriz_geraRecurso[x][y] == NULL &&
+    jogo->matriz_unidade[x][y] == NULL;
 }

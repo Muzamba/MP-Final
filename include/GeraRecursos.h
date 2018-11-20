@@ -1,18 +1,15 @@
-#ifndef GERA_RECURSOS_H
-#define GERA_RECURSOS_H
-
+#ifndef INCLUDE_GERARECURSOS_H_
+#define INCLUDE_GERARECURSOS_H_
+// "Copyright [year] <Pedro>"
 #include "Head.h"
 #include "Predio.h"
 
-#define TAXA_COLETA 5
-#define PRECO_RECURSO_GERA 50
-#define PRECO_DINHEIRO_GERA 100
 class GeraRecursos : public Predio {
-public:
+ public:
     GeraRecursos(int X, int Y, int tipo);
 
     /* Precisa da classe player pronto */
-    void produzirRecurso();
+    int produzirRecurso();
 
     ~GeraRecursos();
 
@@ -28,13 +25,11 @@ public:
 
     void setTipo(int tipo);
 
-private:
-    int nivel = 0; //Nivel incial 0
-    int taxa = TAXA_COLETA; //Taxa de coleta inicial TAXA_COLETA
-    int tipo; //Selecionado pelo construtor
+ private:
+    int nivel = 0;  // Nivel incial 0
+    int taxa = TAXA_COLETA;  // Taxa de coleta inicial TAXA_COLETA
+    int tipo;  // Selecionado pelo construtor
     int preco_recurso = PRECO_RECURSO_GERA;
     int preco_dinheiro = PRECO_DINHEIRO_GERA;
-
 };
-#endif //GERA_RECURSOS_H
-
+#endif  // INCLUDE_GERARECURSOS_H_

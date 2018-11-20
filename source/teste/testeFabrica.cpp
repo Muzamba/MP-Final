@@ -1,7 +1,7 @@
 // Copyright 2018 João Pedro Assis
 #define CATCH_CONFIG_MAIN
-#include "Fabrica.h"
-#include "catch.hpp"
+#include "../../include/Fabrica.h"
+#include "../../lib/catch.hpp"
 
 TEST_CASE("Compile") {
     SECTION("Compile") {
