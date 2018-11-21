@@ -35,7 +35,7 @@ class Fabrica : public Predio {
     void geraUnidade();
     bool can_upgrade(int custo, int capital);
     void atributos_unidade(FABRICA nivel);
-    void upgrade();
+    void upgrade(int* dinheiro);
     ~Fabrica() {}
 
     //  -------------------- Variáveis da Fábrica em si -----------------------

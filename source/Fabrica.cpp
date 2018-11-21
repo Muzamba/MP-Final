@@ -32,8 +32,10 @@ bool Fabrica::can_upgrade(int custo, int capital) {
     }
 }
 
-void Fabrica::upgrade() {
+void Fabrica::upgrade(int* dinheiro) {
+    *dinheiro = *dinheiro - Fabrica::custo_upgrade;
     Fabrica::nivel++;
+    Fabrica::custo_upgrade += 20*Fabrica::nivel;
     Fabrica::atributos_unidade(Fabrica::nivel);
     Fabrica::set_vida(Fabrica::nivel*VIDA_INICIAL_FABRICA);
     Fabrica::tempoEspera -= 5;  // cte que pode ser mudado

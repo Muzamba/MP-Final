@@ -78,7 +78,7 @@ TEST_CASE("Upgrade") {
     Player player;
     SECTION("with enough money") {
         if (fbrc.can_upgrade(fbrc.custo_upgrade, player.getDinheiro())) {
-            fbrc.upgrade();
+            fbrc.upgrade(&player.dinheiro);
             REQUIRE(fbrc.nivel == 2);
         } else {
             REQUIRE(fbrc.nivel == 1);
@@ -87,10 +87,42 @@ TEST_CASE("Upgrade") {
     SECTION("Not enough Money") {
         player.setDinheiro(7);
         if (fbrc.can_upgrade(fbrc.custo_upgrade, player.getDinheiro())) {
-            fbrc.upgrade();
+            fbrc.upgrade(&player.dinheiro);
             REQUIRE(fbrc.nivel == 2);
         } else {
             REQUIRE(fbrc.nivel == 1);
+        }
+    }
+    SECTION("New attributes") {
+        if (fbrc.can_upgrade(fbrc.custo_upgrade, player.getDinheiro())) {
+            fbrc.upgrade(&player.dinheiro);
+            REQUIRE(fbrc.nivel == 2);
+            SECTION("Life/Unidades attributes") {
+                REQUIRE(fbrc.vida == fbrc.nivel*10);
+                REQUIRE(fbrc.dano == fbrc.nivel*5);
+                REQUIRE(fbrc.velocidade == fbrc.nivel*2);
+                REQUIRE(fbrc.get_vida() == fbrc.nivel*VIDA_INICIAL_FABRICA);
+            }
+        } else {
+            REQUIRE(fbrc.nivel == 1);
+        }
+    }
+    SECTION("Donti ravi mônei") {
+        player.setDinheiro(player.getDinheiro() + 800);
+        for (int i = 0; i < 10; i++) {
+            int nivel_atual = fbrc.nivel;
+            int novo_nivel = fbrc.nivel+1;
+            int dinheiro_atual = player.dinheiro;
+            int novo_dinheiro = player.dinheiro - fbrc.custo_upgrade;
+            if (fbrc.can_upgrade(fbrc.custo_upgrade, player.getDinheiro())) {
+                fbrc.upgrade(&player.dinheiro);
+                REQUIRE(fbrc.nivel == novo_nivel);
+                REQUIRE(player.getDinheiro() == novo_dinheiro);
+            } else {
+                REQUIRE(fbrc.nivel == nivel_atual);
+                REQUIRE(player.getDinheiro() == dinheiro_atual);
+            }
+
         }
     }
 }
