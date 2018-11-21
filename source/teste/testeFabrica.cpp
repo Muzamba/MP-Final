@@ -61,15 +61,37 @@ TEST_CASE("Class Fabrica") {
     }
 }
 
-TEST_CASE("Methods") {
-    SECTION("Can Upgrade") {
+TEST_CASE("Verify upgrade") {
         Fabrica fbrc(30, 40, TESOURA);
         Player player;
+    SECTION("Can Upgrade") {
         REQUIRE(fbrc.can_upgrade(fbrc.custo_upgrade, player.getDinheiro())
         == true);
         player.setDinheiro(100);
         REQUIRE(fbrc.can_upgrade(fbrc.custo_upgrade, player.getDinheiro())
         == false);
+    }
+}
+
+TEST_CASE("Upgrade") {
+    Fabrica fbrc(30, 40, PEDRA);
+    Player player;
+    SECTION("with enough money") {
+        if (fbrc.can_upgrade(fbrc.custo_upgrade, player.getDinheiro())) {
+            fbrc.upgrade();
+            REQUIRE(fbrc.nivel == 2);
+        } else {
+            REQUIRE(fbrc.nivel == 1);
+        }
+    }
+    SECTION("Not enough Money") {
+        player.setDinheiro(7);
+        if (fbrc.can_upgrade(fbrc.custo_upgrade, player.getDinheiro())) {
+            fbrc.upgrade();
+            REQUIRE(fbrc.nivel == 2);
+        } else {
+            REQUIRE(fbrc.nivel == 1);
+        }
     }
 }
 

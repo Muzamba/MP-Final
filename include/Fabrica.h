@@ -21,7 +21,7 @@ class Fabrica : public Predio {
     Fabrica(int X, int Y, UNIDADE tipo)
     : Predio(X, Y) {
        Fabrica::tipo = tipo;
-       Fabrica::tempoEspera = 20;
+       Fabrica::tempoEspera = TEMPO_ESPERA_INICIAL_FABRICA;
        Fabrica::nivel = 1;
        Fabrica::vida_predio = VIDA_INICIAL_FABRICA;
        Fabrica::atributos_unidade(Fabrica::nivel);
@@ -44,7 +44,6 @@ class Fabrica : public Predio {
     FABRICA nivel;  // Nível da fábrica (nível maior, menor tempo de espera)
     FABRICA tipo;  // Variável não deve ser alterada
     FABRICA preco_recurso = PRECO_RECURSO_FABRICA;
-    FABRICA preco_dinheiro = PRECO_DINHEIRO_FABRICA;
     FABRICA custo_upgrade = CUSTO_DO_UPGRADE;
 
     // ---------------------- Variáveis das Unidades geradas ------------------

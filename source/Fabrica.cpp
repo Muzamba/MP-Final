@@ -31,3 +31,13 @@ bool Fabrica::can_upgrade(int custo, int capital) {
         return false;
     }
 }
+
+void Fabrica::upgrade() {
+    Fabrica::nivel++;
+    Fabrica::atributos_unidade(Fabrica::nivel);
+    Fabrica::set_vida(Fabrica::nivel*VIDA_INICIAL_FABRICA);
+    Fabrica::tempoEspera -= 5;  // cte que pode ser mudado
+    if (Fabrica::tempoEspera < 5) {
+        Fabrica::tempoEspera = 5;
+    }
+}
