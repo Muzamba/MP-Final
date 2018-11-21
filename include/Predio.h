@@ -1,3 +1,4 @@
+#pragma once
 // Copyright 2018 João Pedro Assis
 #ifndef PREDIO
 #define PREDIO

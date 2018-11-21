@@ -17,9 +17,37 @@ Jogo::Jogo(){
             matriz_geraRecurso[i][j] = NULL;
         }
     }
+    jogador = new Player();
+    cpu = new Player();
 }
 
 Jogo::~Jogo(){
+    for(int i = 0;i < 6;++i){
+        for(int j = 0;j < 12;++j){
+            if(matriz_fabrica[i][j] != NULL){
+                delete matriz_fabrica[i][j];
+            }
+            if(matriz_geraRecurso[i][j] != NULL){
+                delete matriz_geraRecurso[i][j];
+            }
+            if(matriz_unidade[i][j] != NULL){
+                delete matriz_unidade[i][j];
+            }
+        }
+    }
+    for(int i = 0;i < 6;++i){
+        delete[] matriz_fabrica[i];
+        delete[] matriz_geraRecurso[i];
+        delete[] matriz_unidade[i];
+    }
+    delete[] matriz_fabrica;
+    delete[] matriz_geraRecurso;
+    delete[] matriz_unidade;
+
+    delete jogador;
+    jogador = NULL;
+    delete cpu;
+    cpu = NULL;
 }
 
 
@@ -49,9 +77,13 @@ void Jogo::init(const char* nome, int x, int y, int w, int h) {
             //		on = false;
             //	}
             mapa = new Objeto(0, 0);/* Set e get depois*/
-            bIniciar = new Botao_Iniciar(500, 300, 300, 120);
+            bIniciar = new Botao_Iniciar(0, 0);
             menuInicial = new Objeto(0, 0);/* Set e get depois*/
             menu_inicial = true;
+            compra = new Botao_Compra(0,0);
+            
+
+            
             //cTempo = new SDL_Color()
         }
         on = true;
@@ -67,30 +99,26 @@ bool Jogo::isOn(){
 void Jogo::handleEvents(){
     SDL_Event evento;
     SDL_PollEvent(&evento);
-    OPERACOES operacao = NADA;
     switch(evento.type) {
         case SDL_QUIT:
             on = false;
             break;
         case SDL_MOUSEBUTTONDOWN:
         case SDL_MOUSEBUTTONUP:
+        if(!menu_inicial) {
+            compra->handleEvent(&evento);
+            break;
+        }
         case SDL_MOUSEMOTION:
             if(menu_inicial){
-                operacao = bIniciar->handleEvent(&evento, texturas[BOTAO_INICIAR], texturas[BOTAO_INICIAR_S], texturas[BOTAO_INICIAR_P]);
+                bIniciar->handleEvent(&evento);
+
             }
 
         default:
             break;
     }
 
-    switch (operacao) {
-        case INICIA_JOGO:
-            menu_inicial = false;
-            break;
-
-        default:
-            break;
-    }
 }
 
 void Jogo::renderizar(){
@@ -101,6 +129,21 @@ void Jogo::renderizar(){
         bIniciar->render(render);
     }else {
         mapa->render(render);
+        compra->render(render);
+        for(int i = 0;i < 6;++i){
+            for(int j = 0;j < 12; j++){
+                if(matriz_fabrica[i][j] != NULL){
+                    matriz_fabrica[i][j]->render(render);
+                }
+                if(matriz_geraRecurso[i][j] != NULL){
+                    matriz_geraRecurso[i][j]->render(render);
+                    printf("1");
+                }
+                if(matriz_unidade[i][j] != NULL){
+                    matriz_unidade[i][j]->render(render);
+                }
+            }
+        }
     }
     SDL_RenderPresent(render);
 }
@@ -118,8 +161,14 @@ void Jogo::fim() {
     //font = NULL;
 
     delete bIniciar;
+    bIniciar = NULL;
     delete menuInicial;
+    menuInicial = NULL;
     delete mapa;
+    mapa = NULL;
+    delete compra;
+    compra = NULL;
+    
 
 
     //TTF_Quit();
@@ -259,8 +308,17 @@ bool Jogo::loadMidia() {
     //font = TTF_OpenFont( "fonts/lazy.ttf", 28 );
 
     bIniciar->mudaTextura(texturas[BOTAO_INICIAR]);
+    bIniciar->setDestRect(300, 500,300,120);
+    bIniciar->setSrcRect(0, 0, 300, 120);
     menuInicial->mudaTextura(texturas[MENU_PRINCIPAL]);
+    menuInicial->setDestRect(0, 0, 1280,720);
+    menuInicial->setSrcRect(0, 0, 1280, 720);
     mapa->mudaTextura(texturas[MAPA]);
+    mapa->setSrcRect(0, 0, 1280, 720);
+    mapa->setDestRect(0, 0, 1280, 720);
+    compra->mudaTextura(texturas[GERAR_PAPEL]);
+    compra->setSrcRect(0, 0, 64, 64);
+    compra->setDestRect(0, 0, 64, 64);
 
     return success;
 

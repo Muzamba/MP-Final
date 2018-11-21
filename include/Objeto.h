@@ -53,6 +53,10 @@ public:
 
     void mudaTextura(SDL_Texture* textura);
 
+    void setSrcRect(int x, int y, int w, int h);
+    
+    void setDestRect(int x, int y, int w, int h);
+
     ~Objeto();
 protected:
     SDL_Texture* textura = NULL;

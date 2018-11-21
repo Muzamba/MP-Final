@@ -8,6 +8,8 @@
 #include "Fabrica.h"
 #include "GeraRecursos.h"
 #include "Unidade.h"
+#include "Player.h"
+
 class Jogo {
 public:
     Jogo();
@@ -23,23 +25,32 @@ public:
     bool isOn();
     ~Jogo();
 
-    Unidade ***matriz_unidade;
-    GeraRecursos ***matriz_geraRecurso;
-    Fabrica ***matriz_fabrica;
+    Unidade ***matriz_unidade = NULL;
+    GeraRecursos ***matriz_geraRecurso = NULL;
+    Fabrica ***matriz_fabrica = NULL;
+
+    SDL_Texture* texturas[TEXTURAS::TEX_TOTAL];
+    bool menu_inicial = false;
+
+    //Player* jogador = NULL;
+    Player* cpu = NULL;
+    Player* jogador = NULL;
+    bool comprando = false;
+
 protected:
 
     SDL_Color cTempo{0, 0, 0, 255};
     SDL_Texture* tTempo = NULL;
     std::string sTempo;
-    TTF_Font* font;
-    bool menu_inicial = false;
+    TTF_Font* font = NULL;
+    Botao_Compra* compra= NULL;
     Botao_Iniciar* bIniciar = NULL;
     Objeto* menuInicial = NULL;
     Objeto* mapa = NULL;
     int tempo = 0;
     bool on;
     SDL_Window* janela = NULL;
-    SDL_Texture* texturas[TEXTURAS::TEX_TOTAL];
+    
     SDL_Renderer* render = NULL;
 
 };

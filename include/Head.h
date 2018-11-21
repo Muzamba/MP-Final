@@ -1,3 +1,4 @@
+#pragma once
 #ifndef HEAD
 #define HEAD
 
@@ -25,17 +26,23 @@ enum TEXTURAS {
     BASE_CPU,
     TEX_TOTAL
 };
-enum OPERACOES{
-    NADA,
-    INICIA_JOGO,
-    TOTAL
+
+
+enum TIPO {
+    NADA, 
+    GERA_CELULOSE, 
+    GERA_PEDREGULHO, 
+    GERA_METAL, 
+    GERA_PAPEL, 
+    GERA_PEDRA, 
+    GERA_TESOURA
 };
 
 
 //----------Define Player -----------------
 
-#define RECURSO_INICIAL 100
-#define DINHEIRO_INICIAL 200
+#define RECURSO_INICIAL 1000
+#define DINHEIRO_INICIAL 2000
 
 //---------_Define Fabrica ----------------
 
