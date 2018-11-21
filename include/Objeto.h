@@ -12,7 +12,7 @@
  * por qualquer instância que precisar de tais atributos
  */
 class Objeto {
-public:
+ public:
     /**
      * @brief Constrói um objeto Objeto
      *   Recebe as coordenadas da imagem
@@ -54,7 +54,8 @@ public:
     void mudaTextura(SDL_Texture* textura);
 
     ~Objeto();
-protected:
+
+ protected:
     SDL_Texture* textura = NULL;
     SDL_Rect* srcRect = NULL;
     SDL_Rect* destRect = NULL;

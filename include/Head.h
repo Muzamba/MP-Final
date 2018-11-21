@@ -1,3 +1,4 @@
+// copyright 2018 Switch Dreams
 #ifndef HEAD
 #define HEAD
 
@@ -32,12 +33,12 @@ enum OPERACOES{
 };
 
 
-//----------Define Player -----------------
+// ----------Define Player -----------------
 
 #define RECURSO_INICIAL 100
 #define DINHEIRO_INICIAL 200
 
-//---------_Define Fabrica ----------------
+// ---------_Define Fabrica ----------------
 
 #define PRECO_RECURSO_FABRICA 50
 #define PRECO_DINHEIRO_FABRICA 100
@@ -48,4 +49,4 @@ enum OPERACOES{
 #define PRECO_RECURSO_GERA 50
 #define PRECO_DINHEIRO_GERA 100
 
-#endif //HEAD
+#endif  // HEAD

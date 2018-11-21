@@ -1,3 +1,4 @@
+// copyright 2018 Switch Dreams
 #pragma once
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -9,7 +10,7 @@
 #include "GeraRecursos.h"
 #include "Unidade.h"
 class Jogo {
-public:
+ public:
     Jogo();
     void init(const char* titulo, int x_pos, int y_pos, int width, int height);
     bool loadMidia();
@@ -26,8 +27,8 @@ public:
     Unidade ***matriz_unidade;
     GeraRecursos ***matriz_geraRecurso;
     Fabrica ***matriz_fabrica;
-protected:
 
+ protected:
     SDL_Color cTempo{0, 0, 0, 255};
     SDL_Texture* tTempo = NULL;
     std::string sTempo;
@@ -41,5 +42,4 @@ protected:
     SDL_Window* janela = NULL;
     SDL_Texture* texturas[TEXTURAS::TEX_TOTAL];
     SDL_Renderer* render = NULL;
-
 };

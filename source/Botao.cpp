@@ -1,33 +1,35 @@
+// Copyright 2018 Switch Dreams
 #include "Botao.h"
 
-OPERACOES Botao_Iniciar::handleEvent(SDL_Event* evento, SDL_Texture* texBase, SDL_Texture* texSele, SDL_Texture* texPres) {
+OPERACOES Botao_Iniciar::handleEvent(SDL_Event* evento, SDL_Texture* texBase,
+ SDL_Texture* texSele, SDL_Texture* texPres) {
     OPERACOES retorno = NADA;
     int x, y;
-    SDL_GetMouseState(&x,&y);
+    SDL_GetMouseState(&x, &y);
     bool dentro = true;
 
-    if(x < pos_X) {
+    if (x < pos_X) {
         dentro = false;
-    } else if(x > (pos_X + destRect->w)) {
+    } else if (x > (pos_X + destRect->w)) {
         dentro = false;
-    } else if(y < pos_Y) {
+    } else if (y < pos_Y) {
         dentro = false;
-    } else if(y > (pos_Y + destRect->h)) {
+    } else if (y > (pos_Y + destRect->h)) {
         dentro = false;
     }
 
-    if(!dentro){
+    if (!dentro) {
         textura = texBase;
     } else {
-        switch( evento->type ) {
+        switch ( evento->type ) {
             case SDL_MOUSEMOTION:
                 textura = texSele;
                 break;
-            
+
             case SDL_MOUSEBUTTONDOWN:
                 textura = texPres;
                 break;
-                
+
             case SDL_MOUSEBUTTONUP:
                 textura = texPres;
                 retorno = INICIA_JOGO;
@@ -37,6 +39,5 @@ OPERACOES Botao_Iniciar::handleEvent(SDL_Event* evento, SDL_Texture* texBase, SD
     return retorno;
 }
 
-Botao_Iniciar::~Botao_Iniciar(){
-
+Botao_Iniciar::~Botao_Iniciar() {
 }

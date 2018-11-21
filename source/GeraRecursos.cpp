@@ -1,4 +1,4 @@
-//
+// Copyright 2018 Pedro Augusto Duarte
 // Created by pedro on 14/11/18.
 //
 #include <GeraRecursos.h>
@@ -8,7 +8,7 @@
  * @brief acrescenta o recurso dessa determinada geradora(de acordo com a taxa) para o jogador passado de parametro
  * @param jogador - Jogador no qual sera adicionado o recurso
  */
-int GeraRecursos::produzirRecurso(){
+int GeraRecursos::produzirRecurso() {
     return GeraRecursos::taxa;
 }
 
