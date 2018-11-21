@@ -2,6 +2,7 @@
 #include "../../include/Fabrica.h"
 #include "../include/catch.hpp"
 #include "../../include/Head.h"
+#include "../../include/Player.h"
 
 TEST_CASE("Compile") {
     SECTION("Compile") {
@@ -61,8 +62,14 @@ TEST_CASE("Class Fabrica") {
 }
 
 TEST_CASE("Methods") {
-    SECTION("Get attributes") {
+    SECTION("Can Upgrade") {
         Fabrica fbrc(30, 40, TESOURA);
+        Player player;
+        REQUIRE(fbrc.can_upgrade(fbrc.custo_upgrade, player.getDinheiro())
+        == true);
+        player.setDinheiro(100);
+        REQUIRE(fbrc.can_upgrade(fbrc.custo_upgrade, player.getDinheiro())
+        == false);
     }
 }
 

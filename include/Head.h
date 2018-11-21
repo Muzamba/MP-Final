@@ -44,6 +44,7 @@ enum OPERACOES{
 #define PRECO_DINHEIRO_FABRICA 100
 #define VIDA_INICIAL_FABRICA 100
 #define TEMPO_ESPERA_INICIAL_FABRICA 20
+#define CUSTO_DO_UPGRADE 200
 
 // -------- Define GeraRecuso--------------
 

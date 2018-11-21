@@ -33,7 +33,7 @@ class Fabrica : public Predio {
     void set_nivel(int nivel);
 
     void geraUnidade();
-    bool can_upgrade();
+    bool can_upgrade(int custo, int capital);
     void atributos_unidade(FABRICA nivel);
     void upgrade();
     ~Fabrica() {}
@@ -45,6 +45,7 @@ class Fabrica : public Predio {
     FABRICA tipo;  // Variável não deve ser alterada
     FABRICA preco_recurso = PRECO_RECURSO_FABRICA;
     FABRICA preco_dinheiro = PRECO_DINHEIRO_FABRICA;
+    FABRICA custo_upgrade = CUSTO_DO_UPGRADE;
 
     // ---------------------- Variáveis das Unidades geradas ------------------
 

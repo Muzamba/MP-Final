@@ -1,5 +1,6 @@
 // Copyright 2018 João Pedro Assis
 #include "../include/Fabrica.h"
+#include "../include/Player.h"
 
 int Fabrica::get_tempoEspera() {
     return Fabrica::tempoEspera;
@@ -23,4 +24,10 @@ void Fabrica::atributos_unidade(FABRICA nivel) {
     Fabrica::velocidade = nivel*2;
 }
 
-void Fabrica::upgrade() {}
+bool Fabrica::can_upgrade(int custo, int capital) {
+    if (capital >= custo) {
+        return true;
+    } else {
+        return false;
+    }
+}
