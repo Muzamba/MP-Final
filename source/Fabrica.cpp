@@ -22,3 +22,5 @@ void Fabrica::atributos_unidade(FABRICA nivel) {
     Fabrica::dano = nivel*5;
     Fabrica::velocidade = nivel*2;
 }
+
+void Fabrica::upgrade() {}

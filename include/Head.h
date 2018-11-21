@@ -42,6 +42,7 @@ enum OPERACOES{
 
 #define PRECO_RECURSO_FABRICA 50
 #define PRECO_DINHEIRO_FABRICA 100
+#define VIDA_INICIAL_FABRICA 100
 
 // -------- Define GeraRecuso--------------
 
