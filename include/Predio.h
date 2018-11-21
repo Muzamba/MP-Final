@@ -48,7 +48,7 @@ class Predio : public Objeto {
     int get_vida();
 
  protected:
-    int vida;
+    int vida_predio;
     //  Menu menu();
 };
 

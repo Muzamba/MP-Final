@@ -23,7 +23,7 @@ class Fabrica : public Predio {
        Fabrica::tipo = tipo;
        Fabrica::tempoEspera = 20;
        Fabrica::nivel = 1;
-       Fabrica::vida = VIDA_INICIAL_FABRICA;
+       Fabrica::vida_predio = VIDA_INICIAL_FABRICA;
        Fabrica::atributos_unidade(Fabrica::nivel);
     }
     int get_tempoEspera();
@@ -35,9 +35,9 @@ class Fabrica : public Predio {
     void geraUnidade();
     bool can_upgrade();
     void atributos_unidade(FABRICA nivel);
+    void upgrade();
     ~Fabrica() {}
 
- protected:
     //  -------------------- Variáveis da Fábrica em si -----------------------
 
     FABRICA tempoEspera;  // T de espera para uma unidade ser gerada
@@ -51,8 +51,6 @@ class Fabrica : public Predio {
     UNIDADES vida;
     UNIDADES dano;
     UNIDADES velocidade;
-
-    void upgrade();
 };
 
 #endif

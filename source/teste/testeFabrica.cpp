@@ -16,11 +16,11 @@ TEST_CASE("Class Fabrica") {
         x = fbrc.get_x();
         y = fbrc.get_y();
 
-        fbrc.set_vida(100);
+        fbrc.set_vida(VIDA_INICIAL_FABRICA);
 
         REQUIRE(x == 30);
         REQUIRE(y == 40);
-        REQUIRE(fbrc.get_vida() == 100);
+        REQUIRE(fbrc.get_vida() == VIDA_INICIAL_FABRICA);
 
         fbrc.set_x(50);
         fbrc.set_y(60);
@@ -43,6 +43,20 @@ TEST_CASE("Class Fabrica") {
 
         REQUIRE(nivel == 10);
         REQUIRE(tempoEspera == 25);
+    }
+    SECTION("New Constructors") {
+        Fabrica fbrc(30, 40, PEDRA);
+        SECTION("Fabrica variables") {
+            REQUIRE(fbrc.tipo == PEDRA);
+            REQUIRE(fbrc.tempoEspera == TEMPO_ESPERA_INICIAL_FABRICA);
+            REQUIRE(fbrc.nivel == 1);
+            REQUIRE(fbrc.get_vida() == VIDA_INICIAL_FABRICA);
+        }
+        SECTION("Unidade variables") {
+            REQUIRE(fbrc.vida == fbrc.nivel*10);
+            REQUIRE(fbrc.dano == fbrc.nivel*5);
+            REQUIRE(fbrc.velocidade == fbrc.nivel*2);
+        }
     }
 }
 
