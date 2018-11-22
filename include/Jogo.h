@@ -32,21 +32,22 @@ public:
 
     SDL_Texture* texturas[TEXTURAS::TEX_TOTAL];
     bool menu_inicial = false;
-
-    Player* jogador = NULL;
-    Player* cpu = NULL;
+    SDL_Texture* aloo;
+    //#ifdef TESTE
+    //Player* jogador = NULL;
+    //Player* cpu = NULL;
+    //#endif
     //Player* jogador = NULL;
     bool comprando = false;
-    //SDL_Texture *teste;
+    SDL_Texture *teste;
 
 protected:
 
 
     Objeto* recurso;
-    SDL_Color cRecurso{128, 128, 0};
-    //SDL_Texture* tRecurso[1];
-    std::string sTempo;
-    //TTF_Font* font = NULL;
+    SDL_Color cRecurso{0, 0, 0}; //decidir cor 
+    SDL_Texture* tRecurso;
+    TTF_Font* font = NULL;
     Botao_Compra* compra= NULL;
     Botao_Iniciar* bIniciar = NULL;
     Objeto* menuInicial = NULL;

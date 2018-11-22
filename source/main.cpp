@@ -11,6 +11,8 @@
 #include <iostream>
 
 Jogo* jogo;
+Player* jogador;
+Player* cpu;
     
 int main() {
     
@@ -20,6 +22,9 @@ int main() {
     int frameTime;
 printf("\n\n\n1\n\n\n");
     jogo = new Jogo();
+    jogador = new Player();
+    cpu = new Player();
+
 
     jogo->init("teste", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720);
     jogo->loadMidia();
@@ -43,6 +48,8 @@ printf("\n\n\n1\n\n\n");
     jogo->fim();
 
     delete jogo;
+    delete jogador;
+    delete cpu;
      
      return 0;
 }

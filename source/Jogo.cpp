@@ -1,8 +1,10 @@
 #include "Jogo.h"
-//#include "Player.h"
+    #include "Player.h"
 #include <iostream>
 #include <stdlib.h>
 
+extern Player* jogador;
+extern Player* cpu;
 
 Jogo::Jogo(){
     matriz_fabrica = new Fabrica **[6];
@@ -22,6 +24,11 @@ Jogo::Jogo(){
     }
     jogador = new Player();
     cpu = new Player();
+    mapa = new Objeto(0, 0);/* Set e get depois*/
+    bIniciar = new Botao_Iniciar(0, 0);
+    menuInicial = new Objeto(0, 0);
+    compra = new Botao_Compra(0,0);
+    recurso = new Objeto(0,0);
 }
 
 Jogo::~Jogo(){
@@ -47,10 +54,19 @@ Jogo::~Jogo(){
     delete[] matriz_geraRecurso;
     delete[] matriz_unidade;
 
-    delete jogador;
-    jogador = NULL;
-    delete cpu;
-    cpu = NULL;
+    //delete jogador;
+    //jogador = NULL;
+    //delete cpu;
+    //cpu = NULL;
+
+    delete bIniciar;
+    bIniciar = NULL;
+    delete menuInicial;
+    menuInicial = NULL;
+    delete mapa;
+    mapa = NULL;
+    delete compra;
+    compra = NULL;
 }
 
 
@@ -74,22 +90,17 @@ void Jogo::init(const char* nome, int x, int y, int w, int h) {
                 on = false;
             }
 
-            //if( TTF_Init() == -1 )
-            //	{
-            //		printf( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError() );
-           // 		on = false;
-            //	}
-            mapa = new Objeto(0, 0);/* Set e get depois*/
-            bIniciar = new Botao_Iniciar(0, 0);
-            menuInicial = new Objeto(0, 0);/* Set e get depois*/
+            if( TTF_Init() == -1 )
+            	{
+            		printf( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError() );
+            		on = false;
+            	}
+            /* Set e get depois*/
             menu_inicial = true;
-            compra = new Botao_Compra(0,0);
+            
             compra->mudaTipo(GERA_CELULOSE);
-            //recurso = new Objeto(0, 0);
-            
+        
 
-            
-            //cTempo = new SDL_Color()
         }
         on = true;
     } else {
@@ -134,7 +145,7 @@ void Jogo::renderizar(){
         bIniciar->render(render);
     }else {
         mapa->render(render);
-        compra->render(render);
+        //compra->render(render);
         for(int i = 0;i < 6;++i){
             for(int j = 0;j < 12; j++){
                 if(matriz_fabrica[i][j] != NULL){
@@ -150,7 +161,7 @@ void Jogo::renderizar(){
                 cont++;
             }
         }
-        //recurso->render(render);
+        recurso->render(render);
     }
     SDL_RenderPresent(render);
 }
@@ -164,21 +175,14 @@ void Jogo::fim() {
     janela = NULL;
     SDL_DestroyRenderer(render);
     render = NULL;
-    //TTFTTF_CloseFont( font );
-    //font = NULL;
+    TTF_CloseFont( font );
+    font = NULL;
 
-    delete bIniciar;
-    bIniciar = NULL;
-    delete menuInicial;
-    menuInicial = NULL;
-    delete mapa;
-    mapa = NULL;
-    delete compra;
-    compra = NULL;
+    
     
 
 
-    //TTF_Quit();
+    TTF_Quit();
     IMG_Quit();
     SDL_Quit();
     std::cout << "Jogo fechado" << std::endl;
@@ -190,12 +194,13 @@ void Jogo::load(){
 void Jogo::update(){
     static int cont = 0;
     static int cont2 = 0;
-    //SDL_Surface* temp;
-    
+    SDL_Surface* temp;
     
 
-    //temp = TTF_RenderText_Solid(font, std::to_string(jogador->getDinheiro()).c_str(), cRecurso);
-    //texturas[TEXTO_RECURSO] = SDL_CreateTextureFromSurface(render, temp);
+
+    temp = TTF_RenderText_Solid(font, std::to_string(jogador->getDinheiro()).c_str(), cRecurso);
+    texturas[TEXTO_RECURSO] = SDL_CreateTextureFromSurface(render, temp);
+    
     if(!menu_inicial){
     if(cont != 10){
         cont++;
@@ -211,8 +216,8 @@ void Jogo::update(){
        cont2 = 0;
     }
     }
-
-    //SDL_FreeSurface(temp);
+    recurso->mudaTextura(texturas[TEXTO_RECURSO]);
+    SDL_FreeSurface(temp);
     //sTempo.clear();
     //sTempo.push_back(tempo);
     //SDL_Surface* textSurface = TTF_RenderText_Solid( font, .c_str(), textColor );
@@ -337,7 +342,7 @@ bool Jogo::loadMidia() {
         printf( "Failed to load texture Mapa.png!\n" );
         success = false;
     }
-    //font = TTF_OpenFont( "fonts/04B_08__.TTF", 28 );
+    font = TTF_OpenFont( "fonts/04B_08__.TTF", 28 );
 
     bIniciar->mudaTextura(texturas[BOTAO_INICIAR]);
     bIniciar->setDestRect(300, 500,300,120);
@@ -348,13 +353,13 @@ bool Jogo::loadMidia() {
     mapa->mudaTextura(texturas[MAPA]);
     mapa->setSrcRect(0, 0, 1280, 720);
     mapa->setDestRect(0, 0, 1280, 720);
-    compra->mudaTextura(texturas[GERAR_PAPEL]);
+    //compra->mudaTextura(texturas[GERAR_PAPEL]);
     compra->setSrcRect(0, 0, 64, 64);
-    compra->setDestRect(0, 0, 64, 64);
+    compra->setDestRect(480, 648, 64, 64);
 
     //recurso->mudaTextura(texturas[TEXTO_RECURSO]);
-    //recurso->setSrcRect(0,0,64,64);
-    //recurso->setDestRect(320, 36, 80,72);
+    recurso->setSrcRect(0,0,100,64);
+    recurso->setDestRect(235, 20, 80,60);
 
     return success;
 

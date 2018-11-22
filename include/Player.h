@@ -74,5 +74,6 @@ class Player {
 
     bool verifica_espaco_ocupado(int x, int y);
 };
+#define TESTE
 
 #endif  // INCLUDE_PLAYER_H_

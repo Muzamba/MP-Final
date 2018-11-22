@@ -1,6 +1,9 @@
 #include "Botao.h"
 #include "Jogo.h"
+#include "Player.h"
 extern Jogo* jogo;
+extern Player* jogador;
+extern Player* cpu;
 
 void Botao_Iniciar::handleEvent(SDL_Event* evento) {
     //OPERACOES retorno = NADA;
@@ -89,7 +92,7 @@ void Botao_Compra::handleEvent(SDL_Event* evento){
                         printf("%d--%d\n", x, y);
                         if((x >= 0)&&(x < 12)&&(y >= 0)&&(y < 6)) {
                             //printf("deu certo\n");
-                            if(jogo->jogador->compra_GeraRecurso(y, x, CELULOSE)){
+                            if(jogador->compra_GeraRecurso(y, x, CELULOSE)){
                                 printf("comprado\n");
                             }else {
                                 printf("falha\n");
