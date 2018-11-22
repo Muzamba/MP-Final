@@ -72,16 +72,27 @@ TEST_CASE("Verify upgrade") {
          player.getDinheiro()) == false);
     }
 }
-
+//vida: 10 dano: 5 velocidade: 2, 20 10 4
 TEST_CASE("Gera Unidade") {
-    SECTION("First Gera Unidades") {
         Fabrica fbrc(30, 40, PEDRA);
         Unidade unidade1(3, 3, 3, 3, 1, 3);
+        Unidade unidade2(3, 4, 5, 5, 6, 9);
+        int din = 1000;
         unidade1 = fbrc.geraUnidade(3, 2);
-        REQUIRE(unidade1.getDano() == fbrc.dano);
+
+    SECTION("First Gera Unidades") {
+        REQUIRE(unidade1.getDano() ==fbrc.dano);
         REQUIRE(unidade1.getVida() == fbrc.vida);
         REQUIRE(unidade1.getVelocidade() == fbrc.velocidade);
         REQUIRE(unidade1.tipo == fbrc.tipo);
+    }
+    SECTION("Gera after Update Fabrica") {
+        fbrc.upgrade_fabrica(&din);
+        unidade2 = fbrc.geraUnidade(3, 2);
+        REQUIRE(unidade2.getDano() == fbrc.dano);
+        REQUIRE(unidade2.getVida() == fbrc.vida);
+        REQUIRE(unidade2.getVelocidade() == fbrc.velocidade);
+        REQUIRE(unidade2.tipo == fbrc.tipo);
     }
 }
 
