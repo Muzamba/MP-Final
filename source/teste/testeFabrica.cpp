@@ -75,29 +75,29 @@ TEST_CASE("Verify upgrade") {
 
 TEST_CASE("Gera Unidade") {
         Fabrica fbrc(30, 40, PEDRA);
-        Unidade unidade1(3, 3, 3, 3, 1, 3);
-        Unidade unidade2(3, 4, 5, 5, 6, 9);
+        Unidade* unidade1 = fbrc.geraUnidade(2, 3);
+        Unidade* unidade2 = fbrc.geraUnidade(2, 3);
         int din = 1000;
         unidade1 = fbrc.geraUnidade(3, 2);
 
     SECTION("First Gera Unidades") {
-        REQUIRE(unidade1.getDano() ==fbrc.dano);
-        REQUIRE(unidade1.getVida() == fbrc.vida);
-        REQUIRE(unidade1.getVelocidade() == fbrc.velocidade);
-        REQUIRE(unidade1.tipo == fbrc.tipo);
+        REQUIRE(unidade1->getDano() ==fbrc.dano);
+        REQUIRE(unidade1->getVida() == fbrc.vida);
+        REQUIRE(unidade1->getVelocidade() == fbrc.velocidade);
+        REQUIRE(unidade1->tipo == fbrc.tipo);
     }
     SECTION("Gera after Update Fabrica") {
         fbrc.upgrade_fabrica(&din);
         unidade2 = fbrc.geraUnidade(3, 2);
-        REQUIRE(unidade2.getDano() == fbrc.dano);
-        REQUIRE(unidade2.getVida() == fbrc.vida);
-        REQUIRE(unidade2.getVelocidade() == fbrc.velocidade);
-        REQUIRE(unidade2.tipo == fbrc.tipo);
+        REQUIRE(unidade2->getDano() == fbrc.dano);
+        REQUIRE(unidade2->getVida() == fbrc.vida);
+        REQUIRE(unidade2->getVelocidade() == fbrc.velocidade);
+        REQUIRE(unidade2->tipo == fbrc.tipo);
         /* checando que a unidade1 possui valores antigos */
 
-        REQUIRE_FALSE(unidade1.getDano() ==fbrc.dano);
-        REQUIRE_FALSE(unidade1.getVida() == fbrc.vida);
-        REQUIRE_FALSE(unidade1.getVelocidade() == fbrc.velocidade);
+        REQUIRE_FALSE(unidade1->getDano() ==fbrc.dano);
+        REQUIRE_FALSE(unidade1->getVida() == fbrc.vida);
+        REQUIRE_FALSE(unidade1->getVelocidade() == fbrc.velocidade);
     }
 }
 

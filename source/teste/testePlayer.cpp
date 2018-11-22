@@ -5,6 +5,7 @@
 #include"../include/Player.h"
 #include"../include/catch.hpp"
 #include "../include/Jogo.h"
+#include "../include/Fabrica.h"
 
 Jogo *jogo = new Jogo();
 // "Copyright [year] <Pedro>"
@@ -77,3 +78,18 @@ TEST_CASE("Compra_Fabrica", "Player") {
     REQUIRE(jogador.getPedregulho() ==
     5000-(3*PRECO_RECURSO_GERA)+(3*TAXA_COLETA));
 }*/
+
+TEST_CASE("Compra Unidades") {
+    Player jogador;
+    Fabrica fbrc(30, 40, PEDRA);
+    SECTION("Jogador sem recursos") {
+        int x = 1, y = 1;
+        jogador.setPedregulho(0);
+        REQUIRE(!jogador.compra_Unidade(x, y, fbrc));
+    }
+        SECTION("Jogador com recursos") {
+        int x = 3, y = 1;
+        jogador.setPedregulho(400);
+        REQUIRE(jogador.compra_Unidade(x, y, fbrc));
+    }
+}

@@ -60,6 +60,24 @@ bool Player::compra_Fabrica(int x, int y, UNIDADE tipo) {
     }
 }
 
+bool Player::compra_Unidade(int x, int y, Fabrica fabrica) {
+    if (possui_recursos_unidade(fabrica.tipo, fabrica.custo_unidade)) {
+        /* Retira o dinheiro da compra */
+        /*  Verifica se a matriz de posicao esta vazia */
+        if (verifica_espaco_ocupado(x, y)) {
+            /* Retira o dinheiro da compra */
+            Player::retira_recurso_unidade(fabrica.tipo, fabrica);
+            /* Adiciona a fabrica na lista da classe Player*/
+            jogo->matriz_unidade[x][y] = fabrica.geraUnidade(1, 2);
+            return true;
+        } else { /* Se a posicao e invalida */
+            return false;
+        }
+    } else { /* Se o jogador nao tiver recursos suficientes */
+        return false;
+    }
+}
+
 /** Função atualizar_Recursos
  * @brief A função percorre a lista de geraRecursos e soma os recursos gerados nos atributos do player
  * */
@@ -224,6 +242,45 @@ void Player::retira_recurso_geraRecurso(RECURSO tipo) {
     Player::dinheiro -= PRECO_DINHEIRO_GERA;
 }
 
+bool Player::possui_recursos_unidade(int tipo, int custo) {
+    int recurso = 0;
+    switch (tipo) {
+        case RECURSO::CELULOSE :
+            recurso = Player::getCelulose();
+            break;
+        case RECURSO::PEDREGULHO :
+            recurso = Player::getPedregulho();
+            break;
+        case RECURSO::METAL :
+            recurso = Player::getMetal();
+            break;
+        default:
+            printf("ERRO : Recurso Invalido : compra_unidade \n");
+            return false;
+    }
+    if (recurso >= custo) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+void Player::retira_recurso_unidade(UNIDADE tipo, Fabrica fabrica) {
+    /* Retira recurso */
+    switch (tipo) {
+        case RECURSO ::CELULOSE:
+            Player::celulose -= fabrica.custo_unidade;
+            break;
+        case RECURSO ::PEDREGULHO:
+            Player::pedregulho -= fabrica.custo_unidade;
+            break;
+        case RECURSO :: METAL:
+            Player::metal -= fabrica.custo_unidade;
+            break;
+        default:
+            printf("ERRO : Recurso Invalido : compra_unidade \n");
+    }
+}
 bool Player::verifica_espaco_predio(int x, int y) {
     return y < 2;
 }

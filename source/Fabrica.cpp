@@ -1,6 +1,5 @@
 // Copyright 2018 João Pedro Assis
 #include "../include/Fabrica.h"
-#include "../include/Player.h"
 #include "../include/Unidade.h"
 
 int Fabrica::get_tempoEspera() {
@@ -37,6 +36,7 @@ void Fabrica::upgrade_fabrica(int* dinheiro) {
     *dinheiro = *dinheiro - Fabrica::custo_upgrade_fab;
     Fabrica::nivel++;
     Fabrica::custo_upgrade_fab += 20*Fabrica::nivel;
+    Fabrica::custo_unidade += 10*Fabrica::nivel;
     Fabrica::atributos_unidade(Fabrica::nivel);
     Fabrica::set_vida(Fabrica::nivel*VIDA_INICIAL_FABRICA);
     Fabrica::tempoEspera -= 5;  // cte que pode ser mudado
@@ -45,9 +45,7 @@ void Fabrica::upgrade_fabrica(int* dinheiro) {
     }
 }
 
-Unidade Fabrica::geraUnidade(int matI, int matJ) {
-    Unidade unidade(matI, matJ, Fabrica::tipo, Fabrica::vida,
+Unidade* Fabrica::geraUnidade(int matI, int matJ) {
+    return new Unidade(matI, matJ, Fabrica::tipo, Fabrica::vida,
     Fabrica::velocidade, Fabrica::dano);
-
-    return unidade;
 }

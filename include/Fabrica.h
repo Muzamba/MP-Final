@@ -37,14 +37,14 @@ class Fabrica : public Predio {
     void upgrade_fabrica(int* dinheiro);
 
     void atributos_unidade(FABRICA nivel);
-    Unidade geraUnidade(int matI, int matJ);
+    Unidade* geraUnidade(int matI, int matJ);
     ~Fabrica() {}
 
     //  -------------------- Variáveis da Fábrica em si -----------------------
-
+    UNIDADE tipo;
     FABRICA tempoEspera;  // T de espera para uma unidade ser gerada
     FABRICA nivel;  // Nível da fábrica (nível maior, menor tempo de espera)
-    FABRICA tipo;  // Variável não deve ser alterada
+    // FABRICA tipo;  // Variável não deve ser alterada
     FABRICA preco_recurso = PRECO_RECURSO_FABRICA;
     FABRICA custo_upgrade_fab = CUSTO_INICIAL_DO_UPGRADE_UNIDADE;
 
@@ -54,6 +54,7 @@ class Fabrica : public Predio {
     UNIDADES dano;
     UNIDADES velocidade;
     UNIDADES custo_upgrade_und = CUSTO_INICIAL_DO_UPGRADE_UNIDADE;
+    UNIDADES custo_unidade = PRECO_INICIAL_UNIDADE;
 };
 
 #endif  // INCLUDE_FABRICA_H_

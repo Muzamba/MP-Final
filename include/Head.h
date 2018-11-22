@@ -2,8 +2,18 @@
 #ifndef INCLUDE_HEAD_H_
 #define INCLUDE_HEAD_H_
 
-enum UNIDADE {PAPEL, PEDRA, TESOURA};
-enum RECURSO {CELULOSE, PEDREGULHO, METAL};
+enum UNIDADE {
+    PAPEL,
+    PEDRA,
+    TESOURA
+};
+
+enum RECURSO {
+    CELULOSE,
+    PEDREGULHO,
+    METAL
+};
+
 enum TEXTURAS {
     MAPA,
     MENU_PRINCIPAL,
@@ -26,12 +36,16 @@ enum TEXTURAS {
     BASE_CPU,
     TEX_TOTAL
 };
+
 enum OPERACOES{
     NADA,
     INICIA_JOGO,
     TOTAL
 };
 
+// ---------- Define Unidade ----------------
+
+#define PRECO_INICIAL_UNIDADE 50
 
 // ---------- Define Player -----------------
 
