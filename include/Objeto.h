@@ -62,3 +62,16 @@ class Objeto {
     int pos_X;
     int pos_Y;
 };
+
+/*if((x % 80) != 0){
+   x -= (x%80);
+   x = x / 80;                            
+} else {
+   x = x / 80;
+}
+if((y % 74) != 0){
+   y -= (y%72);
+   y = y / 72;
+} else {
+   y = y / 72;
+}*/

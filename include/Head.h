@@ -1,6 +1,6 @@
 // copyright 2018 Switch Dreams
-#ifndef HEAD
-#define HEAD
+#ifndef INCLUDE_HEAD_H_
+#define INCLUDE_HEAD_H_
 
 enum UNIDADE {PAPEL, PEDRA, TESOURA};
 enum RECURSO {CELULOSE, PEDREGULHO, METAL};
@@ -33,18 +33,19 @@ enum OPERACOES{
 };
 
 
-// ----------Define Player -----------------
+// ---------- Define Player -----------------
 
 #define RECURSO_INICIAL 100
 #define DINHEIRO_INICIAL 200
 
-// ---------_Define Fabrica ----------------
+// --------- Define Fabrica ----------------
 
 #define PRECO_RECURSO_FABRICA 50
 #define PRECO_DINHEIRO_FABRICA 100
 #define VIDA_INICIAL_FABRICA 100
 #define TEMPO_ESPERA_INICIAL_FABRICA 20
-#define CUSTO_DO_UPGRADE 200
+#define CUSTO_INICIAL_DO_UPGRADE_FABRICA 200
+#define CUSTO_INICIAL_DO_UPGRADE_UNIDADE 200
 
 // -------- Define GeraRecuso--------------
 
@@ -52,4 +53,4 @@ enum OPERACOES{
 #define PRECO_RECURSO_GERA 50
 #define PRECO_DINHEIRO_GERA 100
 
-#endif  // HEAD
+#endif  // INCLUDE_HEAD_H_

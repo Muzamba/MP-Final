@@ -65,20 +65,21 @@ TEST_CASE("Verify upgrade") {
         Fabrica fbrc(30, 40, TESOURA);
         Player player;
     SECTION("Can Upgrade") {
-        REQUIRE(fbrc.can_upgrade(fbrc.custo_upgrade, player.getDinheiro())
-        == true);
+        REQUIRE(fbrc.can_upgrade_fabrica(fbrc.custo_upgrade_fab,
+         player.getDinheiro()) == true);
         player.setDinheiro(100);
-        REQUIRE(fbrc.can_upgrade(fbrc.custo_upgrade, player.getDinheiro())
-        == false);
+        REQUIRE(fbrc.can_upgrade_fabrica(fbrc.custo_upgrade_fab,
+         player.getDinheiro()) == false);
     }
 }
 
-TEST_CASE("Upgrade") {
+TEST_CASE("Upgrade Fabrica") {
     Fabrica fbrc(30, 40, PEDRA);
     Player player;
     SECTION("with enough money") {
-        if (fbrc.can_upgrade(fbrc.custo_upgrade, player.getDinheiro())) {
-            fbrc.upgrade(&player.dinheiro);
+        if (fbrc.can_upgrade_fabrica(fbrc.custo_upgrade_fab,
+         player.getDinheiro())) {
+            fbrc.upgrade_fabrica(&player.dinheiro);
             REQUIRE(fbrc.nivel == 2);
         } else {
             REQUIRE(fbrc.nivel == 1);
@@ -86,16 +87,18 @@ TEST_CASE("Upgrade") {
     }
     SECTION("Not enough Money") {
         player.setDinheiro(7);
-        if (fbrc.can_upgrade(fbrc.custo_upgrade, player.getDinheiro())) {
-            fbrc.upgrade(&player.dinheiro);
+        if (fbrc.can_upgrade_fabrica(fbrc.custo_upgrade_fab,
+         player.getDinheiro())) {
+            fbrc.upgrade_fabrica(&player.dinheiro);
             REQUIRE(fbrc.nivel == 2);
         } else {
             REQUIRE(fbrc.nivel == 1);
         }
     }
     SECTION("New attributes") {
-        if (fbrc.can_upgrade(fbrc.custo_upgrade, player.getDinheiro())) {
-            fbrc.upgrade(&player.dinheiro);
+        if (fbrc.can_upgrade_fabrica(fbrc.custo_upgrade_fab,
+         player.getDinheiro())) {
+            fbrc.upgrade_fabrica(&player.dinheiro);
             REQUIRE(fbrc.nivel == 2);
             SECTION("Life/Unidades attributes") {
                 REQUIRE(fbrc.vida == fbrc.nivel*10);
@@ -113,17 +116,28 @@ TEST_CASE("Upgrade") {
             int nivel_atual = fbrc.nivel;
             int novo_nivel = fbrc.nivel+1;
             int dinheiro_atual = player.dinheiro;
-            int novo_dinheiro = player.dinheiro - fbrc.custo_upgrade;
-            if (fbrc.can_upgrade(fbrc.custo_upgrade, player.getDinheiro())) {
-                fbrc.upgrade(&player.dinheiro);
+            int novo_dinheiro = player.dinheiro - fbrc.custo_upgrade_fab;
+            if (fbrc.can_upgrade_fabrica(fbrc.custo_upgrade_fab,
+             player.getDinheiro())) {
+                fbrc.upgrade_fabrica(&player.dinheiro);
                 REQUIRE(fbrc.nivel == novo_nivel);
                 REQUIRE(player.getDinheiro() == novo_dinheiro);
             } else {
                 REQUIRE(fbrc.nivel == nivel_atual);
                 REQUIRE(player.getDinheiro() == dinheiro_atual);
             }
-
         }
     }
 }
 
+TEST_CASE("Upgrade Unidades") {
+    Fabrica fbrc(30, 40, PEDRA);
+    Player player;
+    SECTION("With or without money") {
+        REQUIRE(fbrc.can_upgrade_unidade(fbrc.custo_upgrade_und,
+         player.dinheiro) == true);
+        player.setDinheiro(0);
+        REQUIRE(fbrc.can_upgrade_unidade(fbrc.custo_upgrade_und,
+         player.dinheiro) == false);
+    }
+}

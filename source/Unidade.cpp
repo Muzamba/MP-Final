@@ -1,10 +1,18 @@
 #include <Predio.h>
 #include "../include/Unidade.h"
+#include "../include/Jogo.h"
 // "Copyright [2018] <Waliff Cordeiro>"
 
-void Unidade::anda() {
+extern Jogo *jogo;
+
+/*void Unidade::anda() {
     // Atualiza a posição de acordo com a velocidade da unidade
-    Unidade::pos_X += velocidade;
+    for(int i = 0; i < 6; i++) {
+        for (int j = 0; j < 12; j++) {
+            if(jogo->matriz_unidade[i][j].pos_X == Unidade::pos_X &&
+            jogo->matriz_unidade[i][j].pos_Y == Unidade::pos_Y) {}
+        }
+    }
 }
 
 /*void Unidade::ataca_predio(Predio predio, Player jogador){
@@ -12,7 +20,7 @@ void Unidade::anda() {
     if (predio.get_vida() <= 0) {
         predio.destroy();
     }
-}*/
+}
 
 void Unidade::destroy(std::vector<Unidade> *unidades) {
     // Não tentar remover se estiver vazio
@@ -26,7 +34,7 @@ void Unidade::destroy(std::vector<Unidade> *unidades) {
         }
     }
     // Remover imagem
-}
+}*/
 
 int Unidade::getPreco_recursos() const {
     return preco_recursos;

@@ -1,6 +1,6 @@
 // Copyright 2018 João Pedro Assis
-#ifndef EPADAD
-#define EPADAD
+#ifndef  INCLUDE_FABRICA_H_
+#define  INCLUDE_FABRICA_H_
 #include "Predio.h"
 #include "Head.h"
 /*struct Referencias {
@@ -32,10 +32,16 @@ class Fabrica : public Predio {
     int get_nivel();
     void set_nivel(int nivel);
 
-    void geraUnidade();
-    bool can_upgrade(int custo, int capital);
+    bool can_upgrade_fabrica(int custo, int capital);
+    void upgrade_fabrica(int* dinheiro);
+
     void atributos_unidade(FABRICA nivel);
-    void upgrade(int* dinheiro);
+    void geraUnidade();
+
+    bool can_upgrade_unidade(int custo, int capital);
+    void upgrade_unidade();
+
+
     ~Fabrica() {}
 
     //  -------------------- Variáveis da Fábrica em si -----------------------
@@ -44,13 +50,14 @@ class Fabrica : public Predio {
     FABRICA nivel;  // Nível da fábrica (nível maior, menor tempo de espera)
     FABRICA tipo;  // Variável não deve ser alterada
     FABRICA preco_recurso = PRECO_RECURSO_FABRICA;
-    FABRICA custo_upgrade = CUSTO_DO_UPGRADE;
+    FABRICA custo_upgrade_fab = CUSTO_INICIAL_DO_UPGRADE_UNIDADE;
 
     // ---------------------- Variáveis das Unidades geradas ------------------
 
     UNIDADES vida;
     UNIDADES dano;
     UNIDADES velocidade;
+    UNIDADES custo_upgrade_und = CUSTO_INICIAL_DO_UPGRADE_UNIDADE;
 };
 
-#endif
+#endif  // INCLUDE_FABRICA_H_

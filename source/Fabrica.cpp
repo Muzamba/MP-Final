@@ -24,7 +24,7 @@ void Fabrica::atributos_unidade(FABRICA nivel) {
     Fabrica::velocidade = nivel*2;
 }
 
-bool Fabrica::can_upgrade(int custo, int capital) {
+bool Fabrica::can_upgrade_fabrica(int custo, int capital) {
     if (capital >= custo) {
         return true;
     } else {
@@ -32,10 +32,10 @@ bool Fabrica::can_upgrade(int custo, int capital) {
     }
 }
 
-void Fabrica::upgrade(int* dinheiro) {
-    *dinheiro = *dinheiro - Fabrica::custo_upgrade;
+void Fabrica::upgrade_fabrica(int* dinheiro) {
+    *dinheiro = *dinheiro - Fabrica::custo_upgrade_fab;
     Fabrica::nivel++;
-    Fabrica::custo_upgrade += 20*Fabrica::nivel;
+    Fabrica::custo_upgrade_fab += 20*Fabrica::nivel;
     Fabrica::atributos_unidade(Fabrica::nivel);
     Fabrica::set_vida(Fabrica::nivel*VIDA_INICIAL_FABRICA);
     Fabrica::tempoEspera -= 5;  // cte que pode ser mudado
@@ -43,3 +43,14 @@ void Fabrica::upgrade(int* dinheiro) {
         Fabrica::tempoEspera = 5;
     }
 }
+
+bool Fabrica::can_upgrade_unidade(int custo, int capital) {
+    if (capital >= custo) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+void Fabrica::upgrade_unidade() {}

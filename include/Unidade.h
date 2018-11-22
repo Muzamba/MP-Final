@@ -68,3 +68,5 @@ class Unidade : public Objeto {
 
     int dano;
 };
+
+void anda_geralzao_zika_mil_grau();

@@ -4,13 +4,13 @@
 // "Copyright [2018] <Waliff Cordeiro>"
 
 TEST_CASE("Unidades") {
-    SECTION("Fazer o personagem se movimentar") {
+    /*SECTION("Fazer o personagem se movimentar") {
         // (x, y, tipo, vida, velocidade, dano)
         Unidade uniteste(2, 20, 1, 231, 2, 312);
         uniteste.anda();
         REQUIRE(uniteste.get_x() == 4);
-    }
-    SECTION("Destruindo unidade") {
+    }*/
+    /*SECTION("Destruindo unidade") {
         std::vector<Unidade> unidades;
 
         // (x, y, tipo, vida, velocidade, dano)
@@ -32,4 +32,4 @@ TEST_CASE("Unidades") {
         REQUIRE(unidades[2].get_x() != 7);
         REQUIRE(unidades[2].get_y() != 5);
     }
-}
+}*/
