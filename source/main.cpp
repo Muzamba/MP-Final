@@ -25,8 +25,11 @@ printf("\n\n\n1\n\n\n");
     jogo->loadMidia();
 
     while(jogo->isOn()) {
+        
         frameStart = SDL_GetTicks();
+        //printf("teste\n");
         jogo->handleEvents();
+        
         jogo->update();
         jogo->renderizar();
 

@@ -3,12 +3,13 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 #include <string>
+#include "Player.h"
 #include "Head.h"
 #include "Botao.h"
 #include "Fabrica.h"
 #include "GeraRecursos.h"
 #include "Unidade.h"
-#include "Player.h"
+
 
 class Jogo {
 public:
@@ -32,17 +33,20 @@ public:
     SDL_Texture* texturas[TEXTURAS::TEX_TOTAL];
     bool menu_inicial = false;
 
-    //Player* jogador = NULL;
-    Player* cpu = NULL;
     Player* jogador = NULL;
+    Player* cpu = NULL;
+    //Player* jogador = NULL;
     bool comprando = false;
+    //SDL_Texture *teste;
 
 protected:
 
-    SDL_Color cTempo{0, 0, 0, 255};
-    SDL_Texture* tTempo = NULL;
+
+    Objeto* recurso;
+    SDL_Color cRecurso{128, 128, 0};
+    //SDL_Texture* tRecurso[1];
     std::string sTempo;
-    TTF_Font* font = NULL;
+    //TTF_Font* font = NULL;
     Botao_Compra* compra= NULL;
     Botao_Iniciar* bIniciar = NULL;
     Objeto* menuInicial = NULL;

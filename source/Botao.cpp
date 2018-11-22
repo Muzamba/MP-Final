@@ -39,56 +39,78 @@ void Botao_Iniciar::handleEvent(SDL_Event* evento) {
 }
 
 void Botao_Compra::handleEvent(SDL_Event* evento){
-    printf("teste4");
-    if(evento->type == SDL_MOUSEBUTTONUP){
-    switch(tipo){
-        case NADA:
-        case GERA_CELULOSE:
-        case GERA_PEDREGULHO:
-        case GERA_METAL:
-            break;
+    
+    //if(evento->type == SDL_MOUSEBUTTONUP){
+    switch(evento->type){
 
-        case GERA_PAPEL:
-        int x, y;
-            SDL_GetMouseState(&x,&y);
-        if(!jogo->comprando){
-            if((destRect->x < x)&&((destRect->x + destRect->w) > x)&&(destRect->y < y)&&((destRect->y + destRect->h) > y)){
-                jogo->comprando = true;
-                printf("teste2"); 
-            }
-            printf("teste3"); 
-        } else {
-            x -= 160;
-            y -= 144;        
-            if((x % 80) != 0){
-                x -= (x%80);
-                x = x % 80;
-            } else {
-                x = 80;
-            }
-            if((y % 74) != 0){
-                y -= (y%74);
-                y = y % 72;
-            } else {
-                y = y % 72;
-            }
-            if((x > 0)&&(x < 12)&&(y > 0)&&(y <6)) {
-                jogo->jogador->compra_GeraRecurso(x, y, CELULOSE);
-                jogo->comprando = false;
-                printf("teste");    
-            } else {
-                jogo->comprando = false;
-            }
-        }
+        case SDL_MOUSEMOTION:
             break;
+        case SDL_MOUSEBUTTONDOWN:
+            break;
+        case SDL_MOUSEBUTTONUP:
+        printf("-----------------------\n");
+            switch(tipo){
+                case NADA:
+                case GERA_PAPEL:
+                case GERA_PEDREGULHO:
+                case GERA_METAL:
+                    break;
 
-        case GERA_PEDRA:
-            break;
+                case GERA_CELULOSE:
+                    int x, y;
+                    SDL_GetMouseState(&x,&y);
+                    if(!jogo->comprando){
+                        if((destRect->x < x)&&((destRect->x + destRect->w) > x)&&(destRect->y < y)&&((destRect->y + destRect->h) > y)){
+                            jogo->comprando = true;
+                            printf("comprando\n"); 
+                        }else{ printf("nao comprando\n");}
+                    //printf("alooo\n"); 
+                    } else {
+                        printf("ola\n");
+                        printf("%d--%d\n", x, y);
+                        x -= 160;
+                        y -= 144;        
+                        printf("%d--%d\n", x, y);
 
-        case GERA_TESOURA:
-            break;
+                        //printf("modulo: %d--%d\n", x % 80, y % 72);
+                        if((x % 80) != 0){
+                            //printf("aquiiiiiiiiiiiiiiii\n");
+                            x -= (x%80);
+                            x = x / 80;
+                        } else {
+                            x = x / 80;
+                        }
+                        if((y % 74) != 0){
+                            y -= (y%72);
+                            y = y / 72;
+                        } else {
+                            y = y / 72;
+                        }
+                        printf("%d--%d\n", x, y);
+                        if((x >= 0)&&(x < 12)&&(y >= 0)&&(y < 6)) {
+                            //printf("deu certo\n");
+                            if(jogo->jogador->compra_GeraRecurso(y, x, CELULOSE)){
+                                printf("comprado\n");
+                            }else {
+                                printf("falha\n");
+                            }
+                            jogo->comprando = false;
+                                
+                        } else {
+                            jogo->comprando = false;
+                        }
+                    }
+                    break;
+
+                case GERA_PEDRA:
+                    break;
+
+                case GERA_TESOURA:
+                    break;
+            }
+                break;
     }
-    }
+    //}
 
 }
 

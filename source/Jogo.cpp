@@ -1,5 +1,8 @@
 #include "Jogo.h"
+//#include "Player.h"
 #include <iostream>
+#include <stdlib.h>
+
 
 Jogo::Jogo(){
     matriz_fabrica = new Fabrica **[6];
@@ -74,13 +77,15 @@ void Jogo::init(const char* nome, int x, int y, int w, int h) {
             //if( TTF_Init() == -1 )
             //	{
             //		printf( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError() );
-            //		on = false;
+           // 		on = false;
             //	}
             mapa = new Objeto(0, 0);/* Set e get depois*/
             bIniciar = new Botao_Iniciar(0, 0);
             menuInicial = new Objeto(0, 0);/* Set e get depois*/
             menu_inicial = true;
             compra = new Botao_Compra(0,0);
+            compra->mudaTipo(GERA_CELULOSE);
+            //recurso = new Objeto(0, 0);
             
 
             
@@ -105,15 +110,14 @@ void Jogo::handleEvents(){
             break;
         case SDL_MOUSEBUTTONDOWN:
         case SDL_MOUSEBUTTONUP:
-        if(!menu_inicial) {
-            compra->handleEvent(&evento);
-            break;
-        }
         case SDL_MOUSEMOTION:
             if(menu_inicial){
                 bIniciar->handleEvent(&evento);
-
-            }
+                printf("aloo\n");
+            }else {
+                compra->handleEvent(&evento);
+            break;
+        }
 
         default:
             break;
@@ -122,6 +126,7 @@ void Jogo::handleEvents(){
 }
 
 void Jogo::renderizar(){
+    int cont = 0;
     SDL_RenderClear(render);
     //Adione aqui as coisas para renderizar
     if(menu_inicial){
@@ -137,13 +142,15 @@ void Jogo::renderizar(){
                 }
                 if(matriz_geraRecurso[i][j] != NULL){
                     matriz_geraRecurso[i][j]->render(render);
-                    printf("1");
+                    //printf("render %d\n",cont);
                 }
                 if(matriz_unidade[i][j] != NULL){
                     matriz_unidade[i][j]->render(render);
                 }
+                cont++;
             }
         }
+        //recurso->render(render);
     }
     SDL_RenderPresent(render);
 }
@@ -157,7 +164,7 @@ void Jogo::fim() {
     janela = NULL;
     SDL_DestroyRenderer(render);
     render = NULL;
-    //TTF_CloseFont( font );
+    //TTFTTF_CloseFont( font );
     //font = NULL;
 
     delete bIniciar;
@@ -181,6 +188,31 @@ void Jogo::load(){
 }
 
 void Jogo::update(){
+    static int cont = 0;
+    static int cont2 = 0;
+    //SDL_Surface* temp;
+    
+    
+
+    //temp = TTF_RenderText_Solid(font, std::to_string(jogador->getDinheiro()).c_str(), cRecurso);
+    //texturas[TEXTO_RECURSO] = SDL_CreateTextureFromSurface(render, temp);
+    if(!menu_inicial){
+    if(cont != 10){
+        cont++;
+        cont2++;
+    }else if(cont2 != 20){
+    jogador->setDinheiro(jogador->getDinheiro() + 1);
+    jogador->atualizar_Recursos();
+    printf("%d---%d\n",jogador->getDinheiro() ,jogador->getCelulose());
+    cont = 0;
+    
+    } else{
+       jogador->atualizar_Recursos();
+       cont2 = 0;
+    }
+    }
+
+    //SDL_FreeSurface(temp);
     //sTempo.clear();
     //sTempo.push_back(tempo);
     //SDL_Surface* textSurface = TTF_RenderText_Solid( font, .c_str(), textColor );
@@ -300,12 +332,12 @@ bool Jogo::loadMidia() {
         success = false;
     }
 
-    texturas[TEXTURAS::MAPA] = loadTexture( "imagens/Mapa_template.png" );
+    texturas[TEXTURAS::MAPA] = loadTexture( "imagens/Mapa.png" );
     if( texturas[TEXTURAS::MAPA] == NULL ) {
-        printf( "Failed to load texture Mapa_template.png!\n" );
+        printf( "Failed to load texture Mapa.png!\n" );
         success = false;
     }
-    //font = TTF_OpenFont( "fonts/lazy.ttf", 28 );
+    //font = TTF_OpenFont( "fonts/04B_08__.TTF", 28 );
 
     bIniciar->mudaTextura(texturas[BOTAO_INICIAR]);
     bIniciar->setDestRect(300, 500,300,120);
@@ -319,6 +351,10 @@ bool Jogo::loadMidia() {
     compra->mudaTextura(texturas[GERAR_PAPEL]);
     compra->setSrcRect(0, 0, 64, 64);
     compra->setDestRect(0, 0, 64, 64);
+
+    //recurso->mudaTextura(texturas[TEXTO_RECURSO]);
+    //recurso->setSrcRect(0,0,64,64);
+    //recurso->setDestRect(320, 36, 80,72);
 
     return success;
 
