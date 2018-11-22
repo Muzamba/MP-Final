@@ -1,4 +1,5 @@
 // Copyright 2018 João Pedro Assis
+#pragma once
 #ifndef EPADAD
 #define EPADAD
 #include "Predio.h"

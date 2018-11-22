@@ -1,3 +1,4 @@
+#pragma once
 #ifndef INCLUDE_GERARECURSOS_H_
 #define INCLUDE_GERARECURSOS_H_
 // "Copyright [year] <Pedro>"

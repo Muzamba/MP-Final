@@ -1,3 +1,5 @@
+#pragma once
+//#pragma once
 #ifndef INCLUDE_PLAYER_H_
 #define INCLUDE_PLAYER_H_
 
@@ -72,5 +74,6 @@ class Player {
 
     bool verifica_espaco_ocupado(int x, int y);
 };
+#define TESTE
 
 #endif  // INCLUDE_PLAYER_H_

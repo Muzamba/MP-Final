@@ -3,7 +3,7 @@
 
 /* "Copyright [2018] <Pedro>" */
 
-extern Jogo *jogo;
+extern Jogo* jogo;
 /**Construtor da classe Player
  * -------------------------
  * Seta todos os atributos para os valores inciais, e os pontos para 0
@@ -35,6 +35,11 @@ bool Player::compra_GeraRecurso(int x, int y, RECURSO tipo) {
             Player::retira_recurso_geraRecurso(tipo);
             /* Adiciona a fabrica na lista da classe Player*/
             jogo->matriz_geraRecurso[x][y] = new GeraRecursos(x, y, tipo);
+            jogo->matriz_geraRecurso[x][y]->mudaTextura(jogo->texturas[GERAR_PAPEL]);
+            jogo->matriz_geraRecurso[x][y]->setDestRect((y + 2) * 80 ,(x + 2) * 72, 64, 64);
+            jogo->matriz_geraRecurso[x][y]->setSrcRect(0, 0, 64, 64);
+        } else {
+            return false;
         }
         return true;
     } else {
@@ -64,21 +69,31 @@ bool Player::compra_Fabrica(int x, int y, UNIDADE tipo) {
  * @brief A função percorre a lista de geraRecursos e soma os recursos gerados nos atributos do player
  * */
 void Player::atualizar_Recursos() {
-    for (auto &lista_GeraRecurso : lista_GeraRecursos) {
-        switch (lista_GeraRecurso.getTipo()) {
-            case RECURSO::PEDREGULHO:
-                Player::pedregulho += lista_GeraRecurso.produzirRecurso();
-                break;
-            case RECURSO::METAL:
-                Player::metal += lista_GeraRecurso.produzirRecurso();
-                break;
-            case RECURSO::CELULOSE:
-                Player::celulose += lista_GeraRecurso.produzirRecurso();
-                break;
-            default:
-                printf("ERRO: atualizar_Recursos\n");
-                return;
+    for(int i = 0;i < 6;++i) {
+        for(int j = 0; j < 12;++j) {
+            if(jogo->matriz_geraRecurso[i][j] != NULL) {
+                switch (jogo->matriz_geraRecurso[i][j]->getTipo()) {
+                    case RECURSO::PEDREGULHO:
+                        Player::pedregulho += jogo->matriz_geraRecurso[i][j]->getTaxa();
+                        break;
+                    case RECURSO::METAL:
+                         Player::metal += jogo->matriz_geraRecurso[i][j]->getTaxa();
+                        break;
+                    case RECURSO::CELULOSE:
+                        Player::celulose += jogo->matriz_geraRecurso[i][j]->getTaxa();
+                        break;
+                    default:
+                        printf("ERRO: atualizar_Recursos\n");
+                        return;
+                }
+            }
+
         }
+
+    }
+
+    for (auto &lista_GeraRecurso : lista_GeraRecursos) {
+
     }
 }
 
