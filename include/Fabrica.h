@@ -3,6 +3,7 @@
 #define  INCLUDE_FABRICA_H_
 #include "Predio.h"
 #include "Head.h"
+#include "Unidade.h"
 /*struct Referencias {
 int T_ESPERA_INICIAL = 20;
 int NIVEL = 1;
@@ -36,12 +37,7 @@ class Fabrica : public Predio {
     void upgrade_fabrica(int* dinheiro);
 
     void atributos_unidade(FABRICA nivel);
-    void geraUnidade();
-
-    bool can_upgrade_unidade(int custo, int capital);
-    void upgrade_unidade();
-
-
+    Unidade geraUnidade(int matI, int matJ);
     ~Fabrica() {}
 
     //  -------------------- Variáveis da Fábrica em si -----------------------

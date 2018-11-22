@@ -73,6 +73,18 @@ TEST_CASE("Verify upgrade") {
     }
 }
 
+TEST_CASE("Gera Unidade") {
+    SECTION("First Gera Unidades") {
+        Fabrica fbrc(30, 40, PEDRA);
+        Unidade unidade1(3, 3, 3, 3, 1, 3);
+        unidade1 = fbrc.geraUnidade(3, 2);
+        REQUIRE(unidade1.getDano() == fbrc.dano);
+        REQUIRE(unidade1.getVida() == fbrc.vida);
+        REQUIRE(unidade1.getVelocidade() == fbrc.velocidade);
+        REQUIRE(unidade1.tipo == fbrc.tipo);
+    }
+}
+
 TEST_CASE("Upgrade Fabrica") {
     Fabrica fbrc(30, 40, PEDRA);
     Player player;
@@ -128,16 +140,9 @@ TEST_CASE("Upgrade Fabrica") {
             }
         }
     }
-}
+    SECTION("Upgrade unidades") {
 
-TEST_CASE("Upgrade Unidades") {
-    Fabrica fbrc(30, 40, PEDRA);
-    Player player;
-    SECTION("With or without money") {
-        REQUIRE(fbrc.can_upgrade_unidade(fbrc.custo_upgrade_und,
-         player.dinheiro) == true);
-        player.setDinheiro(0);
-        REQUIRE(fbrc.can_upgrade_unidade(fbrc.custo_upgrade_und,
-         player.dinheiro) == false);
     }
 }
+
+

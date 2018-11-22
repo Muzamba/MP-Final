@@ -1,6 +1,7 @@
 // Copyright 2018 João Pedro Assis
 #include "../include/Fabrica.h"
 #include "../include/Player.h"
+#include "../include/Unidade.h"
 
 int Fabrica::get_tempoEspera() {
     return Fabrica::tempoEspera;
@@ -44,13 +45,9 @@ void Fabrica::upgrade_fabrica(int* dinheiro) {
     }
 }
 
-bool Fabrica::can_upgrade_unidade(int custo, int capital) {
-    if (capital >= custo) {
-        return true;
-    } else {
-        return false;
-    }
+Unidade Fabrica::geraUnidade(int matI, int matJ) {
+    Unidade unidade(matI, matJ, Fabrica::tipo, Fabrica::vida,
+    Fabrica::velocidade, Fabrica::dano);
+
+    return unidade;
 }
-
-
-void Fabrica::upgrade_unidade() {}

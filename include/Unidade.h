@@ -1,7 +1,7 @@
 #pragma once
 #include "Objeto.h"
 #include <vector>
-// "Copyright [2018] <Waliff Cordeiro>"
+// "Copyright [2018] <Switch Dreams>"
 
 /**
  * @class Unidade Unidade.h
@@ -55,9 +55,9 @@ class Unidade : public Objeto {
 
     void setDano(int dano);
 
- protected:
     int tipo;
 
+ protected:
     int vida;
 
     int preco_recursos;
@@ -68,5 +68,3 @@ class Unidade : public Objeto {
 
     int dano;
 };
-
-void anda_geralzao_zika_mil_grau();
