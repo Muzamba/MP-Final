@@ -24,3 +24,7 @@ protected:
 
     TIPO tipo = NADA;
 };
+
+void buttomEvents(SDL_Event* evento);
+void retornaBotao(int* x,int* y);
+void to_Cord(int* X, int* Y);

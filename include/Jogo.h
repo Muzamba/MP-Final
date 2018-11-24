@@ -39,12 +39,17 @@ public:
     //#endif
     //Player* jogador = NULL;
     bool comprando = false;
-    SDL_Texture *teste;
+    TIPO tipoCompra = NADA;
+    //SDL_Texture *teste;
 
 protected:
 
 
-    Objeto* recurso;
+    Objeto* dinheiroPlayer;
+    Objeto* celulosePlayer;
+    Objeto* pedregulhoPlayer;
+    Objeto* dinheiroCpu;
+
     SDL_Color cRecurso{0, 0, 0}; //decidir cor 
     SDL_Texture* tRecurso;
     TTF_Font* font = NULL;

@@ -28,14 +28,19 @@ Player::Player() {
  */
 bool Player::compra_GeraRecurso(int x, int y, RECURSO tipo) {
     /* Verifica se o jogador tem recursos suficientes */
+    printf("1\n");
     if (possui_recursos_geraRecurso(tipo)) {
+        printf("2\n");
         /*  Verifica se a matriz de posicao esta vazia */
         if (verifica_espaco_ocupado(x, y) && verifica_espaco_predio(x, y)) {
+            printf("3\n");
             /* Retira o dinheiro da compra */
             Player::retira_recurso_geraRecurso(tipo);
             /* Adiciona a fabrica na lista da classe Player*/
             jogo->matriz_geraRecurso[x][y] = new GeraRecursos(x, y, tipo);
-            jogo->matriz_geraRecurso[x][y]->mudaTextura(jogo->texturas[GERAR_PAPEL]);
+            TEXTURAS text = retorna_textura(tipo);
+            printf("%d", text);
+            jogo->matriz_geraRecurso[x][y]->mudaTextura(jogo->texturas[text]);
             jogo->matriz_geraRecurso[x][y]->setDestRect((y + 2) * 80 ,(x + 2) * 72, 64, 64);
             jogo->matriz_geraRecurso[x][y]->setSrcRect(0, 0, 64, 64);
         } else {
@@ -44,6 +49,19 @@ bool Player::compra_GeraRecurso(int x, int y, RECURSO tipo) {
         return true;
     } else {
         return false;
+    }
+}
+
+TEXTURAS retorna_textura(RECURSO tipo){
+    switch(tipo){
+        case RECURSO::CELULOSE:
+            return TEXTURAS::GERAR_PAPEL;
+        case RECURSO::PEDREGULHO:
+            return TEXTURAS::GERAR_PEDRA;
+        case RECURSO::METAL:
+            return TEXTURAS::GERAR_TESOURA;
+        default:
+            return TEXTURAS::BOTAO_INICIAR_P;
     }
 }
 
@@ -244,7 +262,11 @@ bool Player::verifica_espaco_predio(int x, int y) {
 }
 
 bool Player::verifica_espaco_ocupado(int x, int y) {
-    return jogo->matriz_fabrica[x][y] == NULL &&
-    jogo->matriz_geraRecurso[x][y] == NULL &&
-    jogo->matriz_unidade[x][y] == NULL;
+    if(x >= 0 && y >=0 && x < 6 && y < 12){
+        return jogo->matriz_fabrica[x][y] == NULL &&
+            jogo->matriz_geraRecurso[x][y] == NULL &&
+            jogo->matriz_unidade[x][y] == NULL;
+    }
+    return false;
+    
 }

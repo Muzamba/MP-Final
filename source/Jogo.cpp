@@ -28,7 +28,12 @@ Jogo::Jogo(){
     bIniciar = new Botao_Iniciar(0, 0);
     menuInicial = new Objeto(0, 0);
     compra = new Botao_Compra(0,0);
-    recurso = new Objeto(0,0);
+
+    dinheiroPlayer = new Objeto(0, 0);
+    celulosePlayer = new Objeto(0, 0);
+    pedregulhoPlayer = new Objeto(0, 0);
+
+    dinheiroCpu = new Objeto(0, 0);
 }
 
 Jogo::~Jogo(){
@@ -67,6 +72,13 @@ Jogo::~Jogo(){
     mapa = NULL;
     delete compra;
     compra = NULL;
+    delete dinheiroPlayer;
+    dinheiroPlayer = NULL;
+    delete dinheiroCpu;
+    dinheiroCpu = NULL;
+    delete celulosePlayer;
+    celulosePlayer = NULL;
+    delete pedregulhoPlayer;
 }
 
 
@@ -126,7 +138,7 @@ void Jogo::handleEvents(){
                 bIniciar->handleEvent(&evento);
                 printf("aloo\n");
             }else {
-                compra->handleEvent(&evento);
+                buttomEvents( &evento);
             break;
         }
 
@@ -161,7 +173,10 @@ void Jogo::renderizar(){
                 cont++;
             }
         }
-        recurso->render(render);
+        dinheiroPlayer->render(render);
+        dinheiroCpu->render(render);
+        celulosePlayer->render(render);
+        pedregulhoPlayer->render(render);
     }
     SDL_RenderPresent(render);
 }
@@ -199,25 +214,49 @@ void Jogo::update(){
 
 
     temp = TTF_RenderText_Solid(font, std::to_string(jogador->getDinheiro()).c_str(), cRecurso);
-    texturas[TEXTO_RECURSO] = SDL_CreateTextureFromSurface(render, temp);
+    SDL_DestroyTexture(texturas[TEXTO_RECURSO_P]);
+    texturas[TEXTO_RECURSO_P] = SDL_CreateTextureFromSurface(render, temp);
+    dinheiroPlayer->mudaTextura(texturas[TEXTO_RECURSO_P]);
+    SDL_FreeSurface(temp);
+    
+    temp = TTF_RenderText_Solid(font, std::to_string(cpu->getDinheiro()).c_str(), cRecurso);
+    SDL_DestroyTexture(texturas[TEXTO_RECURSO_C]);
+    texturas[TEXTO_RECURSO_C] = SDL_CreateTextureFromSurface(render, temp);
+    dinheiroCpu->mudaTextura(texturas[TEXTO_RECURSO_C]);
+    SDL_FreeSurface(temp);
+
+    temp = TTF_RenderText_Solid(font, std::to_string(jogador->getCelulose()).c_str(), cRecurso);
+    SDL_DestroyTexture(texturas[TEXTO_CELULOSE_P]);
+    texturas[TEXTO_CELULOSE_P] = SDL_CreateTextureFromSurface(render, temp);
+    celulosePlayer->mudaTextura(texturas[TEXTO_CELULOSE_P]);
+    SDL_FreeSurface(temp);
+
+    temp = TTF_RenderText_Solid(font, std::to_string(jogador->getPedregulho()).c_str(), cRecurso);
+    SDL_DestroyTexture(texturas[TEXTO_PEDRGULHO_P]);
+    texturas[TEXTO_PEDRGULHO_P] = SDL_CreateTextureFromSurface(render, temp);
+    pedregulhoPlayer->mudaTextura(texturas[TEXTO_PEDRGULHO_P]);
+    SDL_FreeSurface(temp);
     
     if(!menu_inicial){
-    if(cont != 10){
-        cont++;
-        cont2++;
-    }else if(cont2 != 20){
-    jogador->setDinheiro(jogador->getDinheiro() + 1);
-    jogador->atualizar_Recursos();
-    printf("%d---%d\n",jogador->getDinheiro() ,jogador->getCelulose());
-    cont = 0;
+        if(cont != 10){
+            cont++;
+            cont2++;
+        }else {
+            jogador->setDinheiro(jogador->getDinheiro() + 1);
+            jogador->atualizar_Recursos();
+            //printf("%d---%d---%d\n",jogador->getDinheiro() ,jogador->getCelulose(), jogador->getPedregulho());
+
+            cpu->setDinheiro(cpu->getDinheiro() + 1);
+            cont = 0;
+            cont2++;
+        }
+        if(cont2 == 20){
+            //jogador->atualizar_Recursos();
+            cont2 = 0;
+        }
+    }
     
-    } else{
-       jogador->atualizar_Recursos();
-       cont2 = 0;
-    }
-    }
-    recurso->mudaTextura(texturas[TEXTO_RECURSO]);
-    SDL_FreeSurface(temp);
+    
     //sTempo.clear();
     //sTempo.push_back(tempo);
     //SDL_Surface* textSurface = TTF_RenderText_Solid( font, .c_str(), textColor );
@@ -358,8 +397,17 @@ bool Jogo::loadMidia() {
     compra->setDestRect(480, 648, 64, 64);
 
     //recurso->mudaTextura(texturas[TEXTO_RECURSO]);
-    recurso->setSrcRect(0,0,100,64);
-    recurso->setDestRect(235, 20, 80,60);
+    dinheiroPlayer->setSrcRect(0,0,100,64);
+    dinheiroPlayer->setDestRect(235, 20, 80,60);
+    celulosePlayer->setSrcRect(0, 0, 100, 64);
+    celulosePlayer->setDestRect(400, 92, 80, 60);
+    pedregulhoPlayer->setSrcRect(0, 0, 100, 64);
+    pedregulhoPlayer->setDestRect(240, 92, 80, 60);
+
+    dinheiroCpu->setSrcRect(0,0,100,64);
+    dinheiroCpu->setDestRect(870, 20, 80,60);
+
+
 
     return success;
 
