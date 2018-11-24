@@ -145,7 +145,7 @@ bool Jogo::loadMidia() {
     bool success = true;
 
     // Load PNG texture
-    texturas[TEXTURAS::TROPA_PAPEL] = loadTexture("imagens/papel.png"s);
+    texturas[TEXTURAS::TROPA_PAPEL] = loadTexture("imagens/papel.png");
     if (texturas[TEXTURAS::TROPA_PAPEL] == NULL) {
         printf("Failed to load texture papel.png!\n");
         success = false;

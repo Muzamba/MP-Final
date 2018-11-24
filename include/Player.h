@@ -1,6 +1,5 @@
 #ifndef INCLUDE_PLAYER_H_
 #define INCLUDE_PLAYER_H_
-
 // "Copyright [year] <Pedro>"
 
 #include "Head.h"
