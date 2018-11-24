@@ -141,8 +141,53 @@ void buttomEvents(SDL_Event* evento) {
                 switch(jogo->tipoCompra){
                     case NADA:
                         jogo->comprando = false;
+                        jogo->tipoCompra = NADA;
                         break;
-
+                    case U_GERA_METAL:
+                        if (jogo->matriz_geraRecurso[y][x]->getTipo() == RECURSO::METAL) {
+                            printf("upgrade realizado gera metal\n ");
+                            jogo->matriz_geraRecurso[y][x]->upgrade(&(jogador->dinheiro));
+                        } else {
+                            printf("Upgrade negado gera metal\n");
+                        }
+                        jogo->comprando = false;
+                        jogo->tipoCompra = NADA;
+                        break;
+                    case U_GERA_PEDREGULHO:
+                        if (jogo->matriz_geraRecurso[y][x]->getTipo() == RECURSO::PEDREGULHO) {
+                            printf("upgrade realizado gera pedregulho\n ");
+                            jogo->matriz_geraRecurso[y][x]->upgrade(&(jogador->dinheiro));
+                        } else {
+                            printf("Upgrade negado gera pedregulho\n");
+                        }
+                        jogo->comprando = false;
+                        jogo->tipoCompra = NADA;
+                        break;
+                    case U_GERA_CELULOSE:
+                        if (jogo->matriz_geraRecurso[y][x]->getTipo() == RECURSO::CELULOSE) {
+                            printf("upgrade realizado gera celulose \n");
+                            jogo->matriz_geraRecurso[y][x]->upgrade(&(jogador->dinheiro));
+                        } else {
+                            printf("Upgrade negado gera celulose\n");
+                        }
+                        jogo->comprando = false;
+                        jogo->tipoCompra = NADA;
+                        break;
+                    case FABRICAR_PAPEL:
+                        jogador->compra_Fabrica(y, x, PAPEL);
+                        jogo->comprando = false;
+                        jogo->tipoCompra = NADA;
+                        break;
+                    case FABRICAR_TESOURA:
+                        jogador->compra_Fabrica(y, x, TESOURA);
+                        jogo->comprando = false;
+                        jogo->tipoCompra = NADA;
+                        break;
+                    case FABRICAR_PEDRA:
+                        jogador->compra_Fabrica(y, x, PEDRA);
+                        jogo->comprando = false;
+                        jogo->tipoCompra = NADA;
+                        break;
                     case GERA_CELULOSE:
                         //printf("deu certo\n");
                         if (jogador->compra_GeraRecurso(y, x, CELULOSE)) {
@@ -162,7 +207,7 @@ void buttomEvents(SDL_Event* evento) {
                             printf("Falha na compra\n");
                         }
                         jogo->comprando = false;
-                        
+                        jogo->tipoCompra = NADA;
                         break;
 
                     case GERA_METAL:
@@ -192,7 +237,6 @@ void buttomEvents(SDL_Event* evento) {
 }
 
 void retornaBotao(int* X,int* Y){
-    
     jogo->comprando = true;
     to_Cord(X, Y);
     switch(*Y){
@@ -233,13 +277,13 @@ void retornaBotao(int* X,int* Y){
                     jogo->tipoCompra = GERA_CELULOSE;
                     return;
                 case 11:
-                    jogo->tipoCompra = U_GERA_CELULOSE;
+                    jogo->tipoCompra = U_GERA_PEDREGULHO;
                     return;
                 case 12:
                     jogo->tipoCompra = U_GERA_METAL;
                     return;
                 case 13:
-                    jogo->tipoCompra = U_GERA_PEDREGULHO;
+                    jogo->tipoCompra = U_GERA_CELULOSE;
                     return;
                 default:
                     jogo->tipoCompra = NADA;

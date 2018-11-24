@@ -38,7 +38,7 @@ bool Player::compra_GeraRecurso(int x, int y, RECURSO tipo) {
             Player::retira_recurso_geraRecurso(tipo);
             /* Adiciona a fabrica na lista da classe Player*/
             jogo->matriz_geraRecurso[x][y] = new GeraRecursos(x, y, tipo);
-            TEXTURAS text = retorna_textura(tipo);
+            TEXTURAS text = retorna_textura_recurso(tipo);
             printf("%d", text);
             jogo->matriz_geraRecurso[x][y]->mudaTextura(jogo->texturas[text]);
             jogo->matriz_geraRecurso[x][y]->setDestRect((y + 2) * 80 ,(x + 2) * 72, 64, 64);
@@ -52,7 +52,7 @@ bool Player::compra_GeraRecurso(int x, int y, RECURSO tipo) {
     }
 }
 
-TEXTURAS retorna_textura(RECURSO tipo){
+TEXTURAS retorna_textura_recurso(RECURSO tipo){
     switch(tipo){
         case RECURSO::CELULOSE:
             return TEXTURAS::GERAR_PAPEL;
@@ -74,12 +74,31 @@ bool Player::compra_Fabrica(int x, int y, UNIDADE tipo) {
             Player::retira_recurso_fabrica(tipo);
             /* Adiciona a fabrica na lista da classe Player*/
             jogo->matriz_fabrica[x][y] = new Fabrica(x, y, tipo);
+            TEXTURAS text = retorna_textura_unidade(tipo);
+            printf("%d", text);
+            jogo->matriz_fabrica[x][y]->mudaTextura(jogo->texturas[text]);
+            jogo->matriz_fabrica[x][y]->setDestRect((y + 2) * 80 ,(x + 2) * 72, 64, 64);
+            jogo->matriz_fabrica[x][y]->setSrcRect(0, 0, 64, 64);
             return true;
         } else { /* Se a posicao e invalida */
             return false;
         }
     } else { /* Se o jogador nao tiver recursos suficientes */
         return false;
+    }
+}
+
+
+TEXTURAS retorna_textura_unidade(UNIDADE tipo){
+    switch(tipo){
+        case RECURSO::CELULOSE:
+            return TEXTURAS::FABRICA_PAPEL;
+        case RECURSO::PEDREGULHO:
+            return TEXTURAS::FABRICA_PEDRA;
+        case RECURSO::METAL:
+            return TEXTURAS::FABRICA_TESOURA;
+        default:
+            return TEXTURAS::BOTAO_INICIAR_P;
     }
 }
 

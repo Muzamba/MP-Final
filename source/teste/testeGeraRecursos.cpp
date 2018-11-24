@@ -36,3 +36,15 @@ TEST_CASE("Testando Enum") {
     REQUIRE(RECURSO::PEDREGULHO == 1);
     REQUIRE(RECURSO::METAL == 2);
 }
+
+TEST_CASE("Upgrade geraRecurso") {
+    GeraRecursos geradora(0, 0, RECURSO::PEDREGULHO);
+    int *dinheiro = (int*) malloc(sizeof(int));
+    *dinheiro = 10000;
+    int taxa = geradora.getTaxa();
+    int nivel = geradora.getNivel();
+    geradora.upgrade(dinheiro);
+    REQUIRE(*dinheiro == 9700);
+    REQUIRE(geradora.getTaxa() == 2 * taxa);
+    REQUIRE(geradora.getNivel() == nivel + 1);
+}

@@ -75,7 +75,10 @@ class Player {
     bool verifica_espaco_ocupado(int x, int y);
 };
 
-TEXTURAS retorna_textura(RECURSO tipo);
+/* Funções auxiliares para compra */
+TEXTURAS retorna_textura_recurso(RECURSO tipo);
+
+TEXTURAS retorna_textura_unidade(UNIDADE tipo);
 #define TESTE
 
 #endif  // INCLUDE_PLAYER_H_

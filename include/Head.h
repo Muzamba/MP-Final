@@ -64,5 +64,7 @@ enum TIPO {
 #define TAXA_COLETA 1
 #define PRECO_RECURSO_GERA 100
 #define PRECO_DINHEIRO_GERA 100
+#define PRECO_UPGRADE_GERA 20
+
 
 #endif //HEAD

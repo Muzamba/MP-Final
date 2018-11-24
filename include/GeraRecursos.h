@@ -9,8 +9,9 @@ class GeraRecursos : public Predio {
  public:
     GeraRecursos(int X, int Y, int tipo);
 
-    /* Precisa da classe player pronto */
     int produzirRecurso();
+
+    bool upgrade(int *dinheiro);
 
     ~GeraRecursos();
 
