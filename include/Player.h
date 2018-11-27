@@ -1,5 +1,8 @@
+#pragma once
+//#pragma once
 #ifndef INCLUDE_PLAYER_H_
 #define INCLUDE_PLAYER_H_
+
 // "Copyright [year] <Pedro>"
 
 #include "Head.h"
@@ -10,13 +13,13 @@
 #include "Jogo.h"
 
 class Player {
- public:
+public:
     /* funcionalidades */
     bool compra_GeraRecurso(int x, int y, RECURSO tipo);
 
     bool compra_Fabrica(int x, int y, UNIDADE tipo);
 
-    bool compra_Unidade(Fabrica fabrica);
+    bool compra_Unidade(int x, int y, Fabrica fabrica);
 
     void atualizar_Recursos();
 
@@ -57,7 +60,7 @@ class Player {
 
     void setPontos(int pontos);
 
- private:
+private:
     /* Metodos auxiliares */
     void retira_recurso_fabrica(UNIDADE tipo);
 
@@ -67,9 +70,19 @@ class Player {
 
     bool possui_recursos_geraRecurso(RECURSO tipo);
 
+    void retira_recurso_unidade(UNIDADE tipo, Fabrica fabrica);
+
+    bool possui_recursos_unidade(int tipo, int custo);
+
     bool verifica_espaco_predio(int x, int y);
 
     bool verifica_espaco_ocupado(int x, int y);
 };
+
+/* Funções auxiliares para compra */
+TEXTURAS retorna_textura_recurso(RECURSO tipo);
+
+TEXTURAS retorna_textura_unidade(UNIDADE tipo);
+#define TESTE
 
 #endif  // INCLUDE_PLAYER_H_

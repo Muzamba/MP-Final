@@ -74,3 +74,11 @@ velocidade(velocidade), dano(dano) {}
 
 Unidade::~Unidade() {
 }
+
+int Unidade::getTipo() const {
+    return tipo;
+}
+
+void Unidade::setTipo(int tipo) {
+    Unidade::tipo = tipo;
+}

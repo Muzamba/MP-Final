@@ -1,4 +1,4 @@
-// copyright 2018 Switch Dreams
+#pragma once
 #ifndef HEAD
 #define HEAD
 
@@ -6,6 +6,14 @@ enum UNIDADE {PAPEL, PEDRA, TESOURA};
 enum RECURSO {CELULOSE, PEDREGULHO, METAL};
 enum TEXTURAS {
     MAPA,
+    RECURSO_DINHEIRO_PLAYER,
+    RECURSO_CELULOSE_PLAYER,
+    RECURSO_PEDREGULHO_PLAYER,
+    RECURSO_METAL_PLAYER,
+    RECURSO_DINHEIRO_CPU,
+    RECURSO_CELULOSE_CPU,
+    RECURSO_PEDREGULHO_CPU,
+    RECURSO_METAL_CPU,
     MENU_PRINCIPAL,
     BOTAO_INICIAR,
     BOTAO_INICIAR_S,
@@ -26,27 +34,48 @@ enum TEXTURAS {
     BASE_CPU,
     TEX_TOTAL
 };
-enum OPERACOES{
-    NADA,
-    INICIA_JOGO,
-    TOTAL
+
+
+enum TIPO {
+    NADA, 
+    GERA_CELULOSE, 
+    GERA_PEDREGULHO, 
+    GERA_METAL, 
+    FABRICAR_PAPEL, 
+    FABRICAR_PEDRA, 
+    FABRICAR_TESOURA,
+    U_GERA_CELULOSE, 
+    U_GERA_PEDREGULHO, 
+    U_GERA_METAL, 
+    U_FABRICA_PAPEL, 
+    U_FABRICA_PEDRA, 
+    U_FABRICA_TESOURA
 };
 
+//--------------Define Unidade ------------
+#define PRECO_INICIAL_UNIDADE 50
+#define CUSTO_INICIAL_DO_UPGRADE_UNIDADE 20
 
-// ----------Define Player -----------------
+//----------Define Player -----------------
 
-#define RECURSO_INICIAL 100
-#define DINHEIRO_INICIAL 200
+#define RECURSO_INICIAL 200
+#define DINHEIRO_INICIAL 100
 
-// ---------_Define Fabrica ----------------
+//---------_Define Fabrica ----------------
 
-#define PRECO_RECURSO_FABRICA 50
+#define PRECO_RECURSO_FABRICA 100
 #define PRECO_DINHEIRO_FABRICA 100
+#define VIDA_INICIAL_FABRICA 100
+#define TEMPO_ESPERA_INICIAL_FABRICA 20
+#define CUSTO_INICIAL_UPGRADE_FABRICA 20
+
 
 // -------- Define GeraRecuso--------------
 
-#define TAXA_COLETA 5
-#define PRECO_RECURSO_GERA 50
+#define TAXA_COLETA 1
+#define PRECO_RECURSO_GERA 100
 #define PRECO_DINHEIRO_GERA 100
+#define PRECO_UPGRADE_GERA 20
 
-#endif  // HEAD
+
+#endif //HEAD

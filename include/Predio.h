@@ -1,3 +1,4 @@
+#pragma once
 // Copyright 2018 João Pedro Assis
 #ifndef PREDIO
 #define PREDIO
@@ -48,7 +49,7 @@ class Predio : public Objeto {
     int get_vida();
 
  protected:
-    int vida;
+    int vida_predio;
     //  Menu menu();
 };
 

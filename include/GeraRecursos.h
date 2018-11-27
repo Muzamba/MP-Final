@@ -1,3 +1,4 @@
+#pragma once
 #ifndef INCLUDE_GERARECURSOS_H_
 #define INCLUDE_GERARECURSOS_H_
 // "Copyright [year] <Pedro>"
@@ -8,8 +9,9 @@ class GeraRecursos : public Predio {
  public:
     GeraRecursos(int X, int Y, int tipo);
 
-    /* Precisa da classe player pronto */
     int produzirRecurso();
+
+    bool upgrade(int *dinheiro);
 
     ~GeraRecursos();
 

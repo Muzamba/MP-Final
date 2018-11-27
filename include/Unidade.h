@@ -51,12 +51,16 @@ class Unidade : public Objeto {
 
     void setVelocidade(int velocidade);
 
+    int getTipo() const;
+
+    void setTipo(int tipo);
+
     int getDano() const;
 
     void setDano(int dano);
 
- protected:
     int tipo;
+ protected:
 
     int vida;
 

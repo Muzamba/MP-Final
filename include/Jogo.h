@@ -1,16 +1,18 @@
-// copyright 2018 Switch Dreams
 #pragma once
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 #include <string>
+#include "Player.h"
 #include "Head.h"
 #include "Botao.h"
 #include "Fabrica.h"
 #include "GeraRecursos.h"
 #include "Unidade.h"
+
+
 class Jogo {
- public:
+public:
     Jogo();
     void init(const char* titulo, int x_pos, int y_pos, int width, int height);
     bool loadMidia();
@@ -24,22 +26,43 @@ class Jogo {
     bool isOn();
     ~Jogo();
 
-    Unidade ***matriz_unidade;
-    GeraRecursos ***matriz_geraRecurso;
-    Fabrica ***matriz_fabrica;
+    Unidade ***matriz_unidade = NULL;
+    GeraRecursos ***matriz_geraRecurso = NULL;
+    Fabrica ***matriz_fabrica = NULL;
 
- protected:
-    SDL_Color cTempo{0, 0, 0, 255};
-    SDL_Texture* tTempo = NULL;
-    std::string sTempo;
-    TTF_Font* font;
+    SDL_Texture* texturas[TEXTURAS::TEX_TOTAL];
     bool menu_inicial = false;
+    SDL_Texture* aloo;
+    //#ifdef TESTE
+    //Player* jogador = NULL;
+    //Player* cpu = NULL;
+    //#endif
+    //Player* jogador = NULL;
+    bool comprando = false;
+    TIPO tipoCompra = NADA;
+    //SDL_Texture *teste;
+
+protected:
+    Objeto* recursoDinheiroJogador = NULL;
+    Objeto* recursoCeluloseJogador= NULL;
+    Objeto* recursoPedregulhoJogador= NULL;
+    Objeto* recursoMetalJogador= NULL;
+    Objeto* recursoDinheiroCpu= NULL;
+    Objeto* recursoCeluloseCpu= NULL;
+    Objeto* recursoPedregulhoCpu= NULL;
+    Objeto* recursoMetalCpu= NULL;
+
+    SDL_Color cRecurso{0, 0, 0}; //decidir cor
+    SDL_Texture* tRecurso;
+    TTF_Font* font = NULL;
+    Botao_Compra* compra= NULL;
     Botao_Iniciar* bIniciar = NULL;
     Objeto* menuInicial = NULL;
     Objeto* mapa = NULL;
     int tempo = 0;
     bool on;
     SDL_Window* janela = NULL;
-    SDL_Texture* texturas[TEXTURAS::TEX_TOTAL];
+
     SDL_Renderer* render = NULL;
+
 };

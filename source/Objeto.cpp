@@ -34,7 +34,21 @@ void Objeto::mudaTextura(SDL_Texture* textura) {
     this->textura = textura;
 }
 
+void Objeto::setSrcRect(int x, int y, int w, int h){
+    srcRect->x = x;
+    srcRect->y = y;
+    srcRect->w = w;
+    srcRect->h = h;
+}
+
+void Objeto::setDestRect(int x, int y, int w, int h){
+    destRect->x = x;
+    destRect->y = y;
+    destRect->w = w;
+    destRect->h = h;
+}
+
 Objeto::~Objeto() {
-    /*delete srcRect;
-    delete destRect;*/
+    delete srcRect;
+    delete destRect;
 }
