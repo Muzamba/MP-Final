@@ -28,3 +28,5 @@ protected:
 void buttomEvents(SDL_Event* evento);
 void retornaBotao(int* x,int* y);
 void to_Cord(int* X, int* Y);
+bool verifica_clique_fabrica(const int* X, const int* Y);
+bool in_range_mapa(int x, int y); /* Testado */

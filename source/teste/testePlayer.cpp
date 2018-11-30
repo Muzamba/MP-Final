@@ -16,7 +16,7 @@ Player* cpu ;
 Player* jogador;
 Jogo* jogo = new Jogo();
 
-
+/*
 TEST_CASE("Construtor da classe Player", "Player") {
     Player player1;
     REQUIRE(player1.getCelulose() == RECURSO_INICIAL);
@@ -39,33 +39,34 @@ TEST_CASE("Compra_GeraRecursos", "Player") {
         REQUIRE(!player1.compra_GeraRecurso(x, y, RECURSO::PEDREGULHO));
     }
     SECTION("player1 com recurso e dinheiro suficiente") {
-        printf("01");
         player1.setPedregulho(1000);
-        printf("01");
         player1.setDinheiro(1000);
-        printf("01");
         REQUIRE(player1.compra_GeraRecurso(1, 1, RECURSO::PEDREGULHO));
         REQUIRE(player1.getDinheiro() == 1000 - PRECO_DINHEIRO_GERA);
         REQUIRE(player1.getPedregulho() == 1000 - PRECO_RECURSO_GERA);
     }
+}*/
+
+
+TEST_CASE("Compra Unidades") {
+    Player player1;
+    printf("ENTROU\n");
+    SECTION("player1 sem recursos") {
+        int x = 5, y = 5;
+        player1.setPedregulho(2);
+        REQUIRE(player1.compra_Unidade(x, y, UNIDADE::PEDRA, 1) == false);
+    }
+    SECTION("player1 com recursos") {
+        int x = 5, y = 5;
+        player1.setPedregulho(8000);
+        printf("Antes\n");
+        CHECK(player1.compra_Unidade(x, y, UNIDADE::PEDRA, 1) == true);
+        printf("Depois\n");
+    }
+    printf("PASSOU AQUI\n");
 }
 
 /*
-TEST_CASE("Compra Unidades") {
-    Player player1;
-    Fabrica fbrc(0, 0, PEDRA);
-    SECTION("player1 sem recursos") {
-        int x = 4, y = 1;
-        player1.setPedregulho(0);
-        REQUIRE(!player1.compra_Unidade(x, y, fbrc));
-    }
-    SECTION("player1 com recursos") {
-        int x = 3, y = 1;
-        player1.setPedregulho(400);
-        REQUIRE(player1.compra_Unidade(x, y, fbrc));
-    }
-}*/
-
 TEST_CASE("Compra_Fabrica", "Player") {
     Player player1;
     int x = 2, y = 0;
@@ -88,5 +89,5 @@ TEST_CASE("Compra_Fabrica", "Player") {
         REQUIRE(player1.getDinheiro() == 1000 - PRECO_DINHEIRO_FABRICA);
         REQUIRE(player1.getPedregulho() == 1000 - PRECO_RECURSO_FABRICA);
     }
-}
+}*/
 

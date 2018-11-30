@@ -28,18 +28,14 @@ Player::Player() {
  */
 bool Player::compra_GeraRecurso(int x, int y, RECURSO tipo) {
     /* Verifica se o jogador tem recursos suficientes */
-    printf("1\n");
     if (possui_recursos_geraRecurso(tipo)) {
-        printf("2\n");
         /*  Verifica se a matriz de posicao esta vazia */
         if (verifica_espaco_ocupado(x, y) && verifica_espaco_predio(x, y)) {
-            printf("3\n");
             /* Retira o dinheiro da compra */
             Player::retira_recurso_geraRecurso(tipo);
             /* Adiciona a fabrica na lista da classe Player*/
             jogo->matriz_geraRecurso[x][y] = new GeraRecursos(x, y, tipo);
             TEXTURAS text = retorna_textura_recurso(tipo);
-            printf("%d", text);
             jogo->matriz_geraRecurso[x][y]->mudaTextura(jogo->texturas[text]);
             jogo->matriz_geraRecurso[x][y]->setDestRect((y + 2) * 80 ,(x + 2) * 72, 64, 64);
             jogo->matriz_geraRecurso[x][y]->setSrcRect(0, 0, 64, 64);
@@ -74,8 +70,7 @@ bool Player::compra_Fabrica(int x, int y, UNIDADE tipo) {
             Player::retira_recurso_fabrica(tipo);
             /* Adiciona a fabrica na lista da classe Player*/
             jogo->matriz_fabrica[x][y] = new Fabrica(x, y, tipo);
-            TEXTURAS text = retorna_textura_unidade(tipo);
-            printf("%d", text);
+            TEXTURAS text = retorna_textura_fabrica(tipo);
             jogo->matriz_fabrica[x][y]->mudaTextura(jogo->texturas[text]);
             jogo->matriz_fabrica[x][y]->setDestRect((y + 2) * 80 ,(x + 2) * 72, 64, 64);
             jogo->matriz_fabrica[x][y]->setSrcRect(0, 0, 64, 64);
@@ -89,7 +84,7 @@ bool Player::compra_Fabrica(int x, int y, UNIDADE tipo) {
 }
 
 
-TEXTURAS retorna_textura_unidade(UNIDADE tipo){
+TEXTURAS retorna_textura_fabrica(UNIDADE tipo){
     switch(tipo){
         case RECURSO::CELULOSE:
             return TEXTURAS::FABRICA_PAPEL;
@@ -102,8 +97,24 @@ TEXTURAS retorna_textura_unidade(UNIDADE tipo){
     }
 }
 
-bool Player::possui_recursos_unidade(int tipo, int custo) {
+bool Player::possui_recursos_unidade(int tipo, int nivel) {
+    int custo = 0;
     int recurso = 0;
+    switch (nivel) {
+        case 1:
+            custo = PRECO_UNIDADE_1;
+            break;
+        case 2:
+            custo = PRECO_UNIDADE_2;
+            break;
+        case 3:
+            custo = PRECO_UNIDADE_3;
+            break;
+        default:
+            custo = 32000;
+            printf("ERRO : Nivel Invalido : compra unidade");
+    }
+
     switch (tipo) {
         case RECURSO::CELULOSE :
             recurso = Player::getCelulose();
@@ -118,53 +129,130 @@ bool Player::possui_recursos_unidade(int tipo, int custo) {
             printf("ERRO : Recurso Invalido : compra_unidade \n");
             return false;
     }
-    if (recurso >= custo) {
-        return true;
-    } else {
-        return false;
-    }
+    return recurso >= custo;
 }
 
-void Player::retira_recurso_unidade(UNIDADE tipo, Fabrica fabrica) {
+void Player::retira_recurso_unidade(UNIDADE tipo, int nivel) {
+    int custo = 0;
+    switch (nivel) {
+        case 1:
+            custo = PRECO_UNIDADE_1;
+            break;
+        case 2:
+            custo = PRECO_UNIDADE_3;
+            break;
+        case 3:
+            custo = PRECO_UNIDADE_3;
+            break;
+        default:
+            custo = 32000;
+            printf("ERRO : Nivel Invalido : compra unidade");
+    }
     /* Retira recurso */
     switch (tipo) {
         case RECURSO::CELULOSE:
-            Player::celulose -= fabrica.custo_unidade;
+            Player::celulose -= custo;
             break;
         case RECURSO::PEDREGULHO:
-            Player::pedregulho -= fabrica.custo_unidade;
+            Player::pedregulho -= custo;
             break;
         case RECURSO:: METAL:
-            Player::metal -= fabrica.custo_unidade;
+            Player::metal -= custo;
             break;
         default:
             printf("ERRO : Recurso Invalido : compra_unidade \n");
     }
 }
 
-bool Player::compra_Unidade(int x, int y, Fabrica fabrica) {
-    if (possui_recursos_unidade(fabrica.tipo, fabrica.custo_unidade)) {
-        /* Retira o dinheiro da compra */
-        /*  Verifica se a matriz de posicao esta vazia */
-        if (verifica_espaco_ocupado(x, y)) {
-            /* Retira o dinheiro da compra */
-            Player::retira_recurso_unidade(fabrica.tipo, fabrica);
-            /* Adiciona a fabrica na lista da classe Player*/
-            jogo->matriz_unidade[x][y] = fabrica.geraUnidade(1, 2);
-            return true;
-        } else { /* Se a posicao e invalida */
-            return false;
+bool verifica_espaco_unidade(int x,int y) {
+    return y >= 2 && y <= 9;
+
+}
+
+TEXTURAS retorna_textura_unidade(int nivel, UNIDADE tipo) {
+    if (nivel == 1 || nivel == 2) {
+        switch (tipo){
+            case UNIDADE::PEDRA:
+                return TEXTURAS::TROPA_PEDRA;
+            case UNIDADE ::PAPEL:
+                return TEXTURAS ::TROPA_PAPEL;
+            case UNIDADE ::TESOURA:
+                return TEXTURAS ::TROPA_TESOURA;
         }
-    } else { /* Se o jogador nao tiver recursos suficientes */
-        return false;
+    } else {
+        switch (tipo){
+            case UNIDADE::PEDRA:
+                return TEXTURAS::TROPA_PEDRA2;
+            case UNIDADE ::PAPEL:
+                return TEXTURAS ::TROPA_PAPEL2;
+            case UNIDADE ::TESOURA:
+                return TEXTURAS ::TROPA_TESOURA2;
+        }
     }
 }
+
+bool Player::compra_Unidade(int x, int y, UNIDADE tipo, int nivel) {
+    if (possui_recursos_unidade(tipo, nivel)) {
+        if (verifica_espaco_ocupado(x, y) && verifica_espaco_unidade(x, y)) {
+            retira_recurso_unidade(tipo, nivel);
+            switch (nivel) {
+                case 1:
+                    jogo->matriz_unidade[x][y] = new Unidade(x, y, tipo, VIDA_UNIDADE_1, VELO_UNIDADE_1, DANO_UNIDADE_1);
+                    jogo->matriz_unidade[x][y]->mudaTextura(jogo->texturas[retorna_textura_unidade(1, tipo)]);
+                    break;
+                case 2:
+                    jogo->matriz_unidade[x][y] = new Unidade(x, y, tipo, VIDA_UNIDADE_2, VELO_UNIDADE_2, DANO_UNIDADE_2);
+                    jogo->matriz_unidade[x][y]->mudaTextura(jogo->texturas[retorna_textura_unidade(2, tipo)]);
+                    break;
+                case 3:
+                    jogo->matriz_unidade[x][y] = new Unidade(x, y, tipo, VIDA_UNIDADE_3, VELO_UNIDADE_3, DANO_UNIDADE_3);
+                    jogo->matriz_unidade[x][y]->mudaTextura(jogo->texturas[retorna_textura_unidade(3, tipo)]);
+                    break;
+                default:
+                    printf("NIVEL INVALIDO :: COMPRA UNIDADE");
+                    break;
+            }
+            jogo->matriz_unidade[x][y]->setDestRect((y + 2) * 80 ,(x + 2) * 72, 64, 64);
+            jogo->matriz_unidade[x][y]->setSrcRect(0, 0, 64, 64);
+            return true;
+        }
+    }
+    return false;
+}
+
+/*bool Player::compra_Unidade(int x, int y, Fabrica fabrica) {
+    printf("Entrou na funcao \n");
+    if (possui_recursos_unidade(fabrica.tipo, fabrica.custo_unidade)) {
+        printf("Possui Recursos\n");
+        // Retira o dinheiro da compra
+        //  Verifica se a matriz de posicao esta vazia
+        if (verifica_espaco_ocupado(x, y)) {
+            printf("Espaço livre\n");
+            // Retira o dinheiro da compra
+            Player::retira_recurso_unidade(fabrica.tipo, fabrica);
+            printf("Retirou recurso\n");
+            // Adiciona a fabrica na matriz unidade
+            //jogo->matriz_unidade[x][y] = fabrica.geraUnidade(1, 2);
+            //jogo->matriz_unidade[x][y] = new Unidade(x, y, fabrica.getTipo(), fabrica.vida, fabrica.velocidade, fabrica.dano);
+            TEXTURAS text = retorna_textura_unidade(fabrica.getTipo());
+            jogo->matriz_fabrica[x][y]->mudaTextura(jogo->texturas[text]);
+            jogo->matriz_fabrica[x][y]->setDestRect((y + 2) * 80 ,(x + 2) * 72, 64, 64);
+            jogo->matriz_fabrica[x][y]->setSrcRect(0, 0, 64, 64);
+            printf("Alocou memoria\n");
+            return true;
+        } else { // Se a posicao e invalida
+            return false;
+        }
+    } else { // Se o jogador nao tiver recursos suficientes
+        return false;
+    }
+}*/
 /** Função atualizar_Recursos
  * @brief A função percorre a lista de geraRecursos e soma os recursos gerados nos atributos do player
  * */
 void Player::atualizar_Recursos() {
     for(int i = 0;i < 6;++i) {
-        for (int j = 0; j < 12; ++j) {
+        for (int j = 0; j < 2; ++j) {
             if (jogo->matriz_geraRecurso[i][j] != NULL) {
                 switch (jogo->matriz_geraRecurso[i][j]->getTipo()) {
                     case RECURSO::PEDREGULHO:
@@ -339,4 +427,12 @@ bool Player::verifica_espaco_ocupado(int x, int y) {
     }
     return false;
 
+}
+
+int Player::getVida() const {
+    return vida;
+}
+
+void Player::setVida(int vida) {
+    Player::vida = vida;
 }

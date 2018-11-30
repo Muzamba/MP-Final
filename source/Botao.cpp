@@ -148,11 +148,39 @@ void buttomEvents(SDL_Event* evento) {
                         jogo->comprando = false;
                         jogo->tipoCompra = NADA;
                         break;
+                    case UNIDADE_PAPEL:
+                        if (jogador->compra_Unidade(y, x, UNIDADE::PAPEL, jogo->nivelCompra)) {
+                            printf("Tropa papel comprada com sucesso \n");
+                        } else {
+                            printf("Falha na compra da tropa papel\n");
+                        }
+                        jogo->comprando = false;
+                        jogo->tipoCompra = NADA;
+                        jogo->nivelCompra = 0;
+                    case UNIDADE_PEDRA:
+                        if (jogador->compra_Unidade(y, x, UNIDADE::PEDRA, jogo->nivelCompra)) {
+                            printf("Tropa pedra comprada com sucesso \n");
+                        } else {
+                            printf("Falha na compra da tropa pedra\n");
+                        }
+                        jogo->comprando = false;
+                        jogo->tipoCompra = NADA;
+                        jogo->nivelCompra = 0;
+                    case UNIDADE_TESOURA:
+                        if (jogador->compra_Unidade(y, x, UNIDADE::TESOURA, jogo->nivelCompra)) {
+                            printf("Tropa tesoura comprada com sucesso \n");
+                        } else {
+                            printf("Falha na compra da tropa tesoura\n");
+                        }
+                        jogo->comprando = false;
+                        jogo->tipoCompra = NADA;
+                        jogo->nivelCompra = 0;
                     case U_FABRICA_PAPEL:
                         if (jogo->matriz_fabrica[y][x] != NULL) {
                             if (jogo->matriz_fabrica[y][x]->tipo == UNIDADE::PAPEL) {
                                 printf("Upgrade realizado FABRICA PAPEL\n");
                                 jogo->matriz_fabrica[y][x]->upgrade_fabrica(&(jogador->dinheiro));
+                                printf("Novo nivel da fabrica %d\n", jogo->matriz_fabrica[y][x]->get_nivel());
                             }
                         }
                         jogo->comprando = false;
@@ -270,23 +298,60 @@ void buttomEvents(SDL_Event* evento) {
                         jogo->comprando = false;
                         jogo->tipoCompra = NADA;
 
-                }//switch
+                }// switch
 
-            } /*if*/else{
+            } /* if */else{
                 retornaBotao(&x, &y);
-            }//else
+            }// else
             printf("tipo: %d , comprando: %d\n", jogo->tipoCompra,(jogo->comprando  ? 1 : 0 ));
-            //printf("x: %d , y: %d\n", x, y);
+            // printf("x: %d , y: %d\n", x, y);
 
     }
 }
 
-void retornaBotao(int* X,int* Y){
+bool in_range_mapa(int x, int y){
+    return x >= 0 && y >=0 && x < 6 && y < 12;
+}
+
+bool verifica_clique_fabrica(const int* X, const int* Y) {
+    /* Conversao de coordenadas de clique para coordenadas de mapa */
+    int x = *X - 2;
+    int y = *Y - 2;
+    /* Se x e y estiverem dentro do escopo do mapa*/
+    if (in_range_mapa(y, x)) {
+        // Verifica se o clique foi em cima de uma fabrica
+        if (jogo->matriz_fabrica[y][x] != NULL) {
+            // Verifica o nivel da fabrica e
+            jogo->comprando = true;
+            switch (jogo->matriz_fabrica[y][x]->getTipo()) {
+                case UNIDADE::TESOURA:
+                    jogo->tipoCompra = UNIDADE_TESOURA;
+                    jogo->nivelCompra = jogo->matriz_fabrica[y][x]->get_nivel();
+                    break;
+                case UNIDADE::PEDRA:
+                    jogo->tipoCompra = UNIDADE_PEDRA;
+                    jogo->nivelCompra = jogo->matriz_fabrica[y][x]->get_nivel();
+                    break;
+                case UNIDADE::PAPEL:
+                    jogo->tipoCompra = UNIDADE_PAPEL;
+                    jogo->nivelCompra = jogo->matriz_fabrica[y][x]->get_nivel();
+                    break;
+            }
+            return true; /* Clicou em uma fabrica */
+        }
+    }
+    return false; /* Nao clicou em uma fabrica*/
+}
+
+void retornaBotao(int* X, int* Y) {
     jogo->comprando = true;
     to_Cord(X, Y);
-    switch(*Y){
+    /* Se o clique for em uma fabrica */
+    if (verifica_clique_fabrica(X, Y))
+        return;
+    switch (*Y) {
         case 8:
-            switch(*X) {
+            switch (*X) {
                 case 4:
                     jogo->tipoCompra = FABRICAR_PAPEL;
                     return;
@@ -311,7 +376,7 @@ void retornaBotao(int* X,int* Y){
                     return;
             }
         case 9:
-            switch(*X){
+            switch (*X) {
                 case 4:
                     jogo->tipoCompra = GERA_PEDREGULHO;
                     return;
@@ -342,15 +407,14 @@ void retornaBotao(int* X,int* Y){
 }
 
 void to_Cord(int* X, int* Y) {
-
-    if((*X % 80) != 0){
+    if ((*X % 80) != 0) {
         *X -= (*X % 80);
         *X = *X / 80;
-        //*X = *X / 72;
+        // *X = *X / 72;
     } else {
         *X = *X / 80;
     }
-    if((*Y % 74) != 0){
+    if ((*Y % 74) != 0) {
         *Y -= (*Y % 72);
         *Y = *Y / 72;
     } else {

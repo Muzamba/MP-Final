@@ -25,11 +25,7 @@ void Fabrica::atributos_unidade(FABRICA nivel) {
 }
 
 bool Fabrica::can_upgrade_fabrica(int custo, int capital) {
-    if (capital >= custo) {
-        return true;
-    } else {
-        return false;
-    }
+    return capital >= custo;
 }
 
 void Fabrica::upgrade_fabrica(int* dinheiro) {
@@ -52,4 +48,12 @@ void Fabrica::upgrade_fabrica(int* dinheiro) {
 Unidade* Fabrica::geraUnidade(int matI, int matJ) {
     return new Unidade(matI, matJ, Fabrica::tipo, Fabrica::vida,
     Fabrica::velocidade, Fabrica::dano);
+}
+
+UNIDADE Fabrica::getTipo() const {
+    return tipo;
+}
+
+void Fabrica::setTipo(UNIDADE tipo) {
+    Fabrica::tipo = tipo;
 }

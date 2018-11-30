@@ -11,7 +11,7 @@ LIBS=-lm
 _DEPS = Unidade.h Head.h Fabrica.h Objeto.h Player.h Predio.h GeraRecursos.h Jogo.h Botao.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ =  Player.o Objeto.o Unidade.o Predio.o Botao.o Fabrica.o GeraRecursos.o Jogo.o teste/testePlayer.o teste/testeGeraRecursos.o teste/testeFabrica.o
+_OBJ =  Player.o Objeto.o Unidade.o Predio.o Botao.o Fabrica.o GeraRecursos.o Jogo.o teste/testeBotao.o teste/testePlayer.o teste/testeGeraRecursos.o teste/testeFabrica.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 

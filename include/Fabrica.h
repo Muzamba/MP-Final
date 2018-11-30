@@ -40,6 +40,10 @@ class Fabrica : public Predio {
     Unidade* geraUnidade(int matI, int matJ);
     ~Fabrica() {}
 
+    UNIDADE getTipo() const;
+
+    void setTipo(UNIDADE tipo);
+
     //  -------------------- Variáveis da Fábrica em si -----------------------
     UNIDADE tipo;
     FABRICA tempoEspera;  // T de espera para uma unidade ser gerada
@@ -50,9 +54,9 @@ class Fabrica : public Predio {
 
     // ---------------------- Variáveis das Unidades geradas ------------------
 
-    UNIDADES vida;
-    UNIDADES dano;
-    UNIDADES velocidade;
+    UNIDADES vida = 5;
+    UNIDADES dano = 5;
+    UNIDADES velocidade = 5;
     UNIDADES custo_upgrade_und = CUSTO_INICIAL_DO_UPGRADE_UNIDADE;
     UNIDADES custo_unidade = PRECO_INICIAL_UNIDADE;
 };

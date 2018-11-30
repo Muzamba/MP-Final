@@ -37,7 +37,10 @@ enum TEXTURAS {
 
 
 enum TIPO {
-    NADA, 
+    NADA,
+    UNIDADE_PAPEL,
+    UNIDADE_PEDRA,
+    UNIDADE_TESOURA,
     GERA_CELULOSE, 
     GERA_PEDREGULHO, 
     GERA_METAL, 
@@ -77,5 +80,19 @@ enum TIPO {
 #define PRECO_DINHEIRO_GERA 100
 #define PRECO_UPGRADE_GERA 20
 
+// --------------Define Atributos Unidades -------------
+#define VIDA_UNIDADE_1 10
+#define VELO_UNIDADE_1 1
+#define DANO_UNIDADE_1 10
+#define PRECO_UNIDADE_1 50
 
+#define VIDA_UNIDADE_2 20
+#define VELO_UNIDADE_2 1
+#define DANO_UNIDADE_2 20
+#define PRECO_UNIDADE_2 75
+
+#define VIDA_UNIDADE_3 30
+#define VELO_UNIDADE_3 1
+#define DANO_UNIDADE_3 30
+#define PRECO_UNIDADE_3 100
 #endif //HEAD

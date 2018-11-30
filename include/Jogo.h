@@ -40,8 +40,11 @@ public:
     //Player* jogador = NULL;
     bool comprando = false;
     TIPO tipoCompra = NADA;
+    int nivelCompra = 0;
     //SDL_Texture *teste;
 
+    /* Movimentacao */
+    void movimentacao();
 protected:
     Objeto* recursoDinheiroJogador = NULL;
     Objeto* recursoCeluloseJogador= NULL;
@@ -66,3 +69,8 @@ protected:
     SDL_Renderer* render = NULL;
 
 };
+
+void combate_unidade(Unidade** unidade1, Unidade** unidade2);
+void ataca_geraRecurso(Unidade* unidade, GeraRecursos* geradora);
+void ataca_fabrica(Unidade* unidade, Fabrica* fbrc);
+void anda(Unidade** unidade, Unidade** destino);

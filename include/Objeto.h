@@ -58,10 +58,10 @@ public:
     void setDestRect(int x, int y, int w, int h);
 
     ~Objeto();
-protected:
     SDL_Texture* textura = NULL;
     SDL_Rect* srcRect = NULL;
     SDL_Rect* destRect = NULL;
+protected:
     int pos_X;
     int pos_Y;
 };

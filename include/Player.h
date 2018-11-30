@@ -19,7 +19,9 @@ public:
 
     bool compra_Fabrica(int x, int y, UNIDADE tipo);
 
-    bool compra_Unidade(int x, int y, Fabrica fabrica);
+    //bool compra_Unidade(int x, int y, Fabrica fabrica);
+
+    bool compra_Unidade(int x, int y, UNIDADE tipo, int nivel);
 
     void atualizar_Recursos();
 
@@ -28,6 +30,12 @@ public:
     int metal;       // Tesoura
     int dinheiro;
     int pontos;
+
+    int getVida() const;
+
+    void setVida(int vida);
+
+    int vida;
 
     /*Listas de Objetos*/
     std::vector<GeraRecursos> lista_GeraRecursos;
@@ -70,9 +78,9 @@ private:
 
     bool possui_recursos_geraRecurso(RECURSO tipo);
 
-    void retira_recurso_unidade(UNIDADE tipo, Fabrica fabrica);
+    void retira_recurso_unidade(UNIDADE tipo, int nivel);
 
-    bool possui_recursos_unidade(int tipo, int custo);
+    bool possui_recursos_unidade(int tipo, int nivel);
 
     bool verifica_espaco_predio(int x, int y);
 
@@ -82,7 +90,9 @@ private:
 /* Funções auxiliares para compra */
 TEXTURAS retorna_textura_recurso(RECURSO tipo);
 
-TEXTURAS retorna_textura_unidade(UNIDADE tipo);
+TEXTURAS retorna_textura_fabrica(UNIDADE tipo);
+
+TEXTURAS retorna_textura_unidade(int nivel, UNIDADE tipo);
 #define TESTE
 
 #endif  // INCLUDE_PLAYER_H_
