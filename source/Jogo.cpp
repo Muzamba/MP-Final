@@ -303,9 +303,21 @@ bool Jogo::loadMidia() {
         success = false;
     }
 
+    texturas[TEXTURAS::TROPA_PAPEL_CPU] = loadTexture( "imagens/papel_cpu.png" );
+    if( texturas[TEXTURAS::TROPA_PAPEL] == NULL ) {
+        printf( "Failed to load texture papel_cpu.png!\n" );
+        success = false;
+    }
+
     texturas[TEXTURAS::TROPA_PEDRA] = loadTexture( "imagens/pedra.png" );
     if( texturas[TEXTURAS::TROPA_PEDRA] == NULL ) {
         printf( "Failed to load texture pedra.png!\n" );
+        success = false;
+    }
+
+    texturas[TEXTURAS::TROPA_PEDRA_CPU] = loadTexture( "imagens/pedra_cpu.png" );
+    if( texturas[TEXTURAS::TROPA_PEDRA] == NULL ) {
+        printf( "Failed to load texture pedra_cpu.png!\n" );
         success = false;
     }
 
@@ -315,9 +327,27 @@ bool Jogo::loadMidia() {
         success = false;
     }
 
+    texturas[TEXTURAS::TROPA_TESOURA_CPU] = loadTexture( "imagens/tesoura_cpu.png" );
+    if( texturas[TEXTURAS::TROPA_TESOURA] == NULL ) {
+        printf( "Failed to load texture tesoura_cpu.png!\n" );
+        success = false;
+    }
+
     texturas[TEXTURAS::TROPA_PAPEL2] = loadTexture( "imagens/aviao_de_papel.png" );
     if( texturas[TEXTURAS::TROPA_PAPEL2] == NULL ) {
         printf( "Failed to load texture aviao_de_papel.png!\n" );
+        success = false;
+    }
+
+    texturas[TEXTURAS::TROPA_PAPEL2_CPU] = loadTexture( "imagens/aviao_de_papel_cpu.png" );
+    if( texturas[TEXTURAS::TROPA_PAPEL2] == NULL ) {
+        printf( "Failed to load texture aviao_de_papel_cpu.png!\n" );
+        success = false;
+    }
+
+    texturas[TEXTURAS::TROPA_PEDRA2] = loadTexture( "imagens/Golem_de_pedra.png" );
+    if( texturas[TEXTURAS::TROPA_PEDRA2] == NULL ) {
+        printf( "Failed to load texture Golem_de_pedra.png!\n" );
         success = false;
     }
 
@@ -330,6 +360,12 @@ bool Jogo::loadMidia() {
     texturas[TEXTURAS::TROPA_TESOURA2] = loadTexture( "imagens/katana.png" );
     if( texturas[TEXTURAS::TROPA_TESOURA2] == NULL ) {
         printf( "Failed to load texture katana.png!\n" );
+        success = false;
+    }
+
+    texturas[TEXTURAS::TROPA_TESOURA2_CPU] = loadTexture( "imagens/katana_cpu.png" );
+    if( texturas[TEXTURAS::TROPA_TESOURA2] == NULL ) {
+        printf( "Failed to load texture katana_cpu.png!\n" );
         success = false;
     }
 
