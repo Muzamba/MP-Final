@@ -40,3 +40,11 @@ public:
     void handleEvent(SDL_Event* evento);
 
 };
+
+class Botao_Load : public Objeto {
+public:
+    Botao_Load(int X, int Y) : Objeto(X, Y){}
+
+    void handleEvent(SDL_Event* evento);
+
+};

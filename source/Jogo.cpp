@@ -30,6 +30,7 @@ Jogo::Jogo(){
     resume = new Botao_Resume(0,0);
     menuInicial = new Objeto(0, 0);
     compra = new Botao_Compra(0,0);
+    bLoad = new Botao_Load(0, 0);
     recursoDinheiroJogador = new Objeto(0,0);
     recursoCeluloseJogador = new Objeto(0,0);
     recursoPedregulhoJogador = new Objeto(0,0);
@@ -74,6 +75,8 @@ Jogo::~Jogo(){
     pause = NULL;
     delete resume;
     resume = NULL;
+    delete bLoad;
+    bLoad = NULL;
     delete menuInicial;
     menuInicial = NULL;
     delete mapa;
@@ -154,6 +157,7 @@ void Jogo::handleEvents(){
         case SDL_MOUSEMOTION:
             if(menu_inicial){
                 bIniciar->handleEvent(&evento);
+                bLoad->handleEvent(&evento);
                 printf("aloo\n");
             }else {
                 pause->handleEvent(&evento);
@@ -175,6 +179,7 @@ void Jogo::renderizar(){
     if(menu_inicial){
         menuInicial->render(render);
         bIniciar->render(render);
+        bLoad->render(render);
     }else {
         mapa->render(render);
         //compra->render(render);
@@ -487,6 +492,24 @@ bool Jogo::loadMidia() {
         success = false;
     }
 
+    texturas[TEXTURAS::BOTAO_LOAD] = loadTexture( "imagens/botao_load.png" );
+    if( texturas[TEXTURAS::BOTAO_LOAD] == NULL ) {
+        printf( "Failed to load texture botao_load.png!\n" );
+        success = false;
+    }
+
+    texturas[TEXTURAS::BOTAO_LOAD_SOBRE] = loadTexture( "imagens/botao_load_sobre.png" );
+    if( texturas[TEXTURAS::BOTAO_LOAD_SOBRE] == NULL ) {
+        printf( "Failed to load texture botao_load_sobre.png!\n" );
+        success = false;
+    }
+
+    texturas[TEXTURAS::BOTAO_LOAD_CLICK] = loadTexture( "imagens/botao_load_click.png" );
+    if( texturas[TEXTURAS::BOTAO_LOAD_CLICK] == NULL ) {
+        printf( "Failed to load texture botao_load_click.png!\n" );
+        success = false;
+    }
+
     texturas[TEXTURAS::MAPA] = loadTexture( "imagens/Mapa.png" );
     if( texturas[TEXTURAS::MAPA] == NULL ) {
         printf( "Failed to load texture Mapa.png!\n" );
@@ -497,6 +520,10 @@ bool Jogo::loadMidia() {
     bIniciar->mudaTextura(texturas[BOTAO_INICIAR]);
     bIniciar->setDestRect(300, 500,300,120);
     bIniciar->setSrcRect(0, 0, 300, 120);
+    // Botao Load
+    bLoad->mudaTextura(texturas[BOTAO_LOAD]);
+    bLoad->setSrcRect(0, 0, 300, 120);
+    bLoad->setDestRect(680, 500, 300, 120);
     // Botao Pause
     pause->mudaTextura(texturas[BOTAO_PAUSE]);
     pause->setSrcRect(0, 0, 64, 64);

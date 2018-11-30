@@ -60,6 +60,7 @@ protected:
     Botao_Iniciar* bIniciar = NULL;
     Botao_Pause* pause = NULL;
     Botao_Resume* resume = NULL;
+    Botao_Load* bLoad = NULL;
     Objeto* menuInicial = NULL;
     Objeto* mapa = NULL;
     int tempo = 0;
