@@ -26,6 +26,8 @@ Jogo::Jogo(){
     cpu = new Player();
     mapa = new Objeto(0, 0);/* Set e get depois*/
     bIniciar = new Botao_Iniciar(0, 0);
+    pause = new Botao_Pause(0,0);
+    resume = new Botao_Resume(0,0);
     menuInicial = new Objeto(0, 0);
     compra = new Botao_Compra(0,0);
     recursoDinheiroJogador = new Objeto(0,0);
@@ -68,6 +70,10 @@ Jogo::~Jogo(){
 
     delete bIniciar;
     bIniciar = NULL;
+    delete pause;
+    pause = NULL;
+    delete resume;
+    resume = NULL;
     delete menuInicial;
     menuInicial = NULL;
     delete mapa;
@@ -150,6 +156,8 @@ void Jogo::handleEvents(){
                 bIniciar->handleEvent(&evento);
                 printf("aloo\n");
             }else {
+                pause->handleEvent(&evento);
+                resume->handleEvent(&evento);
                 compra->handleEvent(&evento);
             break;
         }
@@ -193,6 +201,8 @@ void Jogo::renderizar(){
         recursoCeluloseCpu->render(render);
         recursoPedregulhoCpu->render(render);
         recursoMetalCpu->render(render);
+        pause->render(render);
+        resume->render(render);
     }
     SDL_RenderPresent(render);
 }
@@ -441,6 +451,42 @@ bool Jogo::loadMidia() {
         success = false;
     }
 
+    texturas[TEXTURAS::BOTAO_PAUSE] = loadTexture( "imagens/botao_pause.png" );
+    if( texturas[TEXTURAS::BOTAO_PAUSE] == NULL ) {
+        printf( "Failed to load texture botao_pause.png!\n" );
+        success = false;
+    }
+
+    texturas[TEXTURAS::BOTAO_PAUSE_SOBRE] = loadTexture( "imagens/botao_pause_sobre.png" );
+    if( texturas[TEXTURAS::BOTAO_PAUSE_SOBRE] == NULL ) {
+        printf( "Failed to load texture botao_pause_sobre.png!\n" );
+        success = false;
+    }
+
+    texturas[TEXTURAS::BOTAO_PAUSE_CLICK] = loadTexture( "imagens/botao_pause_click.png" );
+    if( texturas[TEXTURAS::BOTAO_PAUSE_CLICK] == NULL ) {
+        printf( "Failed to load texture botao_pause_click.png!\n" );
+        success = false;
+    }
+
+    texturas[TEXTURAS::BOTAO_RESUME] = loadTexture( "imagens/botao_resume.png" );
+    if( texturas[TEXTURAS::BOTAO_RESUME] == NULL ) {
+        printf( "Failed to load texture botao_resume.png!\n" );
+        success = false;
+    }
+
+    texturas[TEXTURAS::BOTAO_RESUME_SOBRE] = loadTexture( "imagens/botao_resume_sobre.png" );
+    if( texturas[TEXTURAS::BOTAO_RESUME_SOBRE] == NULL ) {
+        printf( "Failed to load texture botao_resume_sobre.png!\n" );
+        success = false;
+    }
+
+    texturas[TEXTURAS::BOTAO_RESUME_CLICK] = loadTexture( "imagens/botao_resume_click.png" );
+    if( texturas[TEXTURAS::BOTAO_RESUME_CLICK] == NULL ) {
+        printf( "Failed to load texture botao_resume_click.png!\n" );
+        success = false;
+    }
+
     texturas[TEXTURAS::MAPA] = loadTexture( "imagens/Mapa.png" );
     if( texturas[TEXTURAS::MAPA] == NULL ) {
         printf( "Failed to load texture Mapa.png!\n" );
@@ -451,6 +497,15 @@ bool Jogo::loadMidia() {
     bIniciar->mudaTextura(texturas[BOTAO_INICIAR]);
     bIniciar->setDestRect(300, 500,300,120);
     bIniciar->setSrcRect(0, 0, 300, 120);
+    // Botao Pause
+    pause->mudaTextura(texturas[BOTAO_PAUSE]);
+    pause->setSrcRect(0, 0, 64, 64);
+    pause->setDestRect(0, 0, 80, 60);
+    // Botao Resume
+    resume->mudaTextura(texturas[BOTAO_RESUME]);
+    resume->setSrcRect(0, 0, 64, 64);
+    resume->setDestRect(80, 0, 80, 60);
+    // Menu Inicial
     menuInicial->mudaTextura(texturas[MENU_PRINCIPAL]);
     menuInicial->setDestRect(0, 0, 1280,720);
     menuInicial->setSrcRect(0, 0, 1280, 720);

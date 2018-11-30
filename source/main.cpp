@@ -13,9 +13,9 @@
 Jogo* jogo;
 Player* jogador;
 Player* cpu;
-    
+
 int main() {
-    
+
     const int FPS = 60;
     const int frameDelay = 1000 / FPS;
     Uint32 frameStart;
@@ -30,11 +30,13 @@ printf("\n\n\n1\n\n\n");
     jogo->loadMidia();
 
     while(jogo->isOn()) {
-        
+
         frameStart = SDL_GetTicks();
         //printf("teste\n");
         jogo->handleEvents();
-        
+        while(jogo->paused){
+          jogo->handleEvents();
+        }
         jogo->update();
         jogo->renderizar();
 
@@ -50,11 +52,6 @@ printf("\n\n\n1\n\n\n");
     delete jogo;
     delete jogador;
     delete cpu;
-     
+
      return 0;
 }
-
-
- 
-
-

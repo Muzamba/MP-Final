@@ -32,6 +32,7 @@ public:
 
     SDL_Texture* texturas[TEXTURAS::TEX_TOTAL];
     bool menu_inicial = false;
+    bool paused = false;
     SDL_Texture* aloo;
     //#ifdef TESTE
     //Player* jogador = NULL;
@@ -57,6 +58,8 @@ protected:
     TTF_Font* font = NULL;
     Botao_Compra* compra= NULL;
     Botao_Iniciar* bIniciar = NULL;
+    Botao_Pause* pause = NULL;
+    Botao_Resume* resume = NULL;
     Objeto* menuInicial = NULL;
     Objeto* mapa = NULL;
     int tempo = 0;
