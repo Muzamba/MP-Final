@@ -19,7 +19,7 @@ public:
     SDL_Texture* loadTexture(const char* nome);
     void load();
     void fim();
-
+    void turnOff();
     void update();
     void handleEvents();
     void renderizar();
@@ -61,6 +61,7 @@ protected:
     Botao_Pause* pause = NULL;
     Botao_Resume* resume = NULL;
     Botao_Load* bLoad = NULL;
+    Botao_Sair* bSair = NULL;
     Objeto* menuInicial = NULL;
     Objeto* mapa = NULL;
     int tempo = 0;

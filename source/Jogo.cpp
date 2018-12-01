@@ -31,6 +31,7 @@ Jogo::Jogo(){
     menuInicial = new Objeto(0, 0);
     compra = new Botao_Compra(0,0);
     bLoad = new Botao_Load(0, 0);
+    bSair = new Botao_Sair(0, 0);
     recursoDinheiroJogador = new Objeto(0,0);
     recursoCeluloseJogador = new Objeto(0,0);
     recursoPedregulhoJogador = new Objeto(0,0);
@@ -71,6 +72,8 @@ Jogo::~Jogo(){
 
     delete bIniciar;
     bIniciar = NULL;
+    delete bSair;
+    bSair = NULL;
     delete pause;
     pause = NULL;
     delete resume;
@@ -145,12 +148,16 @@ bool Jogo::isOn(){
     return on;
 }
 
+void Jogo::turnOff(){
+    on = false;
+}
+
 void Jogo::handleEvents(){
     SDL_Event evento;
     SDL_PollEvent(&evento);
     switch(evento.type) {
         case SDL_QUIT:
-            on = false;
+            turnOff();
             break;
         case SDL_MOUSEBUTTONDOWN:
         case SDL_MOUSEBUTTONUP:
@@ -158,6 +165,7 @@ void Jogo::handleEvents(){
             if(menu_inicial){
                 bIniciar->handleEvent(&evento);
                 bLoad->handleEvent(&evento);
+                bSair->handleEvent(&evento);
                 printf("aloo\n");
             }else {
                 pause->handleEvent(&evento);
@@ -180,6 +188,7 @@ void Jogo::renderizar(){
         menuInicial->render(render);
         bIniciar->render(render);
         bLoad->render(render);
+        bSair->render(render);
     }else {
         mapa->render(render);
         //compra->render(render);
@@ -438,24 +447,26 @@ bool Jogo::loadMidia() {
         success = false;
     }
 
-    texturas[TEXTURAS::BOTAO_INICIAR] = loadTexture( "imagens/botao1.png" );
+// Carrega as texturas do botao iniciar
+    texturas[TEXTURAS::BOTAO_INICIAR] = loadTexture( "imagens/botao_iniciar.png" );
     if( texturas[TEXTURAS::BOTAO_INICIAR] == NULL ) {
-        printf( "Failed to load texture bota1.png!\n" );
+        printf( "Failed to load texture botao_iniciar.png!\n" );
         success = false;
     }
 
-    texturas[TEXTURAS::BOTAO_INICIAR_S] = loadTexture( "imagens/botao1S.png" );
-    if( texturas[TEXTURAS::BOTAO_INICIAR_S] == NULL ) {
-        printf( "Failed to load texture botao1S.png!\n" );
+    texturas[TEXTURAS::BOTAO_INICIAR_SOBRE] = loadTexture( "imagens/botao_iniciar_sobre.png" );
+    if( texturas[TEXTURAS::BOTAO_INICIAR_SOBRE] == NULL ) {
+        printf( "Failed to load texture botao_inciar_sobre.png!\n" );
         success = false;
     }
 
-    texturas[TEXTURAS::BOTAO_INICIAR_P] = loadTexture( "imagens/botao1P.png" );
-    if( texturas[TEXTURAS::BOTAO_INICIAR_P] == NULL ) {
-        printf( "Failed to load texture botao1P.png!\n" );
+    texturas[TEXTURAS::BOTAO_INICIAR_CLICK] = loadTexture( "imagens/botao_init_click.png" );
+    if( texturas[TEXTURAS::BOTAO_INICIAR_CLICK] == NULL ) {
+        printf( "Failed to load texture botao_iniciar_click.png!\n" );
         success = false;
-    }
+    }else printf("dale\n");
 
+//  Carrega as texturas do botao pause
     texturas[TEXTURAS::BOTAO_PAUSE] = loadTexture( "imagens/botao_pause.png" );
     if( texturas[TEXTURAS::BOTAO_PAUSE] == NULL ) {
         printf( "Failed to load texture botao_pause.png!\n" );
@@ -474,6 +485,7 @@ bool Jogo::loadMidia() {
         success = false;
     }
 
+//  Carrega as texturas do botao resume
     texturas[TEXTURAS::BOTAO_RESUME] = loadTexture( "imagens/botao_resume.png" );
     if( texturas[TEXTURAS::BOTAO_RESUME] == NULL ) {
         printf( "Failed to load texture botao_resume.png!\n" );
@@ -492,6 +504,7 @@ bool Jogo::loadMidia() {
         success = false;
     }
 
+//  Carrega as texturas do botao load
     texturas[TEXTURAS::BOTAO_LOAD] = loadTexture( "imagens/botao_load.png" );
     if( texturas[TEXTURAS::BOTAO_LOAD] == NULL ) {
         printf( "Failed to load texture botao_load.png!\n" );
@@ -510,6 +523,25 @@ bool Jogo::loadMidia() {
         success = false;
     }
 
+//  Carrega as texturas do botao sair
+    texturas[TEXTURAS::BOTAO_SAIR] = loadTexture( "imagens/botao_sair.png" );
+    if( texturas[TEXTURAS::BOTAO_SAIR] == NULL ) {
+        printf( "Failed to load texture botao_sair.png!\n" );
+        success = false;
+    }
+
+    texturas[TEXTURAS::BOTAO_SAIR_SOBRE] = loadTexture( "imagens/botao_sair_sobre.png" );
+    if( texturas[TEXTURAS::BOTAO_SAIR_SOBRE] == NULL ) {
+        printf( "Failed to load texture botao_sair_sobre.png!\n" );
+        success = false;
+    }
+
+    texturas[TEXTURAS::BOTAO_SAIR_CLICK] = loadTexture( "imagens/botao_sair_click.png" );
+    if( texturas[TEXTURAS::BOTAO_SAIR_CLICK] == NULL ) {
+        printf( "Failed to load texture botao_sair_click.png!\n" );
+        success = false;
+    }
+
     texturas[TEXTURAS::MAPA] = loadTexture( "imagens/Mapa.png" );
     if( texturas[TEXTURAS::MAPA] == NULL ) {
         printf( "Failed to load texture Mapa.png!\n" );
@@ -517,13 +549,18 @@ bool Jogo::loadMidia() {
     }
     font = TTF_OpenFont( "fonts/04B_08__.TTF", 28 );
 
+    //  Botao Iniciar
     bIniciar->mudaTextura(texturas[BOTAO_INICIAR]);
-    bIniciar->setDestRect(300, 500,300,120);
+    bIniciar->setDestRect(460, 240,300,120);
     bIniciar->setSrcRect(0, 0, 300, 120);
+    //  Botao Sair
+    bSair->mudaTextura(texturas[BOTAO_SAIR]);
+    bSair->setSrcRect(0, 0, 300, 120);
+    bSair->setDestRect(460, 520, 300, 120);
     // Botao Load
     bLoad->mudaTextura(texturas[BOTAO_LOAD]);
     bLoad->setSrcRect(0, 0, 300, 120);
-    bLoad->setDestRect(680, 500, 300, 120);
+    bLoad->setDestRect(460, 380, 300, 120);
     // Botao Pause
     pause->mudaTextura(texturas[BOTAO_PAUSE]);
     pause->setSrcRect(0, 0, 64, 64);

@@ -26,15 +26,15 @@ void Botao_Iniciar::handleEvent(SDL_Event* evento) {
     } else {
         switch( evento->type ) {
             case SDL_MOUSEMOTION:
-                textura = jogo->texturas[BOTAO_INICIAR_S];
+                textura = jogo->texturas[BOTAO_INICIAR_SOBRE];
                 break;
 
             case SDL_MOUSEBUTTONDOWN:
-                textura = jogo->texturas[BOTAO_INICIAR_P];
+                textura = jogo->texturas[BOTAO_INICIAR_CLICK];
                 break;
 
             case SDL_MOUSEBUTTONUP:
-                textura = jogo->texturas[BOTAO_INICIAR_P];
+                textura = jogo->texturas[BOTAO_INICIAR_CLICK];
                 jogo->menu_inicial = false;
                 break;
             }
@@ -224,6 +224,42 @@ void Botao_Load::handleEvent(SDL_Event* evento) {
             case SDL_MOUSEBUTTONUP:
                 textura = jogo->texturas[BOTAO_LOAD_CLICK];
                 jogo->menu_inicial = false;
+                break;
+            }
+    }
+}
+
+void Botao_Sair::handleEvent(SDL_Event* evento) {
+    //OPERACOES retorno = NADA;
+    int x, y;
+    SDL_GetMouseState(&x,&y);
+    bool dentro = true;
+
+    if(x < destRect->x) {
+        dentro = false;
+    } else if(x > (destRect->x + destRect->w)) {
+        dentro = false;
+    } else if(y < destRect->y) {
+        dentro = false;
+    } else if(y > (destRect->y + destRect->h)) {
+        dentro = false;
+    }
+
+    if(!dentro){
+        textura = jogo->texturas[BOTAO_SAIR];
+    } else {
+        switch( evento->type ) {
+            case SDL_MOUSEMOTION:
+                textura = jogo->texturas[BOTAO_SAIR_SOBRE];
+                break;
+
+            case SDL_MOUSEBUTTONDOWN:
+                textura = jogo->texturas[BOTAO_SAIR_CLICK];
+                break;
+
+            case SDL_MOUSEBUTTONUP:
+                textura = jogo->texturas[BOTAO_SAIR_CLICK];
+                jogo->turnOff();
                 break;
             }
     }
