@@ -9,6 +9,9 @@
 #include "Fabrica.h"
 #include "GeraRecursos.h"
 #include "Unidade.h"
+#include <iostream>
+#include <stdlib.h>
+
 
 
 class Jogo {
@@ -54,15 +57,16 @@ protected:
     Objeto* recursoCeluloseCpu= NULL;
     Objeto* recursoPedregulhoCpu= NULL;
     Objeto* recursoMetalCpu= NULL;
+    Objeto* tempo_Obj = NULL;
 
     SDL_Color cRecurso{0, 0, 0}; //decidir cor
-    SDL_Texture* tRecurso;
+    SDL_Texture* tRecurso; //talvez possa remover 
     TTF_Font* font = NULL;
     Botao_Compra* compra= NULL;
     Botao_Iniciar* bIniciar = NULL;
     Objeto* menuInicial = NULL;
     Objeto* mapa = NULL;
-    int tempo = 0;
+    std::string tempo_val;
     bool on;
     SDL_Window* janela = NULL;
 
@@ -70,7 +74,8 @@ protected:
 
 };
 
-void combate_unidade(Unidade** unidade1, Unidade** unidade2);
-void ataca_geraRecurso(Unidade* unidade, GeraRecursos* geradora);
-void ataca_fabrica(Unidade* unidade, Fabrica* fbrc);
+int combate_unidade(Unidade** unidade1, Unidade** unidade2);
+int ataca_geraRecurso(Unidade** unidade, GeraRecursos** geradora);
+int ataca_fabrica(Unidade** unidade, Fabrica** fbrc);
 void anda(Unidade** unidade, Unidade** destino);
+void tempoPP(std::string* string);

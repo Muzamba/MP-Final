@@ -1,8 +1,4 @@
 #include "Jogo.h"
-#include "Player.h"
-#include "Botao.h"
-#include <iostream>
-#include <stdlib.h>
 
 extern Player* jogador;
 extern Player* cpu;
@@ -38,6 +34,7 @@ Jogo::Jogo() {
     recursoCeluloseCpu = new Objeto(0, 0);
     recursoPedregulhoCpu = new Objeto(0, 0);
     recursoMetalCpu = new Objeto(0, 0);
+    tempo_Obj = new Objeto(0, 0);
 }
 
 Jogo::~Jogo() {
@@ -92,13 +89,14 @@ Jogo::~Jogo() {
     recursoPedregulhoCpu = NULL;
     delete recursoMetalCpu;
     recursoMetalCpu = NULL;
+    delete tempo_Obj;
+    tempo_Obj = NULL;
 }
 
 void ataca_base(Unidade* unidade, Player* jogador) {
     jogador->setVida(jogador->getVida() - unidade->getDano());
-    printf("Atacou a base, Vida atual: %d", jogador->getVida());
-    //delete unidade;
-    //unidade = NULL;
+    delete unidade;
+    unidade = NULL;
     if (jogador->getVida() <= 0) {
         // Finalizar jogo
         // Jogo::isOn();
@@ -116,7 +114,9 @@ int retorna_dano(Unidade* unidade1, int tipo2) {
 }
 
 
-void combate_unidade(Unidade** atacante, Unidade** defensor) {
+int combate_unidade(Unidade** atacante, Unidade** defensor) {
+    Unidade** aux;
+    int mortes = 0;
     // Define dano de acordo com as fraquezas
     int danoAtacante = retorna_dano((*atacante), (*defensor)->getTipo());
     int danoDefensor = retorna_dano((*defensor), (*atacante)->getTipo());
@@ -128,18 +128,18 @@ void combate_unidade(Unidade** atacante, Unidade** defensor) {
     }
 
     // Se alguma unidade não tem vida, destrói
+    if ((*defensor)->getVida() <= 0 && (*atacante)->getVida() <= 0) {
+        auto aux = (*defensor);
+        return 3;
+
+
+    }
     if ((*defensor)->getVida() <= 0) {
-        /*delete (*defensor);
-        (*defensor) = NULL;*/
-        printf("MORREU DEFENSOR");
+        return 2;
     }
     if ((*atacante)->getVida() <= 0) {
-        //delete (*atacante);
-        //(*atacante) = NULL;
-        printf("MORREU ATACANTE");
-    } else {
-        // Se o (*atacante) não foi destruído, anda
-        anda(atacante, defensor);
+        return 1;
+
     }
 }
 
@@ -150,32 +150,28 @@ void anda(Unidade** unidade, Unidade** destino) {
     *unidade = aux;
 }
 
-void ataca_fabrica(Unidade* unidade1, Fabrica* fbrc1) {
-    int dano = retorna_dano(unidade1, fbrc1->getTipo());
+int ataca_fabrica(Unidade** unidade1, Fabrica** fbrc1) {
+    int dano = retorna_dano((*unidade1), (*fbrc1)->getTipo());
     // Unidade retira vida da fábrica
-    fbrc1->set_vida(fbrc1->get_vida() - dano);
+    (*fbrc1)->set_vida((*fbrc1)->get_vida() - dano);
     // Unidade é destruida
-    delete unidade1;
-    unidade1 = NULL;
     // Se fábrica não tem vida, é destruida
-    if (fbrc1->get_vida() <= 0) {
-        delete fbrc1;
-        fbrc1 = NULL;
+    if ((*fbrc1)->get_vida() <= 0) {
+        return 1;
     }
+    return 0;
 }
 
-void ataca_geraRecurso(Unidade* unidade1, GeraRecursos* geradora) {
-    int dano = retorna_dano(unidade1, geradora->getTipo());
+int ataca_geraRecurso(Unidade** unidade1, GeraRecursos** geradora) {
+    int dano = retorna_dano((*unidade1), (*geradora)->getTipo());
     // Unidade retira vida da geradora
-    geradora->set_vida(geradora->get_vida() - dano);
+    (*geradora)->set_vida((*geradora)->get_vida() - dano);
     // Unidade é destruida
-    delete unidade1;
-    unidade1 = NULL;
     // Se geradora não tem vida, é destruida
-    if (geradora->get_vida() <= 0) {
-        delete geradora;
-        geradora = NULL;
+    if ((*geradora)->get_vida() <= 0) {
+        return 1;
     }
+    return 0;
 }
 
 void Jogo::movimentacao() {
@@ -185,10 +181,7 @@ void Jogo::movimentacao() {
         if (Jogo::matriz_unidade[lin][11] != NULL
         && Jogo::matriz_unidade[lin][11]->getVelocidade() > 0) {
             // ataca base cpu, e despois se auto destroi
-            printf("Atacou Base\n");
             ataca_base(Jogo::matriz_unidade[lin][11], cpu);
-            delete(Jogo::matriz_unidade[lin][11]);
-            Jogo::matriz_unidade[lin][11] = nullptr;
         }
         if (Jogo::matriz_unidade[lin][0] != NULL
         && Jogo::matriz_unidade[lin][0]->getVelocidade() < 0) {
@@ -202,20 +195,64 @@ void Jogo::movimentacao() {
                 if (Jogo::matriz_unidade[lin][col]->getVelocidade() > 0) {
                    if (Jogo::matriz_unidade[lin][col + 1] != NULL) {
                        // ataca tropa
-                       combate_unidade(&Jogo::matriz_unidade[lin][col], &Jogo::matriz_unidade[lin][col + 1]);
+                       switch (combate_unidade(&Jogo::matriz_unidade[lin][col], &Jogo::matriz_unidade[lin][col + 1])) {
+                           case 1:
+                               // atacante morre
+                               delete Jogo::matriz_unidade[lin][col];
+                               Jogo::matriz_unidade[lin][col] = NULL;
+                               break;
+                           case 2:
+                               // defensor morre
+                               Jogo::matriz_unidade[lin][col + 1];
+                               Jogo::matriz_unidade[lin][col] = NULL;
+                               Jogo::matriz_unidade[lin][col]->setDestRect((lin + 2) * 80 ,(col + 2) * 72, 64, 64);
+                               anda(&Jogo::matriz_unidade[lin][col], &Jogo::matriz_unidade[lin][col + 1]);
+                               break;
+                           case 3:
+                               // ambos morrem
+                               delete Jogo::matriz_unidade[lin][col];
+                               Jogo::matriz_unidade[lin][col] = NULL;
+
+                               Jogo::matriz_unidade[lin][col + 1];
+                               Jogo::matriz_unidade[lin][col] = NULL;
+                               break;
+                       }
                    } else if (Jogo::matriz_geraRecurso[lin][col + 1] != NULL) {
                        // ataca geraRecurso
-                       ataca_geraRecurso(Jogo::matriz_unidade[lin][col],
-                               Jogo::matriz_geraRecurso[lin][col + 1]);
+                       switch(ataca_geraRecurso(&Jogo::matriz_unidade[lin][col],
+                               &Jogo::matriz_geraRecurso[lin][col + 1])) {
+                           case 0:
+                               delete Jogo::matriz_unidade[lin][col];
+                               Jogo::matriz_unidade[lin][col] = NULL;
+                               break;
+                           case 1:
+                               // Geradora morre
+                               delete Jogo::matriz_unidade[lin][col];
+                               Jogo::matriz_unidade[lin][col] = NULL;
+                               delete Jogo::matriz_geraRecurso[lin][col + 1];
+                               Jogo::matriz_geraRecurso[lin][col + 1] = NULL;
+                               break;
+
+                       }
+
                    } else if (Jogo::matriz_fabrica[lin][col + 1] != NULL) {
                        // ataca fabrica
-                       ataca_fabrica(Jogo::matriz_unidade[lin][col], Jogo::matriz_fabrica[lin][col +1]);
+                       switch(ataca_fabrica(&Jogo::matriz_unidade[lin][col], &Jogo::matriz_fabrica[lin][col + 1])) {
+                           case 0:
+                               delete Jogo::matriz_unidade[lin][col];
+                               Jogo::matriz_unidade[lin][col] = NULL;
+                               break;
+                           case 1:
+                               // Fábrica morre
+                               delete Jogo::matriz_fabrica[lin][col +1];
+                               Jogo::matriz_fabrica[lin][col +1] = NULL;
+                               delete Jogo::matriz_unidade[lin][col];
+                               Jogo::matriz_unidade[lin][col] = NULL;
+                               break;
+                       }
                    } else {
-                       //*Jogo::matriz_unidade[lin][col]->srcRect = *Jogo::matriz_unidade[lin][col + 1]->srcRect;
                        Jogo::matriz_unidade[lin][col]->setDestRect((col + 2) * 80 ,(lin + 2) * 72, 64, 64);
-                       //Jogo::matriz_unidade[lin][col]->srcRect->x -= 80;
                        anda(&Jogo::matriz_unidade[lin][col], &Jogo::matriz_unidade[lin][col + 1]);
-                       printf("Andou de %d:%d, Para %d:%d\n", lin, col, lin , col +1);
                        // anda para direita
                    }
                 } /* if velo positiva */
@@ -228,15 +265,64 @@ void Jogo::movimentacao() {
                 if (Jogo::matriz_unidade[lin][col]->getVelocidade() < 0) {
                     if (Jogo::matriz_unidade[lin][col - 1] != NULL) {
                         // ataca tropa
-                        combate_unidade(&Jogo::matriz_unidade[lin][col], &Jogo::matriz_unidade[lin][col - 1]);
+                        switch(combate_unidade(&Jogo::matriz_unidade[lin][col], &Jogo::matriz_unidade[lin][col - 1])) {
+                            case 1:
+                                // atacante morre
+                                delete Jogo::matriz_unidade[lin][col];
+                                Jogo::matriz_unidade[lin][col] = NULL;
+                                break;
+                            case 2:
+                                // defensor morre
+                                Jogo::matriz_unidade[lin][col - 1];
+                                Jogo::matriz_unidade[lin][col] = NULL;
+                                Jogo::matriz_unidade[lin][col]->setDestRect((lin + 2) * 80 ,(col + 1) * 72, 64, 64);
+                                anda(&Jogo::matriz_unidade[lin][col], &Jogo::matriz_unidade[lin][col - 1]);
+                                break;
+                            case 3:
+                                // ambos morrem
+                                delete Jogo::matriz_unidade[lin][col];
+                                Jogo::matriz_unidade[lin][col] = NULL;
+
+                                Jogo::matriz_unidade[lin][col - 1];
+                                Jogo::matriz_unidade[lin][col] = NULL;
+                                break;
+
+                        }
                     } else if (Jogo::matriz_geraRecurso[lin][col - 1] != NULL) {
                         // ataca geraRecurso
-                        ataca_geraRecurso(Jogo::matriz_unidade[lin][col], Jogo::matriz_geraRecurso[lin][col - 1]);
+                        switch(ataca_geraRecurso(&Jogo::matriz_unidade[lin][col], &Jogo::matriz_geraRecurso[lin][col - 1])) {
+                            case 0:
+                                delete Jogo::matriz_unidade[lin][col];
+                                Jogo::matriz_unidade[lin][col] = NULL;
+                                break;
+                            case 1:
+                                // Geradora morre
+                                delete Jogo::matriz_unidade[lin][col];
+                                Jogo::matriz_unidade[lin][col] = NULL;
+                                delete Jogo::matriz_geraRecurso[lin][col - 1];
+                                Jogo::matriz_geraRecurso[lin][col - 1] = NULL;
+                                break;
+
+                        }
                     } else if (Jogo::matriz_fabrica[lin][col - 1] != NULL) {
                         // ataca fabrica
-                        ataca_fabrica(Jogo::matriz_unidade[lin][col], Jogo::matriz_fabrica[lin][col - 1]);
+                        switch(ataca_fabrica(&Jogo::matriz_unidade[lin][col], &Jogo::matriz_fabrica[lin][col - 1])) {
+                            case 0:
+                                delete Jogo::matriz_unidade[lin][col];
+                                Jogo::matriz_unidade[lin][col] = NULL;
+                                break;
+                            case 1:
+                                // Fábrica morre
+                                delete Jogo::matriz_fabrica[lin][col - 1];
+                                Jogo::matriz_fabrica[lin][col - 1] = NULL;
+                                delete Jogo::matriz_unidade[lin][col];
+                                Jogo::matriz_unidade[lin][col] = NULL;
+                                break;
+
+                        }
                     } else {
                         // anda para esquerda
+                        Jogo::matriz_unidade[lin][col]->setDestRect((col + 2) * 80 ,(lin + 1) * 72, 64, 64);
                         anda(&Jogo::matriz_unidade[lin][col], &Jogo::matriz_unidade[lin][col - 1]);
                     }
                 } /* if velo positiva */
@@ -341,6 +427,7 @@ void Jogo::renderizar() {
         recursoCeluloseCpu->render(render);
         recursoPedregulhoCpu->render(render);
         recursoMetalCpu->render(render);
+        tempo_Obj->render(render);
     }
     SDL_RenderPresent(render);
 }
@@ -380,31 +467,59 @@ void Jogo::update() {
         Jogo::movimentacao();
     }
     //  Pega os valores dos recursos do jogador e transforma em texturas
+    SDL_DestroyTexture(texturas[RECURSO_DINHEIRO_PLAYER]);
     temp = TTF_RenderText_Solid(font, std::to_string(jogador->getDinheiro()).c_str(), cRecurso);
     texturas[RECURSO_DINHEIRO_PLAYER] = SDL_CreateTextureFromSurface(render, temp);
     SDL_FreeSurface(temp);
+
+    SDL_DestroyTexture(texturas[RECURSO_CELULOSE_PLAYER]);
     temp = TTF_RenderText_Solid(font, std::to_string(jogador->getCelulose()).c_str(), cRecurso);
     texturas[RECURSO_CELULOSE_PLAYER] = SDL_CreateTextureFromSurface(render, temp);
     SDL_FreeSurface(temp);
+    
+    SDL_DestroyTexture(texturas[RECURSO_PEDREGULHO_PLAYER]);
     temp = TTF_RenderText_Solid(font, std::to_string(jogador->getPedregulho()).c_str(), cRecurso);
     texturas[RECURSO_PEDREGULHO_PLAYER] = SDL_CreateTextureFromSurface(render, temp);
     SDL_FreeSurface(temp);
+    
+    SDL_DestroyTexture(texturas[RECURSO_METAL_PLAYER]);
     temp = TTF_RenderText_Solid(font, std::to_string(jogador->getMetal()).c_str(), cRecurso);
     texturas[RECURSO_METAL_PLAYER] = SDL_CreateTextureFromSurface(render, temp);
     SDL_FreeSurface(temp);
+    
     //  Pega os valores dos recursos da cpu e transforma em texturas
+    SDL_DestroyTexture(texturas[RECURSO_DINHEIRO_CPU]);
     temp = TTF_RenderText_Solid(font, std::to_string(cpu->getDinheiro()).c_str(), cRecurso);
     texturas[RECURSO_DINHEIRO_CPU] = SDL_CreateTextureFromSurface(render, temp);
     SDL_FreeSurface(temp);
+    
+    SDL_DestroyTexture(texturas[RECURSO_CELULOSE_CPU]);
     temp = TTF_RenderText_Solid(font, std::to_string(cpu->getCelulose()).c_str(), cRecurso);
     texturas[RECURSO_CELULOSE_CPU] = SDL_CreateTextureFromSurface(render, temp);
     SDL_FreeSurface(temp);
+    
+    SDL_DestroyTexture(texturas[RECURSO_PEDREGULHO_CPU]);
     temp = TTF_RenderText_Solid(font, std::to_string(cpu->getPedregulho()).c_str(), cRecurso);
     texturas[RECURSO_PEDREGULHO_CPU] = SDL_CreateTextureFromSurface(render, temp);
     SDL_FreeSurface(temp);
+    
+    SDL_DestroyTexture(texturas[RECURSO_METAL_CPU]);
     temp = TTF_RenderText_Solid(font, std::to_string(cpu->getMetal()).c_str(), cRecurso);
     texturas[RECURSO_METAL_CPU] = SDL_CreateTextureFromSurface(render, temp);
     SDL_FreeSurface(temp);
+
+    static int it = 0;
+    if(it == 60){
+        SDL_DestroyTexture(texturas[TEMPO]);
+        temp = TTF_RenderText_Solid(font, tempo_val.c_str(), cRecurso);
+        texturas[TEMPO] = SDL_CreateTextureFromSurface(render, temp);
+        tempoPP(&tempo_val);
+        SDL_FreeSurface(temp);
+        it = 0;
+    } else{
+        it++;
+    }
+    
     if (!menu_inicial) {
         if (cont != 10) {
             cont++;
@@ -432,6 +547,7 @@ void Jogo::update() {
     recursoCeluloseCpu->mudaTextura(texturas[RECURSO_CELULOSE_CPU]);
     recursoPedregulhoCpu->mudaTextura(texturas[RECURSO_PEDREGULHO_CPU]);
     recursoMetalCpu->mudaTextura(texturas[RECURSO_METAL_CPU]);
+    tempo_Obj->mudaTextura(texturas[TEMPO]);
 
     //sTempo.clear();
     //sTempo.push_back(tempo);
@@ -598,6 +714,11 @@ bool Jogo::loadMidia() {
     recursoMetalCpu->setSrcRect(0, 0, 100, 64);
     recursoMetalCpu->setDestRect(1040, 20, 80, 60);
 
+    //Iniciando a string do tempo os rects do objeto
+    tempo_val = ("00:00");
+    tempo_Obj->setSrcRect(0, 0, 100, 64);
+    tempo_Obj->setDestRect(560, 32, 160, 100);
+
     return success;
 }
 
@@ -616,3 +737,23 @@ SDL_Texture* Jogo::loadTexture(const char* nome) {
     }
     return novaTextura;
 }
+
+void tempoPP(std::string* string) {
+    if(string->at(4) < '9') {
+        string->at(4)++;
+    } else {
+        string->at(4) -= 9;
+        if(string->at(3) < '6') {
+            string->at(3)++;
+        } else {
+            string->at(3) -= 6;
+            if(string->at(1) < '9') {
+                string->at(1)++;
+            } else {
+                string->at(1) -= 9;
+                string->at(0)++;
+            }
+        }
+    }
+}
+
