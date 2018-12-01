@@ -1,4 +1,6 @@
+// copyright 2018 Switch Dreams
 #pragma once
+#include <stdlib.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
@@ -10,12 +12,11 @@
 #include "GeraRecursos.h"
 #include "Unidade.h"
 #include <iostream>
-#include <stdlib.h>
 
 
 
 class Jogo {
-public:
+ public:
     Jogo();
     void init(const char* titulo, int x_pos, int y_pos, int width, int height);
     bool loadMidia();
@@ -36,33 +37,34 @@ public:
     SDL_Texture* texturas[TEXTURAS::TEX_TOTAL];
     bool menu_inicial = false;
     SDL_Texture* aloo;
-    //#ifdef TESTE
-    //Player* jogador = NULL;
-    //Player* cpu = NULL;
-    //#endif
-    //Player* jogador = NULL;
+    // #ifdef TESTE
+    // Player* jogador = NULL;
+    // Player* cpu = NULL;
+    // #endif
+    // Player* jogador = NULL;
     bool comprando = false;
     TIPO tipoCompra = NADA;
     int nivelCompra = 0;
-    //SDL_Texture *teste;
+    // SDL_Texture *teste;
 
     /* Movimentacao */
     void movimentacao();
-protected:
+
+ protected:
     Objeto* recursoDinheiroJogador = NULL;
-    Objeto* recursoCeluloseJogador= NULL;
-    Objeto* recursoPedregulhoJogador= NULL;
-    Objeto* recursoMetalJogador= NULL;
-    Objeto* recursoDinheiroCpu= NULL;
-    Objeto* recursoCeluloseCpu= NULL;
-    Objeto* recursoPedregulhoCpu= NULL;
-    Objeto* recursoMetalCpu= NULL;
+    Objeto* recursoCeluloseJogador = NULL;
+    Objeto* recursoPedregulhoJogador = NULL;
+    Objeto* recursoMetalJogador = NULL;
+    Objeto* recursoDinheiroCpu = NULL;
+    Objeto* recursoCeluloseCpu = NULL;
+    Objeto* recursoPedregulhoCpu = NULL;
+    Objeto* recursoMetalCpu = NULL;
     Objeto* tempo_Obj = NULL;
 
-    SDL_Color cRecurso{0, 0, 0}; //decidir cor
-    SDL_Texture* tRecurso; //talvez possa remover 
+    SDL_Color cRecurso{0, 0, 0};  // decidir cor
+    SDL_Texture* tRecurso;  // talvez possa remover
     TTF_Font* font = NULL;
-    Botao_Compra* compra= NULL;
+    Botao_Compra* compra = NULL;
     Botao_Iniciar* bIniciar = NULL;
     Objeto* menuInicial = NULL;
     Objeto* mapa = NULL;
@@ -71,7 +73,6 @@ protected:
     SDL_Window* janela = NULL;
 
     SDL_Renderer* render = NULL;
-
 };
 
 int combate_unidade(Unidade** unidade1, Unidade** unidade2);
