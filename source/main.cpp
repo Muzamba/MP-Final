@@ -26,7 +26,7 @@ printf("\n\n\n1\n\n\n");
     cpu = new Player();
 
 
-    jogo->init("teste", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720);
+    jogo->init("Jankenpo", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720);
     jogo->loadMidia();
 
     while(jogo->isOn()) {
