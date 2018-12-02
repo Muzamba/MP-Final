@@ -1,8 +1,8 @@
 /**
  * @file Head.h
- * 
+ *
  * @brief Arquivo cabeçalho para defines e declaraçoes de enum's
- * 
+ *
  * @copyright Copyright (c) 2018 (nao sei o que colocar aqui)
  */
 #pragma once
@@ -15,7 +15,7 @@
 enum UNIDADE {PAPEL, PEDRA, TESOURA};
 enum RECURSO {CELULOSE, PEDREGULHO, METAL};
 enum TEXTURAS {
-    
+
     MAPA,
     TEMPO,
     RECURSO_DINHEIRO_PLAYER,
@@ -57,11 +57,17 @@ enum TEXTURAS {
     TROPA_TESOURA_CPU,
     TROPA_TESOURA2_CPU,
     FABRICA_PAPEL,
+    FABRICA_PAPEL_UP,
     FABRICA_PEDRA,
+    FABRICA_PEDRA_UP,
     FABRICA_TESOURA,
+    FABRICA_TESOURA_UP,
     GERAR_PAPEL,
+    GERAR_PAPEL_UP,
     GERAR_PEDRA,
+    GERAR_PEDRA_UP,
     GERAR_TESOURA,
+    GERAR_TESOURA_UP,
     BASE_PLAYER,
     BASE_CPU,
     TEX_TOTAL
@@ -72,17 +78,17 @@ enum TIPO {
     UNIDADE_PAPEL,
     UNIDADE_PEDRA,
     UNIDADE_TESOURA,
-    GERA_CELULOSE, 
-    GERA_PEDREGULHO, 
-    GERA_METAL, 
-    FABRICAR_PAPEL, 
-    FABRICAR_PEDRA, 
+    GERA_CELULOSE,
+    GERA_PEDREGULHO,
+    GERA_METAL,
+    FABRICAR_PAPEL,
+    FABRICAR_PEDRA,
     FABRICAR_TESOURA,
-    U_GERA_CELULOSE, 
-    U_GERA_PEDREGULHO, 
-    U_GERA_METAL, 
-    U_FABRICA_PAPEL, 
-    U_FABRICA_PEDRA, 
+    U_GERA_CELULOSE,
+    U_GERA_PEDREGULHO,
+    U_GERA_METAL,
+    U_FABRICA_PAPEL,
+    U_FABRICA_PEDRA,
     U_FABRICA_TESOURA
 };
 

@@ -273,6 +273,8 @@ void buttomEvents(SDL_Event* evento) {
                                     printf("Novo nivel da fabrica %d\n",
                                             jogo->matriz_fabrica[y][x]->
                                             get_nivel());
+                                    jogo->matriz_fabrica[y][x]->mudaTextura
+                                          (jogo->texturas[FABRICA_PAPEL_UP]);
                                 } else {
                                     printf("Nao foi possivel dar o upgrade\n");
                                 }
@@ -291,6 +293,8 @@ void buttomEvents(SDL_Event* evento) {
                                     printf("Novo nivel da fabrica %d\n",
                                             jogo->matriz_fabrica[y][x]->
                                             get_nivel());
+                                    jogo->matriz_fabrica[y][x]->mudaTextura
+                                          (jogo->texturas[FABRICA_PEDRA_UP]);
                                 } else {
                                     printf("Nao foi possivel dar o upgrade\n");
                                 }
@@ -309,6 +313,8 @@ void buttomEvents(SDL_Event* evento) {
                                     printf("Novo nivel da fabrica %d\n",
                                             jogo->matriz_fabrica[y][x]->
                                             get_nivel());
+                                    jogo->matriz_fabrica[y][x]->mudaTextura
+                                          (jogo->texturas[FABRICA_TESOURA_UP]);
                                 } else {
                                     printf("Nao foi possivel dar upgrade\n");
                                 }
@@ -324,6 +330,8 @@ void buttomEvents(SDL_Event* evento) {
                                 printf("upgrade realizado gera metal\n ");
                                 jogo->matriz_geraRecurso[y][x]->upgrade
                                 (&(jogador->dinheiro));
+                                jogo->matriz_geraRecurso[y][x]->mudaTextura
+                                      (jogo->texturas[GERAR_TESOURA_UP]);
                             } else {
                                 printf("Upgrade negado gera metal\n");
                             }
@@ -339,6 +347,8 @@ void buttomEvents(SDL_Event* evento) {
                                 printf("upgrade realizado gera pedregulho\n ");
                                 jogo->matriz_geraRecurso[y][x]->upgrade
                                 (&(jogador->dinheiro));
+                                jogo->matriz_geraRecurso[y][x]->mudaTextura
+                                      (jogo->texturas[GERAR_PEDRA_UP]);
                             } else {
                                 printf("Upgrade negado gera pedregulho\n");
                             }
@@ -354,6 +364,8 @@ void buttomEvents(SDL_Event* evento) {
                                 printf("upgrade realizado gera celulose \n");
                                 jogo->matriz_geraRecurso[y][x]->upgrade
                                 (&(jogador->dinheiro));
+                                jogo->matriz_geraRecurso[y][x]->mudaTextura
+                                      (jogo->texturas[GERAR_PAPEL_UP]);
                             } else {
                                 printf("Upgrade negado gera celulose\n");
                             }

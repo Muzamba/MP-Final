@@ -853,6 +853,13 @@ bool Jogo::loadMidia() {
         success = false;
     }
 
+    texturas[TEXTURAS::FABRICA_PAPEL_UP] =
+        loadTexture("imagens/GeraTropaPapelUp.png");
+    if ( texturas[TEXTURAS::FABRICA_PAPEL_UP] == NULL ) {
+        printf("Failed to load texture GeraTropaPapelUp.png!\n");
+        success = false;
+    }
+
     texturas[TEXTURAS::FABRICA_PEDRA] =
             loadTexture("imagens/GeraTropaPedra-Vida.png");
     if ( texturas[TEXTURAS::FABRICA_PEDRA] == NULL ) {
@@ -860,10 +867,24 @@ bool Jogo::loadMidia() {
         success = false;
     }
 
+    texturas[TEXTURAS::FABRICA_PEDRA_UP] =
+         loadTexture("imagens/GeraTropaPedraUp.png");
+    if ( texturas[TEXTURAS::FABRICA_PEDRA_UP] == NULL ) {
+        printf("Failed to load texture GeraTropaPedraUp.png!\n");
+        success = false;
+    }
+
     texturas[TEXTURAS::FABRICA_TESOURA] =
-            loadTexture("imagens/GeraTropaTesoura-Vida.png");
+          loadTexture("imagens/GeraTropaTesoura-Vida.png");
     if ( texturas[TEXTURAS::FABRICA_TESOURA] == NULL ) {
         printf("Failed to load texture GeraTropaTesoura-Vida.png!\n");
+        success = false;
+    }
+
+    texturas[TEXTURAS::FABRICA_TESOURA_UP] =
+           loadTexture("imagens/GeraTropaTesouraUp.png");
+    if ( texturas[TEXTURAS::FABRICA_TESOURA_UP] == NULL ) {
+        printf("Failed to load texture GeraTropaTesouraUp.png!\n");
         success = false;
     }
 
@@ -874,9 +895,24 @@ bool Jogo::loadMidia() {
         success = false;
     }
 
-    texturas[TEXTURAS::GERAR_PEDRA] = loadTexture("imagens/Gerador_Pedra-Vida.png");
+    texturas[TEXTURAS::GERAR_PAPEL_UP] =
+            loadTexture("imagens/Gerador_Madeira_Upgrade.png");
+    if ( texturas[TEXTURAS::GERAR_PAPEL_UP] == NULL ) {
+        printf("Failed to load texture Gerador_Madeira_Upgrade.png!\n");
+        success = false;
+    }
+
+    texturas[TEXTURAS::GERAR_PEDRA] =
+            loadTexture("imagens/Gerador_Pedra-Vida.png");
     if ( texturas[TEXTURAS::GERAR_PEDRA] == NULL ) {
         printf("Failed to load texture Gerador_Pedra-Vida.png!\n");
+        success = false;
+    }
+
+    texturas[TEXTURAS::GERAR_PEDRA_UP] =
+            loadTexture("imagens/Gerador_Pedra_Upgrade.png");
+    if ( texturas[TEXTURAS::GERAR_PEDRA] == NULL ) {
+        printf("Failed to load texture Gerador_Pedra_Upgrade.png!\n");
         success = false;
     }
 
@@ -884,6 +920,13 @@ bool Jogo::loadMidia() {
             loadTexture("imagens/Gerador_Metal-Vida.png");
     if ( texturas[TEXTURAS::GERAR_TESOURA] == NULL ) {
         printf("Failed to load texture Gerador_Metal-Vida.png!\n");
+        success = false;
+    }
+
+    texturas[TEXTURAS::GERAR_TESOURA_UP] =
+            loadTexture("imagens/Gerador_Metal_Upgrade.png");
+    if ( texturas[TEXTURAS::GERAR_TESOURA_UP] == NULL ) {
+        printf("Failed to load texture Gerador_Metal.png!\n");
         success = false;
     }
 
@@ -1042,7 +1085,7 @@ bool Jogo::loadMidia() {
     mapa->mudaTextura(texturas[MAPA]);
     mapa->setSrcRect(0, 0, 1280, 720);
     mapa->setDestRect(0, 0, 1280, 720);
-    
+
     //  Botao Sair
     bSair->mudaTextura(texturas[BOTAO_SAIR]);
     bSair->setSrcRect(0, 0, 300, 120);
