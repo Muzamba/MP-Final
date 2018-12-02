@@ -13,13 +13,13 @@
 #include "Jogo.h"
 
 class Player {
- public:
+public:
     /* funcionalidades */
     bool compra_GeraRecurso(int x, int y, RECURSO tipo);
 
     bool compra_Fabrica(int x, int y, UNIDADE tipo);
 
-    bool compra_Unidade(Fabrica fabrica);
+    bool compra_Unidade(int x, int y, UNIDADE tipo, int nivel);
 
     void atualizar_Recursos();
 
@@ -28,6 +28,12 @@ class Player {
     int metal;       // Tesoura
     int dinheiro;
     int pontos;
+
+    int getVida() const;
+
+    void setVida(int vida);
+
+    int vida;
 
     /*Listas de Objetos*/
     std::vector<GeraRecursos> lista_GeraRecursos;
@@ -60,7 +66,7 @@ class Player {
 
     void setPontos(int pontos);
 
- private:
+private:
     /* Metodos auxiliares */
     void retira_recurso_fabrica(UNIDADE tipo);
 
@@ -70,10 +76,21 @@ class Player {
 
     bool possui_recursos_geraRecurso(RECURSO tipo);
 
+    void retira_recurso_unidade(UNIDADE tipo, int nivel);
+
+    bool possui_recursos_unidade(int tipo, int nivel);
+
     bool verifica_espaco_predio(int x, int y);
 
     bool verifica_espaco_ocupado(int x, int y);
 };
+
+/* Funções auxiliares para compra */
+TEXTURAS retorna_textura_recurso(int tipo);
+
+TEXTURAS retorna_textura_fabrica(int tipo);
+
+TEXTURAS retorna_textura_unidade(int nivel, int tipo);
 #define TESTE
 
 #endif  // INCLUDE_PLAYER_H_

@@ -1,8 +1,6 @@
 //
 // Created by pedro on 15/11/18.
 //
-
-#define CATCH_CONFIG_MAIN
 #include"../include/Head.h"
 #include"../include/GeraRecursos.h"
 #include"../include/catch.hpp"
@@ -35,4 +33,16 @@ TEST_CASE("Testando Enum") {
     REQUIRE(RECURSO::CELULOSE == 0);
     REQUIRE(RECURSO::PEDREGULHO == 1);
     REQUIRE(RECURSO::METAL == 2);
+}
+
+TEST_CASE("Upgrade geraRecurso") {
+    GeraRecursos geradora(0, 0, RECURSO::PEDREGULHO);
+    int *dinheiro = (int*) malloc(sizeof(int));
+    *dinheiro = 10000;
+    int taxa = geradora.getTaxa();
+    int nivel = geradora.getNivel();
+    geradora.upgrade(dinheiro);
+    REQUIRE(*dinheiro == 10000 - PRECO_UPGRADE_GERA);
+    REQUIRE(geradora.getTaxa() == 2 * taxa);
+    REQUIRE(geradora.getNivel() == nivel + 1);
 }

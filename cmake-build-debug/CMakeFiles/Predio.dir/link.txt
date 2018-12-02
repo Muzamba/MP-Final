@@ -1,0 +1,2 @@
+/usr/bin/ar qc libPredio.a  CMakeFiles/Predio.dir/source/Predio.cpp.o
+/usr/bin/ranlib libPredio.a

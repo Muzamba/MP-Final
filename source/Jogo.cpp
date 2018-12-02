@@ -1,22 +1,22 @@
 #include "Jogo.h"
-    #include "Player.h"
-#include <iostream>
-#include <stdlib.h>
+
+// "Copyright [2018] <SW Dreams>"
 
 extern Player* jogador;
 extern Player* cpu;
 
-Jogo::Jogo(){
+
+Jogo::Jogo() {
     matriz_fabrica = new Fabrica **[6];
     matriz_unidade = new Unidade **[6];
     matriz_geraRecurso = new GeraRecursos**[6];
-    for(int i=0; i < 6; i++){
+    for (int i=0; i < 6; i++) {
         matriz_fabrica[i] = new Fabrica *[12];
         matriz_unidade[i] = new Unidade *[12];
         matriz_geraRecurso[i] = new GeraRecursos *[12];
     }
-    for(int i=0; i< 6; i++){
-        for(int j=0; j < 12; j++) {
+    for (int i=0; i< 6; i++) {
+        for (int j=0; j < 12; j++) {
             matriz_fabrica[i][j] = NULL;
             matriz_unidade[i][j] = NULL;
             matriz_geraRecurso[i][j] = NULL;
@@ -26,37 +26,39 @@ Jogo::Jogo(){
     cpu = new Player();
     mapa = new Objeto(0, 0);/* Set e get depois*/
     bIniciar = new Botao_Iniciar(0, 0);
-    pause = new Botao_Pause(0,0);
-    resume = new Botao_Resume(0,0);
     menuInicial = new Objeto(0, 0);
-    compra = new Botao_Compra(0,0);
+    compra = new Botao_Compra(0, 0);
     bLoad = new Botao_Load(0, 0);
+    pause = new Botao_Pause(0, 0);
+    resume = new Botao_Resume(0, 0);
     bSair = new Botao_Sair(0, 0);
-    recursoDinheiroJogador = new Objeto(0,0);
-    recursoCeluloseJogador = new Objeto(0,0);
-    recursoPedregulhoJogador = new Objeto(0,0);
-    recursoMetalJogador = new Objeto(0,0);
-    recursoDinheiroCpu = new Objeto(0,0);
-    recursoCeluloseCpu = new Objeto(0,0);
-    recursoPedregulhoCpu = new Objeto(0,0);
-    recursoMetalCpu = new Objeto(0,0);
+
+    recursoDinheiroJogador = new Objeto(0, 0);
+    recursoCeluloseJogador = new Objeto(0, 0);
+    recursoPedregulhoJogador = new Objeto(0, 0);
+    recursoMetalJogador = new Objeto(0, 0);
+    recursoDinheiroCpu = new Objeto(0, 0);
+    recursoCeluloseCpu = new Objeto(0, 0);
+    recursoPedregulhoCpu = new Objeto(0, 0);
+    recursoMetalCpu = new Objeto(0, 0);
+    tempo_Obj = new Objeto(0, 0);
 }
 
-Jogo::~Jogo(){
-    for(int i = 0;i < 6;++i){
-        for(int j = 0;j < 12;++j){
-            if(matriz_fabrica[i][j] != NULL){
+Jogo::~Jogo() {
+    for (int i = 0; i < 6; ++i) {
+        for (int j = 0; j < 12; ++j) {
+            if (matriz_fabrica[i][j] != NULL) {
                 delete matriz_fabrica[i][j];
             }
-            if(matriz_geraRecurso[i][j] != NULL){
+            if (matriz_geraRecurso[i][j] != NULL) {
                 delete matriz_geraRecurso[i][j];
             }
-            if(matriz_unidade[i][j] != NULL){
+            if (matriz_unidade[i][j] != NULL) {
                 delete matriz_unidade[i][j];
             }
         }
     }
-    for(int i = 0;i < 6;++i){
+    for (int i = 0; i < 6; ++i) {
         delete[] matriz_fabrica[i];
         delete[] matriz_geraRecurso[i];
         delete[] matriz_unidade[i];
@@ -65,13 +67,11 @@ Jogo::~Jogo(){
     delete[] matriz_geraRecurso;
     delete[] matriz_unidade;
 
-    //delete jogador;
-    //jogador = NULL;
-    //delete cpu;
-    //cpu = NULL;
+    // delete jogador;
+    // jogador = NULL;
+    // delete cpu;
+    // cpu = NULL;
 
-    delete bIniciar;
-    bIniciar = NULL;
     delete bSair;
     bSair = NULL;
     delete pause;
@@ -80,6 +80,8 @@ Jogo::~Jogo(){
     resume = NULL;
     delete bLoad;
     bLoad = NULL;
+    delete bIniciar;
+    bIniciar = NULL;
     delete menuInicial;
     menuInicial = NULL;
     delete mapa;
@@ -102,41 +104,290 @@ Jogo::~Jogo(){
     recursoPedregulhoCpu = NULL;
     delete recursoMetalCpu;
     recursoMetalCpu = NULL;
+    delete tempo_Obj;
+    tempo_Obj = NULL;
+}
 
+void ataca_base(Unidade* unidade, Player* jogador) {
+    jogador->setVida(jogador->getVida() - unidade->getDano());
+    delete unidade;
+    unidade = NULL;
+    if (jogador->getVida() <= 0) {
+        // Finalizar jogo
+        // Jogo::isOn();
+    }
+}
+
+void Jogo::turnOff() {
+    on = false;
+}
+
+int retorna_dano(Unidade* unidade1, int tipo2) {
+    int dano = unidade1->getDano();
+    if ((unidade1->getTipo() == UNIDADE::PAPEL && tipo2 == UNIDADE::PEDRA) ||
+        (unidade1->getTipo() == UNIDADE::PEDRA && tipo2 == UNIDADE::TESOURA) ||
+        (unidade1->getTipo() == UNIDADE::TESOURA && tipo2 == UNIDADE::PAPEL)) {
+            dano *= 2;
+    }
+    return dano;
 }
 
 
-void Jogo::init(const char* nome, int x, int y, int w, int h) {
+int combate_unidade(Unidade** atacante, Unidade** defensor) {
+    Unidade** aux;
+    int mortes = 0;
+    // Define dano de acordo com as fraquezas
+    int danoAtacante = retorna_dano((*atacante), (*defensor)->getTipo());
+    int danoDefensor = retorna_dano((*defensor), (*atacante)->getTipo());
 
-    if(SDL_Init(SDL_INIT_EVERYTHING) == 0) {
+    // Enquanto alguma unidade tem vida, ataca
+    while ((*atacante)->getVida() > 0 && (*defensor)->getVida() > 0) {
+        (*atacante)->setVida((*atacante)->getVida() - danoDefensor);
+        (*defensor)->setVida((*defensor)->getVida() - danoAtacante);
+    }
+
+    // Se alguma unidade não tem vida, destrói
+    if ((*defensor)->getVida() <= 0 && (*atacante)->getVida() <= 0) {
+        auto aux = (*defensor);
+        return 3;
+    }
+    if ((*defensor)->getVida() <= 0) {
+        return 2;
+    }
+    if ((*atacante)->getVida() <= 0) {
+        return 1;
+    }
+}
+
+void anda(Unidade** unidade, Unidade** destino) {
+    Unidade* aux;
+    aux = *destino;
+    *destino = *unidade;
+    *unidade = aux;
+}
+
+int ataca_fabrica(Unidade** unidade1, Fabrica** fbrc1) {
+    int dano = retorna_dano((*unidade1), (*fbrc1)->getTipo());
+    // Unidade retira vida da fábrica
+    (*fbrc1)->set_vida((*fbrc1)->get_vida() - dano);
+    // Unidade é destruida
+    // Se fábrica não tem vida, é destruida
+    if ((*fbrc1)->get_vida() <= 0) {
+        return 1;
+    }
+    return 0;
+}
+
+int ataca_geraRecurso(Unidade** unidade1, GeraRecursos** geradora) {
+    int dano = retorna_dano((*unidade1), (*geradora)->getTipo());
+    // Unidade retira vida da geradora
+    (*geradora)->set_vida((*geradora)->get_vida() - dano);
+    // Unidade é destruida
+    // Se geradora não tem vida, é destruida
+    if ((*geradora)->get_vida() <= 0) {
+        return 1;
+    }
+    return 0;
+}
+
+void Jogo::movimentacao() {
+    /* Casos meio da matriz */
+    for (int lin = 0; lin < 6 ; lin++) {
+        /* Condicoes de atacar base principal*/
+        if (Jogo::matriz_unidade[lin][11] != NULL
+        && Jogo::matriz_unidade[lin][11]->getVelocidade() > 0) {
+            // ataca base cpu, e despois se auto destroi
+            ataca_base(Jogo::matriz_unidade[lin][11], cpu);
+        }
+        if (Jogo::matriz_unidade[lin][0] != NULL
+        && Jogo::matriz_unidade[lin][0]->getVelocidade() < 0) {
+            // ataca base player, e despois se auto destroi
+            ataca_base(Jogo::matriz_unidade[lin][0], jogador);
+        }
+
+        /* Na 11 ja foi verificado, e so pode ser criado apartir da
+         * 2 as tropas com  velocidade positiva */
+        for (int col = 10; col >= 2; col --) {
+            if (Jogo::matriz_unidade[lin][col] != NULL) {
+                if (Jogo::matriz_unidade[lin][col]->getVelocidade() > 0) {
+                   if (Jogo::matriz_unidade[lin][col + 1] != NULL) {
+                       // ataca tropa
+                       switch (combate_unidade(&Jogo::matriz_unidade[lin][col],
+                               &Jogo::matriz_unidade[lin][col + 1])) {
+                           case 1:
+                               // atacante morre
+                               delete Jogo::matriz_unidade[lin][col];
+                               Jogo::matriz_unidade[lin][col] = NULL;
+                               break;
+                           case 2:
+                               // defensor morre
+                               Jogo::matriz_unidade[lin][col + 1];
+                               Jogo::matriz_unidade[lin][col] = NULL;
+                               Jogo::matriz_unidade[lin][col]->setDestRect
+                               ((lin + 2) * 80 , (col + 2) * 72, 64, 64);
+                               anda(&Jogo::matriz_unidade[lin][col],
+                                       &Jogo::matriz_unidade[lin][col + 1]);
+                               break;
+                           case 3:
+                               // ambos morrem
+                               delete Jogo::matriz_unidade[lin][col];
+                               Jogo::matriz_unidade[lin][col] = NULL;
+
+                               Jogo::matriz_unidade[lin][col + 1];
+                               Jogo::matriz_unidade[lin][col] = NULL;
+                               break;
+                       }
+                   } else if (Jogo::matriz_geraRecurso[lin][col + 1] != NULL) {
+                       // ataca geraRecurso
+                       switch (ataca_geraRecurso
+                       (&Jogo::matriz_unidade[lin][col],
+                               &Jogo::matriz_geraRecurso[lin][col + 1])) {
+                           case 0:
+                               delete Jogo::matriz_unidade[lin][col];
+                               Jogo::matriz_unidade[lin][col] = NULL;
+                               break;
+                           case 1:
+                               // Geradora morre
+                               delete Jogo::matriz_unidade[lin][col];
+                               Jogo::matriz_unidade[lin][col] = NULL;
+                               delete Jogo::matriz_geraRecurso[lin][col + 1];
+                               Jogo::matriz_geraRecurso[lin][col + 1] = NULL;
+                               break;
+                       }
+                   } else if (Jogo::matriz_fabrica[lin][col + 1] != NULL) {
+                       // ataca fabrica
+                       switch (ataca_fabrica
+                       (&Jogo::matriz_unidade[lin][col],
+                               &Jogo::matriz_fabrica[lin][col + 1])) {
+                           case 0:
+                               delete Jogo::matriz_unidade[lin][col];
+                               Jogo::matriz_unidade[lin][col] = NULL;
+                               break;
+                           case 1:
+                               // Fábrica morre
+                               delete Jogo::matriz_fabrica[lin][col +1];
+                               Jogo::matriz_fabrica[lin][col +1] = NULL;
+                               delete Jogo::matriz_unidade[lin][col];
+                               Jogo::matriz_unidade[lin][col] = NULL;
+                               break;
+                       }
+                   } else {
+                       Jogo::matriz_unidade[lin][col]->setDestRect
+                       ((col + 2) * 80 , (lin + 2) * 72, 64, 64);
+                       anda(&Jogo::matriz_unidade[lin][col],
+                               &Jogo::matriz_unidade[lin][col + 1]);
+                       // anda para direita
+                   }
+                } /* if velo positiva */
+            } /* if != NULL*/
+        } /* for col */
+
+        /* Na 0 ja foi verificado, e so pode ser criado apartir da 9
+         * as tropas com velocidade negativa */
+        for (int col = 1; col < 9; col ++) {
+            if (Jogo::matriz_unidade[lin][col] != NULL) {
+                if (Jogo::matriz_unidade[lin][col]->getVelocidade() < 0) {
+                    if (Jogo::matriz_unidade[lin][col - 1] != NULL) {
+                        // ataca tropa
+                        switch (combate_unidade
+                        (&Jogo::matriz_unidade[lin][col],
+                                &Jogo::matriz_unidade[lin][col - 1])) {
+                            case 1:
+                                // atacante morre
+                                delete Jogo::matriz_unidade[lin][col];
+                                Jogo::matriz_unidade[lin][col] = NULL;
+                                break;
+                            case 2:
+                                // defensor morre
+                                Jogo::matriz_unidade[lin][col - 1];
+                                Jogo::matriz_unidade[lin][col] = NULL;
+                                Jogo::matriz_unidade[lin][col]->setDestRect
+                                ((lin + 2) * 80 , (col + 1) * 72, 64, 64);
+                                anda(&Jogo::matriz_unidade[lin][col],
+                                        &Jogo::matriz_unidade[lin][col - 1]);
+                                break;
+                            case 3:
+                                // ambos morrem
+                                delete Jogo::matriz_unidade[lin][col];
+                                Jogo::matriz_unidade[lin][col] = NULL;
+
+                                Jogo::matriz_unidade[lin][col - 1];
+                                Jogo::matriz_unidade[lin][col] = NULL;
+                                break;
+                        }
+                    } else if (Jogo::matriz_geraRecurso[lin][col - 1] != NULL) {
+                        // ataca geraRecurso
+                        switch (ataca_geraRecurso
+                        (&Jogo::matriz_unidade[lin][col],
+                                &Jogo::matriz_geraRecurso[lin][col - 1])) {
+                            case 0:
+                                delete Jogo::matriz_unidade[lin][col];
+                                Jogo::matriz_unidade[lin][col] = NULL;
+                                break;
+                            case 1:
+                                // Geradora morre
+                                delete Jogo::matriz_unidade[lin][col];
+                                Jogo::matriz_unidade[lin][col] = NULL;
+                                delete Jogo::matriz_geraRecurso[lin][col - 1];
+                                Jogo::matriz_geraRecurso[lin][col - 1] = NULL;
+                                break;
+                        }
+                    } else if (Jogo::matriz_fabrica[lin][col - 1] != NULL) {
+                        // ataca fabrica
+                        switch (ataca_fabrica(&Jogo::matriz_unidade[lin][col],
+                                &Jogo::matriz_fabrica[lin][col - 1])) {
+                            case 0:
+                                delete Jogo::matriz_unidade[lin][col];
+                                Jogo::matriz_unidade[lin][col] = NULL;
+                                break;
+                            case 1:
+                                // Fábrica morre
+                                delete Jogo::matriz_fabrica[lin][col - 1];
+                                Jogo::matriz_fabrica[lin][col - 1] = NULL;
+                                delete Jogo::matriz_unidade[lin][col];
+                                Jogo::matriz_unidade[lin][col] = NULL;
+                                break;
+                        }
+                    } else {
+                        // anda para esquerda
+                        Jogo::matriz_unidade[lin][col]->setDestRect
+                        ((col + 2) * 80 , (lin + 1) * 72, 64, 64);
+                        anda(&Jogo::matriz_unidade[lin][col],
+                                &Jogo::matriz_unidade[lin][col - 1]);
+                    }
+                } /* if velo positiva */
+            } /* if != NULL*/
+        } /* for col */
+    } /* for lin */
+} /* Jogo::movimentacao */
+
+void Jogo::init(const char* nome, int x, int y, int w, int h) {
+    if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
         std::cout << "Sistema Inicializado!...." << std::endl;
 
-        janela = SDL_CreateWindow( nome, x, y, w, h, 0);
-        if(janela){
+        janela = SDL_CreateWindow(nome, x, y, w, h, 0);
+        if (janela) {
             std::cout << "Janela criada!" << std::endl;
         }
         render = SDL_CreateRenderer(janela, -1, 0);
-        if(render){
-
+        if (render) {
             SDL_SetRenderDrawColor(render, 255, 255, 255, 255);
             std::cout << "Render criado!" << std::endl;
             int imgFlags = IMG_INIT_PNG;
-            if( !( IMG_Init( imgFlags ) & imgFlags ) ) {
-                printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
+            if (!(IMG_Init(imgFlags) & imgFlags)) {
+                printf("SDL_image could not initialize! SDL_image Error: %s\n",
+                        IMG_GetError());
                 on = false;
             }
-
-            if( TTF_Init() == -1 )
-            	{
-            		printf( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError() );
-            		on = false;
-            	}
+            if ( TTF_Init() == -1 ) {
+                printf("SDL_ttf could not initialize! SDL_ttf Error: %s\n",
+                        TTF_GetError());
+                on = false;
+            }
             /* Set e get depois*/
             menu_inicial = true;
 
             compra->mudaTipo(GERA_CELULOSE);
-
-
         }
         on = true;
     } else {
@@ -144,64 +395,57 @@ void Jogo::init(const char* nome, int x, int y, int w, int h) {
     }
 }
 
-bool Jogo::isOn(){
+bool Jogo::isOn() {
     return on;
 }
 
-void Jogo::turnOff(){
-    on = false;
-}
-
-void Jogo::handleEvents(){
+void Jogo::handleEvents() {
     SDL_Event evento;
     SDL_PollEvent(&evento);
-    switch(evento.type) {
+    switch (evento.type) {
         case SDL_QUIT:
             turnOff();
             break;
         case SDL_MOUSEBUTTONDOWN:
         case SDL_MOUSEBUTTONUP:
         case SDL_MOUSEMOTION:
-            if(menu_inicial){
+            if (menu_inicial) {
                 bIniciar->handleEvent(&evento);
                 bLoad->handleEvent(&evento);
                 bSair->handleEvent(&evento);
-                printf("aloo\n");
-            }else {
+            } else {
                 pause->handleEvent(&evento);
                 resume->handleEvent(&evento);
-                compra->handleEvent(&evento);
+                buttomEvents(&evento);
             break;
         }
-
         default:
             break;
     }
-
 }
 
-void Jogo::renderizar(){
+void Jogo::renderizar() {
     int cont = 0;
     SDL_RenderClear(render);
-    //Adione aqui as coisas para renderizar
-    if(menu_inicial){
+    // Adione aqui as coisas para renderizar
+    if (menu_inicial) {
         menuInicial->render(render);
         bIniciar->render(render);
         bLoad->render(render);
         bSair->render(render);
-    }else {
+    } else {
         mapa->render(render);
-        //compra->render(render);
-        for(int i = 0;i < 6;++i){
-            for(int j = 0;j < 12; j++){
-                if(matriz_fabrica[i][j] != NULL){
+        // compra->render(render);
+        for (int i = 0; i < 6; ++i) {
+            for (int j = 0; j < 12; j++) {
+                if (matriz_fabrica[i][j] != NULL) {
                     matriz_fabrica[i][j]->render(render);
                 }
-                if(matriz_geraRecurso[i][j] != NULL){
+                if (matriz_geraRecurso[i][j] != NULL) {
                     matriz_geraRecurso[i][j]->render(render);
-                    //printf("render %d\n",cont);
+                    // printf("render %d\n",cont);
                 }
-                if(matriz_unidade[i][j] != NULL){
+                if (matriz_unidade[i][j] != NULL) {
                     matriz_unidade[i][j]->render(render);
                 }
                 cont++;
@@ -215,6 +459,7 @@ void Jogo::renderizar(){
         recursoCeluloseCpu->render(render);
         recursoPedregulhoCpu->render(render);
         recursoMetalCpu->render(render);
+        tempo_Obj->render(render);
         pause->render(render);
         resume->render(render);
     }
@@ -222,7 +467,7 @@ void Jogo::renderizar(){
 }
 
 void Jogo::fim() {
-    for(int i = 0;i < TEXTURAS::TEX_TOTAL;++i){
+    for (int i = 0; i < TEXTURAS::TEX_TOTAL; ++i) {
         SDL_DestroyTexture(texturas[i]);
         texturas[i] = NULL;
     }
@@ -230,12 +475,8 @@ void Jogo::fim() {
     janela = NULL;
     SDL_DestroyRenderer(render);
     render = NULL;
-    TTF_CloseFont( font );
+    TTF_CloseFont(font);
     font = NULL;
-
-
-
-
 
     TTF_Quit();
     IMG_Quit();
@@ -243,64 +484,104 @@ void Jogo::fim() {
     std::cout << "Jogo fechado" << std::endl;
 }
 
-void Jogo::load(){
-}
-
-void Jogo::update(){
+void Jogo::update() {
     static int cont = 0;
     static int cont2 = 0;
+    static int cont_mov = 0;
     SDL_Surface* temp;
-
-
+    cont_mov += 1;
+    if (cont_mov % 200 == 0) {
+        cont_mov -= 200;
+        Jogo::movimentacao();
+    }
     //  Pega os valores dos recursos do jogador e transforma em texturas
-    temp = TTF_RenderText_Solid(font, std::to_string(jogador->getDinheiro()).c_str(), cRecurso);
-    texturas[RECURSO_DINHEIRO_PLAYER] = SDL_CreateTextureFromSurface(render, temp);
+    SDL_DestroyTexture(texturas[RECURSO_DINHEIRO_PLAYER]);
+    temp = TTF_RenderText_Solid
+            (font, std::to_string(jogador->getDinheiro()).c_str(), cRecurso);
+    texturas[RECURSO_DINHEIRO_PLAYER] =
+            SDL_CreateTextureFromSurface(render, temp);
     SDL_FreeSurface(temp);
 
-    temp = TTF_RenderText_Solid(font, std::to_string(jogador->getCelulose()).c_str(), cRecurso);
-    texturas[RECURSO_CELULOSE_PLAYER] = SDL_CreateTextureFromSurface(render, temp);
+    SDL_DestroyTexture(texturas[RECURSO_CELULOSE_PLAYER]);
+    temp = TTF_RenderText_Solid
+            (font, std::to_string(jogador->getCelulose()).c_str(), cRecurso);
+    texturas[RECURSO_CELULOSE_PLAYER] =
+            SDL_CreateTextureFromSurface(render, temp);
     SDL_FreeSurface(temp);
 
-    temp = TTF_RenderText_Solid(font, std::to_string(jogador->getPedregulho()).c_str(), cRecurso);
-    texturas[RECURSO_PEDREGULHO_PLAYER] = SDL_CreateTextureFromSurface(render, temp);
+    // Recurso Pedregulho Player
+    SDL_DestroyTexture(texturas[RECURSO_PEDREGULHO_PLAYER]);
+    temp = TTF_RenderText_Solid
+            (font, std::to_string(jogador->getPedregulho()).c_str(), cRecurso);
+    texturas[RECURSO_PEDREGULHO_PLAYER] =
+            SDL_CreateTextureFromSurface(render, temp);
     SDL_FreeSurface(temp);
 
-    temp = TTF_RenderText_Solid(font, std::to_string(jogador->getMetal()).c_str(), cRecurso);
-    texturas[RECURSO_METAL_PLAYER] = SDL_CreateTextureFromSurface(render, temp);
+    // Recurso Metal Player
+    SDL_DestroyTexture(texturas[RECURSO_METAL_PLAYER]);
+    temp = TTF_RenderText_Solid
+            (font, std::to_string(jogador->getMetal()).c_str(), cRecurso);
+    texturas[RECURSO_METAL_PLAYER] =
+            SDL_CreateTextureFromSurface(render, temp);
     SDL_FreeSurface(temp);
-
     //  Pega os valores dos recursos da cpu e transforma em texturas
-    temp = TTF_RenderText_Solid(font, std::to_string(cpu->getDinheiro()).c_str(), cRecurso);
-    texturas[RECURSO_DINHEIRO_CPU] = SDL_CreateTextureFromSurface(render, temp);
+    SDL_DestroyTexture(texturas[RECURSO_DINHEIRO_CPU]);
+    temp = TTF_RenderText_Solid
+            (font, std::to_string(cpu->getDinheiro()).c_str(), cRecurso);
+    texturas[RECURSO_DINHEIRO_CPU] =
+            SDL_CreateTextureFromSurface(render, temp);
     SDL_FreeSurface(temp);
 
-    temp = TTF_RenderText_Solid(font, std::to_string(cpu->getCelulose()).c_str(), cRecurso);
-    texturas[RECURSO_CELULOSE_CPU] = SDL_CreateTextureFromSurface(render, temp);
+    SDL_DestroyTexture(texturas[RECURSO_CELULOSE_CPU]);
+    temp = TTF_RenderText_Solid
+            (font, std::to_string(cpu->getCelulose()).c_str(), cRecurso);
+    texturas[RECURSO_CELULOSE_CPU] =
+            SDL_CreateTextureFromSurface(render, temp);
     SDL_FreeSurface(temp);
 
-    temp = TTF_RenderText_Solid(font, std::to_string(cpu->getPedregulho()).c_str(), cRecurso);
-    texturas[RECURSO_PEDREGULHO_CPU] = SDL_CreateTextureFromSurface(render, temp);
+    // Recurso Pedra CPU
+    SDL_DestroyTexture(texturas[RECURSO_PEDREGULHO_CPU]);
+    temp = TTF_RenderText_Solid
+            (font, std::to_string(cpu->getPedregulho()).c_str(), cRecurso);
+    texturas[RECURSO_PEDREGULHO_CPU] =
+            SDL_CreateTextureFromSurface(render, temp);
     SDL_FreeSurface(temp);
 
-    temp = TTF_RenderText_Solid(font, std::to_string(cpu->getMetal()).c_str(), cRecurso);
+    SDL_DestroyTexture(texturas[RECURSO_METAL_CPU]);
+    temp = TTF_RenderText_Solid
+            (font, std::to_string(cpu->getMetal()).c_str(), cRecurso);
     texturas[RECURSO_METAL_CPU] = SDL_CreateTextureFromSurface(render, temp);
     SDL_FreeSurface(temp);
 
-    if(!menu_inicial){
-    if(cont != 10){
-        cont++;
-        cont2++;
-    }else if(cont2 != 20){
-    jogador->setDinheiro(jogador->getDinheiro() + 1);
-    jogador->atualizar_Recursos();
-    printf("%d---%d---%d\n",jogador->getDinheiro() ,jogador->getCelulose(), jogador->getPedregulho());
-    cont = 0;
+    static int it = 0;
+    if (it == 60) {
+        SDL_DestroyTexture(texturas[TEMPO]);
+        temp = TTF_RenderText_Solid(font, tempo_val.c_str(), cRecurso);
+        texturas[TEMPO] = SDL_CreateTextureFromSurface(render, temp);
+        tempoPP(&tempo_val);
+        SDL_FreeSurface(temp);
+        it = 0;
+    } else {
+        it++;
+    }
+    if (!menu_inicial) {
+        if (cont != 10) {
+            cont++;
+            cont2++;
+        } else {
+            jogador->setDinheiro(jogador->getDinheiro() + 1);
+            jogador->atualizar_Recursos();
 
-    } else{
-       jogador->atualizar_Recursos();
-       cont2 = 0;
+            cpu->setDinheiro(cpu->getDinheiro() + 1);
+            cont = 0;
+            cont2++;
+        }
+        if (cont2 == 20) {
+            // jogador->atualizar_Recursos();
+            cont2 = 0;
+        }
     }
-    }
+
     recursoDinheiroJogador->mudaTextura(texturas[RECURSO_DINHEIRO_PLAYER]);
     recursoCeluloseJogador->mudaTextura(texturas[RECURSO_CELULOSE_PLAYER]);
     recursoPedregulhoJogador->mudaTextura(texturas[RECURSO_PEDREGULHO_PLAYER]);
@@ -309,258 +590,321 @@ void Jogo::update(){
     recursoCeluloseCpu->mudaTextura(texturas[RECURSO_CELULOSE_CPU]);
     recursoPedregulhoCpu->mudaTextura(texturas[RECURSO_PEDREGULHO_CPU]);
     recursoMetalCpu->mudaTextura(texturas[RECURSO_METAL_CPU]);
+    tempo_Obj->mudaTextura(texturas[TEMPO]);
 
-    //sTempo.clear();
-    //sTempo.push_back(tempo);
-    //SDL_Surface* textSurface = TTF_RenderText_Solid( font, .c_str(), textColor );
-
+    // sTempo.clear();
+    // sTempo.push_back(tempo);
+    // SDL_Surface* textSurface =
+    // TTF_RenderText_Solid( font, .c_str(), textColor );
 }
 
 bool Jogo::loadMidia() {
-    //Loading success flag
+    // Loading success flag
     bool success = true;
 
-    //Load PNG texture
-    texturas[TEXTURAS::TROPA_PAPEL] = loadTexture( "imagens/papel.png" );
-    if( texturas[TEXTURAS::TROPA_PAPEL] == NULL ) {
-        printf( "Failed to load texture papel.png!\n" );
+    // Load PNG texture
+    texturas[TEXTURAS::TROPA_PAPEL] =
+            loadTexture("imagens/papel.png");
+    if ( texturas[TEXTURAS::TROPA_PAPEL] == NULL ) {
+        printf("Failed to load texture papel.png!\n");
         success = false;
     }
 
-    texturas[TEXTURAS::TROPA_PAPEL_CPU] = loadTexture( "imagens/papel_cpu.png" );
-    if( texturas[TEXTURAS::TROPA_PAPEL] == NULL ) {
-        printf( "Failed to load texture papel_cpu.png!\n" );
+    texturas[TEXTURAS::TROPA_PAPEL_CPU] =
+            loadTexture("imagens/papel_cpu.png");
+    if ( texturas[TEXTURAS::TROPA_PAPEL] == NULL ) {
+        printf("Failed to load texture papel_cpu.png!\n");
         success = false;
     }
 
-    texturas[TEXTURAS::TROPA_PEDRA] = loadTexture( "imagens/pedra.png" );
-    if( texturas[TEXTURAS::TROPA_PEDRA] == NULL ) {
-        printf( "Failed to load texture pedra.png!\n" );
+    texturas[TEXTURAS::TROPA_PEDRA] =
+            loadTexture("imagens/pedra.png");
+    if ( texturas[TEXTURAS::TROPA_PEDRA] == NULL ) {
+        printf("Failed to load texture pedra.png!\n");
         success = false;
     }
 
-    texturas[TEXTURAS::TROPA_PEDRA_CPU] = loadTexture( "imagens/pedra_cpu.png" );
-    if( texturas[TEXTURAS::TROPA_PEDRA] == NULL ) {
-        printf( "Failed to load texture pedra_cpu.png!\n" );
+    texturas[TEXTURAS::TROPA_PEDRA_CPU] =
+            loadTexture("imagens/pedra_cpu.png");
+    if ( texturas[TEXTURAS::TROPA_PEDRA] == NULL ) {
+        printf("Failed to load texture pedra_cpu.png!\n");
         success = false;
     }
 
-    texturas[TEXTURAS::TROPA_TESOURA] = loadTexture( "imagens/tesoura.png" );
-    if( texturas[TEXTURAS::TROPA_TESOURA] == NULL ) {
-        printf( "Failed to load texture tesoura.png!\n" );
+    texturas[TEXTURAS::TROPA_TESOURA] =
+            loadTexture("imagens/tesoura.png");
+    if ( texturas[TEXTURAS::TROPA_TESOURA] == NULL ) {
+        printf("Failed to load texture tesoura.png!\n");
         success = false;
     }
 
-    texturas[TEXTURAS::TROPA_TESOURA_CPU] = loadTexture( "imagens/tesoura_cpu.png" );
-    if( texturas[TEXTURAS::TROPA_TESOURA] == NULL ) {
-        printf( "Failed to load texture tesoura_cpu.png!\n" );
+    texturas[TEXTURAS::TROPA_TESOURA_CPU] =
+            loadTexture("imagens/tesoura_cpu.png");
+    if ( texturas[TEXTURAS::TROPA_TESOURA] == NULL ) {
+        printf("Failed to load texture tesoura_cpu.png!\n");
         success = false;
     }
 
-    texturas[TEXTURAS::TROPA_PAPEL2] = loadTexture( "imagens/aviao_de_papel.png" );
-    if( texturas[TEXTURAS::TROPA_PAPEL2] == NULL ) {
-        printf( "Failed to load texture aviao_de_papel.png!\n" );
+    texturas[TEXTURAS::TROPA_PAPEL2] =
+            loadTexture("imagens/aviao_de_papel.png");
+    if ( texturas[TEXTURAS::TROPA_PAPEL2] == NULL ) {
+        printf("Failed to load texture aviao_de_papel.png!\n");
         success = false;
     }
 
-    texturas[TEXTURAS::TROPA_PAPEL2_CPU] = loadTexture( "imagens/aviao_de_papel_cpu.png" );
-    if( texturas[TEXTURAS::TROPA_PAPEL2] == NULL ) {
-        printf( "Failed to load texture aviao_de_papel_cpu.png!\n" );
+    texturas[TEXTURAS::TROPA_PAPEL2_CPU] =
+            loadTexture("imagens/aviao_de_papel_cpu.png");
+    if ( texturas[TEXTURAS::TROPA_PAPEL2] == NULL ) {
+        printf("Failed to load texture aviao_de_papel_cpu.png!\n");
         success = false;
     }
 
-    texturas[TEXTURAS::TROPA_PEDRA2] = loadTexture( "imagens/Golem_de_pedra.png" );
-    if( texturas[TEXTURAS::TROPA_PEDRA2] == NULL ) {
-        printf( "Failed to load texture Golem_de_pedra.png!\n" );
+    texturas[TEXTURAS::TROPA_PEDRA2] =
+            loadTexture("imagens/Golem_de_pedra.png");
+    if ( texturas[TEXTURAS::TROPA_PEDRA2] == NULL ) {
+        printf("Failed to load texture Golem_de_pedra.png!\n");
         success = false;
     }
 
-    texturas[TEXTURAS::TROPA_PEDRA2] = loadTexture( "imagens/Golem_de_pedra.png" );
-    if( texturas[TEXTURAS::TROPA_PEDRA2] == NULL ) {
-        printf( "Failed to load texture Golem_de_pedra.png!\n" );
+    texturas[TEXTURAS::TROPA_PEDRA2_CPU] =
+            loadTexture("imagens/golem_de_pedra_cpu.png");
+    if ( texturas[TEXTURAS::TROPA_PEDRA2] == NULL ) {
+        printf("Failed to load texture Golem_de_pedra.png!\n");
         success = false;
     }
 
-    texturas[TEXTURAS::TROPA_TESOURA2] = loadTexture( "imagens/katana.png" );
-    if( texturas[TEXTURAS::TROPA_TESOURA2] == NULL ) {
-        printf( "Failed to load texture katana.png!\n" );
+    texturas[TEXTURAS::TROPA_TESOURA2] =
+            loadTexture("imagens/katana.png");
+    if ( texturas[TEXTURAS::TROPA_TESOURA2] == NULL ) {
+        printf("Failed to load texture katana.png!\n");
         success = false;
     }
 
-    texturas[TEXTURAS::TROPA_TESOURA2_CPU] = loadTexture( "imagens/katana_cpu.png" );
-    if( texturas[TEXTURAS::TROPA_TESOURA2] == NULL ) {
-        printf( "Failed to load texture katana_cpu.png!\n" );
+    texturas[TEXTURAS::TROPA_TESOURA2_CPU] =
+            loadTexture("imagens/katana_cpu.png");
+    if ( texturas[TEXTURAS::TROPA_TESOURA2] == NULL ) {
+        printf("Failed to load texture katana_cpu.png!\n");
         success = false;
     }
 
-    texturas[TEXTURAS::FABRICA_PAPEL] = loadTexture( "imagens/GeraTropaPapel.png" );
-    if( texturas[TEXTURAS::FABRICA_PAPEL] == NULL ) {
-        printf( "Failed to load texture GeraTropaPapel.png!\n" );
+    texturas[TEXTURAS::FABRICA_PAPEL] =
+            loadTexture("imagens/GeraTropaPapel.png");
+    if ( texturas[TEXTURAS::FABRICA_PAPEL] == NULL ) {
+        printf("Failed to load texture GeraTropaPapel.png!\n");
         success = false;
     }
 
-    texturas[TEXTURAS::FABRICA_PEDRA] = loadTexture( "imagens/GeraTropaPedra.png" );
-    if( texturas[TEXTURAS::FABRICA_PEDRA] == NULL ) {
-        printf( "Failed to load texture GeraTropaPedra.png!\n" );
+    texturas[TEXTURAS::FABRICA_PEDRA] =
+            loadTexture("imagens/GeraTropaPedra.png");
+    if ( texturas[TEXTURAS::FABRICA_PEDRA] == NULL ) {
+        printf("Failed to load texture GeraTropaPedra.png!\n");
         success = false;
     }
 
-    texturas[TEXTURAS::FABRICA_TESOURA] = loadTexture( "imagens/GeraTropaTesoura.png" );
-    if( texturas[TEXTURAS::FABRICA_TESOURA] == NULL ) {
-        printf( "Failed to load texture GeraTropaTesoura.png!\n" );
+    texturas[TEXTURAS::FABRICA_TESOURA] =
+            loadTexture("imagens/GeraTropaTesoura.png");
+    if ( texturas[TEXTURAS::FABRICA_TESOURA] == NULL ) {
+        printf("Failed to load texture GeraTropaTesoura.png!\n");
         success = false;
     }
 
-    texturas[TEXTURAS::GERAR_PAPEL] = loadTexture( "imagens/Gerador_Madeira.png" );
-    if( texturas[TEXTURAS::GERAR_PAPEL] == NULL ) {
-        printf( "Failed to load texture Gerador_Madeira.png!\n" );
+    texturas[TEXTURAS::GERAR_PAPEL] =
+            loadTexture("imagens/Gerador_Madeira.png");
+    if ( texturas[TEXTURAS::GERAR_PAPEL] == NULL ) {
+        printf("Failed to load texture Gerador_Madeira.png!\n");
         success = false;
     }
 
-    texturas[TEXTURAS::GERAR_PEDRA] = loadTexture( "imagens/Gerador_Pedra.png" );
-    if( texturas[TEXTURAS::GERAR_PEDRA] == NULL ) {
-        printf( "Failed to load texture Gerador_Pedra.png!\n" );
+    texturas[TEXTURAS::GERAR_PEDRA] = loadTexture("imagens/Gerador_Pedra.png");
+    if ( texturas[TEXTURAS::GERAR_PEDRA] == NULL ) {
+        printf("Failed to load texture Gerador_Pedra.png!\n");
         success = false;
     }
 
-    texturas[TEXTURAS::GERAR_TESOURA] = loadTexture( "imagens/Gerador_Metal.png" );
-    if( texturas[TEXTURAS::GERAR_TESOURA] == NULL ) {
-        printf( "Failed to load texture Gerador_Metal.png!\n" );
+    texturas[TEXTURAS::GERAR_TESOURA] =
+            loadTexture("imagens/Gerador_Metal.png");
+    if ( texturas[TEXTURAS::GERAR_TESOURA] == NULL ) {
+        printf("Failed to load texture Gerador_Metal.png!\n");
         success = false;
     }
 
-    texturas[TEXTURAS::BASE_PLAYER] = loadTexture( "imagens/castelo_azul.png" );
-    if( texturas[TEXTURAS::BASE_PLAYER] == NULL ) {
-        printf( "Failed to load texture castelo_azul.png!\n" );
+    texturas[TEXTURAS::BASE_PLAYER] =
+            loadTexture("imagens/castelo_azul.png");
+    if ( texturas[TEXTURAS::BASE_PLAYER] == NULL ) {
+        printf("Failed to load texture castelo_azul.png!\n");
         success = false;
     }
 
-    texturas[TEXTURAS::BASE_CPU] = loadTexture( "imagens/castelo_vermelho.png" );
-    if( texturas[TEXTURAS::BASE_CPU] == NULL ) {
-        printf( "Failed to load texture castelo_vermelho.png!\n" );
+    texturas[TEXTURAS::BASE_CPU] =
+            loadTexture("imagens/castelo_vermelho.png");
+    if ( texturas[TEXTURAS::BASE_CPU] == NULL ) {
+        printf("Failed to load texture castelo_vermelho.png!\n");
         success = false;
     }
 
-    texturas[TEXTURAS::MENU_PRINCIPAL] = loadTexture( "imagens/menu_inicial.png" );
-    if( texturas[TEXTURAS::MENU_PRINCIPAL] == NULL ) {
-        printf( "Failed to load texture menu_inicial.png!\n" );
+    texturas[TEXTURAS::MENU_PRINCIPAL] =
+            loadTexture("imagens/menu_inicial.png");
+    if ( texturas[TEXTURAS::MENU_PRINCIPAL] == NULL ) {
+        printf("Failed to load texture menu_inicial.png!\n");
         success = false;
     }
 
-// Carrega as texturas do botao iniciar
-    texturas[TEXTURAS::BOTAO_INICIAR] = loadTexture( "imagens/botao_iniciar.png" );
-    if( texturas[TEXTURAS::BOTAO_INICIAR] == NULL ) {
-        printf( "Failed to load texture botao_iniciar.png!\n" );
+    texturas[TEXTURAS::BOTAO_INICIAR] =
+            loadTexture("imagens/botao_iniciar.png");
+    if ( texturas[TEXTURAS::BOTAO_INICIAR] == NULL ) {
+        printf("Failed to load texture bota1.png!\n");
         success = false;
     }
 
-    texturas[TEXTURAS::BOTAO_INICIAR_SOBRE] = loadTexture( "imagens/botao_iniciar_sobre.png" );
-    if( texturas[TEXTURAS::BOTAO_INICIAR_SOBRE] == NULL ) {
-        printf( "Failed to load texture botao_inciar_sobre.png!\n" );
+    texturas[TEXTURAS::BOTAO_INICIAR_SOBRE] =
+            loadTexture("imagens/botao_iniciar_sobre.png");
+    if ( texturas[TEXTURAS::BOTAO_INICIAR_SOBRE] == NULL ) {
+        printf("Failed to load texture botao_inciar_sobre.png!\n");
         success = false;
     }
 
-    texturas[TEXTURAS::BOTAO_INICIAR_CLICK] = loadTexture( "imagens/botao_init_click.png" );
-    if( texturas[TEXTURAS::BOTAO_INICIAR_CLICK] == NULL ) {
-        printf( "Failed to load texture botao_iniciar_click.png!\n" );
-        success = false;
-    }else printf("dale\n");
-
-//  Carrega as texturas do botao pause
-    texturas[TEXTURAS::BOTAO_PAUSE] = loadTexture( "imagens/botao_pause.png" );
-    if( texturas[TEXTURAS::BOTAO_PAUSE] == NULL ) {
-        printf( "Failed to load texture botao_pause.png!\n" );
+    texturas[TEXTURAS::BOTAO_INICIAR_CLICK] =
+            loadTexture("imagens/botao_init_click.png");
+    if ( texturas[TEXTURAS::BOTAO_INICIAR_CLICK] == NULL ) {
+        printf("Failed to load texture botao_iniciar_click.png!\n");
         success = false;
     }
 
-    texturas[TEXTURAS::BOTAO_PAUSE_SOBRE] = loadTexture( "imagens/botao_pause_sobre.png" );
-    if( texturas[TEXTURAS::BOTAO_PAUSE_SOBRE] == NULL ) {
-        printf( "Failed to load texture botao_pause_sobre.png!\n" );
+    texturas[TEXTURAS::BOTAO_PAUSE] =
+            loadTexture("imagens/botao_pause.png");
+    if ( texturas[TEXTURAS::BOTAO_PAUSE] == NULL ) {
+        printf("Failed to load texture botao_pause.png!\n");
+        success = false;
+    }
+    texturas[TEXTURAS::BOTAO_PAUSE_SOBRE] =
+            loadTexture("imagens/botao_pause_sobre.png");
+    if ( texturas[TEXTURAS::BOTAO_PAUSE_SOBRE] == NULL ) {
+        printf("Failed to load texture botao_pause_sobre.png!\n");
+        success = false;
+    }
+    texturas[TEXTURAS::BOTAO_PAUSE_CLICK] =
+            loadTexture("imagens/botao_pause_click.png");
+    if ( texturas[TEXTURAS::BOTAO_PAUSE_CLICK] == NULL ) {
+        printf("Failed to load texture botao_pause_click.png!\n");
         success = false;
     }
 
-    texturas[TEXTURAS::BOTAO_PAUSE_CLICK] = loadTexture( "imagens/botao_pause_click.png" );
-    if( texturas[TEXTURAS::BOTAO_PAUSE_CLICK] == NULL ) {
-        printf( "Failed to load texture botao_pause_click.png!\n" );
+    texturas[TEXTURAS::BOTAO_RESUME] =
+            loadTexture("imagens/botao_resume.png");
+    if ( texturas[TEXTURAS::BOTAO_RESUME] == NULL ) {
+        printf("Failed to load texture botao_resume.png!\n");
         success = false;
     }
 
-//  Carrega as texturas do botao resume
-    texturas[TEXTURAS::BOTAO_RESUME] = loadTexture( "imagens/botao_resume.png" );
-    if( texturas[TEXTURAS::BOTAO_RESUME] == NULL ) {
-        printf( "Failed to load texture botao_resume.png!\n" );
+    texturas[TEXTURAS::BOTAO_RESUME_SOBRE] =
+            loadTexture("imagens/botao_resume_sobre.png");
+    if ( texturas[TEXTURAS::BOTAO_RESUME_SOBRE] == NULL ) {
+        printf("Failed to load texture botao_resume_sobre.png!\n");
         success = false;
     }
 
-    texturas[TEXTURAS::BOTAO_RESUME_SOBRE] = loadTexture( "imagens/botao_resume_sobre.png" );
-    if( texturas[TEXTURAS::BOTAO_RESUME_SOBRE] == NULL ) {
-        printf( "Failed to load texture botao_resume_sobre.png!\n" );
+    texturas[TEXTURAS::BOTAO_RESUME_CLICK] =
+            loadTexture("imagens/botao_resume_click.png");
+    if ( texturas[TEXTURAS::BOTAO_RESUME_CLICK] == NULL ) {
+        printf("Failed to load texture botao_resume_click.png!\n");
         success = false;
     }
 
-    texturas[TEXTURAS::BOTAO_RESUME_CLICK] = loadTexture( "imagens/botao_resume_click.png" );
-    if( texturas[TEXTURAS::BOTAO_RESUME_CLICK] == NULL ) {
-        printf( "Failed to load texture botao_resume_click.png!\n" );
+    //  Carrega as texturas do botao sair
+    texturas[TEXTURAS::BOTAO_SAIR] =
+            loadTexture("imagens/botao_sair.png");
+    if ( texturas[TEXTURAS::BOTAO_SAIR] == NULL ) {
+        printf("Failed to load texture botao_sair.png!\n");
+        success = false;
+    }
+    texturas[TEXTURAS::BOTAO_SAIR_SOBRE] =
+            loadTexture("imagens/botao_sair_sobre.png");
+    if ( texturas[TEXTURAS::BOTAO_SAIR_SOBRE] == NULL ) {
+        printf("Failed to load texture botao_sair_sobre.png!\n");
+        success = false;
+    }
+    texturas[TEXTURAS::BOTAO_SAIR_CLICK] =
+            loadTexture("imagens/botao_sair_click.png");
+    if (texturas[TEXTURAS::BOTAO_SAIR_CLICK] == NULL) {
+        printf("Failed to load texture botao_sair_click.png!\n");
         success = false;
     }
 
-//  Carrega as texturas do botao load
-    texturas[TEXTURAS::BOTAO_LOAD] = loadTexture( "imagens/botao_load.png" );
-    if( texturas[TEXTURAS::BOTAO_LOAD] == NULL ) {
-        printf( "Failed to load texture botao_load.png!\n" );
+    texturas[TEXTURAS::BOTAO_LOAD] =
+            loadTexture("imagens/botao_load.png");
+    if (texturas[TEXTURAS::BOTAO_LOAD] == NULL) {
+        printf("Failed to load texture botao_load.png!\n");
+        success = false;
+    }
+    texturas[TEXTURAS::BOTAO_LOAD_SOBRE] =
+            loadTexture("imagens/botao_load_sobre.png");
+    if (texturas[TEXTURAS::BOTAO_LOAD_SOBRE] == NULL) {
+        printf("Failed to load texture botao_load_sobre.png!\n");
+        success = false;
+    }
+    texturas[TEXTURAS::BOTAO_LOAD_CLICK] =
+            loadTexture("imagens/botao_load_click.png");
+    if (texturas[TEXTURAS::BOTAO_LOAD_CLICK] == NULL) {
+        printf("Failed to load texture botao_load_click.png!\n");
         success = false;
     }
 
-    texturas[TEXTURAS::BOTAO_LOAD_SOBRE] = loadTexture( "imagens/botao_load_sobre.png" );
-    if( texturas[TEXTURAS::BOTAO_LOAD_SOBRE] == NULL ) {
-        printf( "Failed to load texture botao_load_sobre.png!\n" );
+    texturas[TEXTURAS::MAPA] = loadTexture("imagens/Mapa.png");
+    if (texturas[TEXTURAS::MAPA] == NULL) {
+        printf("Failed to load texture Mapa.png!\n");
         success = false;
     }
+    font = TTF_OpenFont("fonts/04B_08__.TTF", 28);
 
-    texturas[TEXTURAS::BOTAO_LOAD_CLICK] = loadTexture( "imagens/botao_load_click.png" );
-    if( texturas[TEXTURAS::BOTAO_LOAD_CLICK] == NULL ) {
-        printf( "Failed to load texture botao_load_click.png!\n" );
-        success = false;
-    }
-
-//  Carrega as texturas do botao sair
-    texturas[TEXTURAS::BOTAO_SAIR] = loadTexture( "imagens/botao_sair.png" );
-    if( texturas[TEXTURAS::BOTAO_SAIR] == NULL ) {
-        printf( "Failed to load texture botao_sair.png!\n" );
-        success = false;
-    }
-
-    texturas[TEXTURAS::BOTAO_SAIR_SOBRE] = loadTexture( "imagens/botao_sair_sobre.png" );
-    if( texturas[TEXTURAS::BOTAO_SAIR_SOBRE] == NULL ) {
-        printf( "Failed to load texture botao_sair_sobre.png!\n" );
-        success = false;
-    }
-
-    texturas[TEXTURAS::BOTAO_SAIR_CLICK] = loadTexture( "imagens/botao_sair_click.png" );
-    if( texturas[TEXTURAS::BOTAO_SAIR_CLICK] == NULL ) {
-        printf( "Failed to load texture botao_sair_click.png!\n" );
-        success = false;
-    }
-
-    texturas[TEXTURAS::MAPA] = loadTexture( "imagens/Mapa.png" );
-    if( texturas[TEXTURAS::MAPA] == NULL ) {
-        printf( "Failed to load texture Mapa.png!\n" );
-        success = false;
-    }
-    font = TTF_OpenFont( "fonts/04B_08__.TTF", 28 );
-
-    //  Botao Iniciar
+    // Botao Iniciar
     bIniciar->mudaTextura(texturas[BOTAO_INICIAR]);
-    bIniciar->setDestRect(460, 240,300,120);
+    bIniciar->setDestRect(460, 240, 300, 120);
     bIniciar->setSrcRect(0, 0, 300, 120);
+
+    // Menu Principal
+    menuInicial->mudaTextura(texturas[MENU_PRINCIPAL]);
+    menuInicial->setDestRect(0, 0, 1280, 720);
+    menuInicial->setSrcRect(0, 0, 1280, 720);
+
+    // Mapa
+    mapa->mudaTextura(texturas[MAPA]);
+    mapa->setSrcRect(0, 0, 1280, 720);
+    mapa->setDestRect(0, 0, 1280, 720);
+    // compra->mudaTextura(texturas[GERAR_PAPEL]);
+    compra->setSrcRect(0, 0, 64, 64);
+    compra->setDestRect(480, 648, 64, 64);
     //  Botao Sair
     bSair->mudaTextura(texturas[BOTAO_SAIR]);
     bSair->setSrcRect(0, 0, 300, 120);
     bSair->setDestRect(460, 520, 300, 120);
-    // Botao Load
-    bLoad->mudaTextura(texturas[BOTAO_LOAD]);
-    bLoad->setSrcRect(0, 0, 300, 120);
-    bLoad->setDestRect(460, 380, 300, 120);
+
+
+    // recurso->mudaTextura(texturas[TEXTO_RECURSO]);
+    // recursoDinheiroJogador->mudaTextura(texturas[TEXTO_RECURSO]);
+    recursoDinheiroJogador->setSrcRect(0, 0, 100, 64);
+    recursoDinheiroJogador->setDestRect(235, 20, 80, 60);
+    // recursoCeluloseJogador->mudaTextura(texturas[TEXTO_RECURSO]);
+    recursoCeluloseJogador->setSrcRect(0, 0, 100, 64);
+    recursoCeluloseJogador->setDestRect(400, 80, 80, 60);
+    // recursoPedregulhoJogador->mudaTextura(texturas[TEXTO_RECURSO]);
+    recursoPedregulhoJogador->setSrcRect(0, 0, 100, 64);
+    recursoPedregulhoJogador->setDestRect(235, 80, 80, 60);
+    // recursoMetalJogador->mudaTextura(texturas[TEXTO_RECURSO]);
+    recursoMetalJogador->setSrcRect(0, 0, 100, 64);
+    recursoMetalJogador->setDestRect(400, 20, 80, 60);
+    // recursoDinheiroCpu->mudaTextura(texturas[TEXTO_RECURSO]);
+    recursoDinheiroCpu->setSrcRect(0, 0, 100, 64);
+    recursoDinheiroCpu->setDestRect(875, 20, 80, 60);
+    // recursoCeluloseCpu->mudaTextura(texturas[TEXTO_RECURSO]);
+    recursoCeluloseCpu->setSrcRect(0, 0, 100, 64);
+    recursoCeluloseCpu->setDestRect(1040, 80, 80, 60);
+    // recursoPedregulhoCpu->mudaTextura(texturas[TEXTO_RECURSO]);
+    recursoPedregulhoCpu->setSrcRect(0, 0, 100, 64);
+    recursoPedregulhoCpu->setDestRect(875, 80, 80, 60);
+    // recursoMetalCpu->mudaTextura(texturas[TEXTO_RECURSO]);
+    recursoMetalCpu->setSrcRect(0, 0, 100, 64);
+    recursoMetalCpu->setDestRect(1040, 20, 80, 60);
+
     // Botao Pause
     pause->mudaTextura(texturas[BOTAO_PAUSE]);
     pause->setSrcRect(0, 0, 64, 64);
@@ -570,65 +914,211 @@ bool Jogo::loadMidia() {
     resume->setSrcRect(0, 0, 64, 64);
     resume->setDestRect(80, 0, 80, 60);
     // Menu Inicial
-    menuInicial->mudaTextura(texturas[MENU_PRINCIPAL]);
-    menuInicial->setDestRect(0, 0, 1280,720);
-    menuInicial->setSrcRect(0, 0, 1280, 720);
-    mapa->mudaTextura(texturas[MAPA]);
-    mapa->setSrcRect(0, 0, 1280, 720);
-    mapa->setDestRect(0, 0, 1280, 720);
-    //compra->mudaTextura(texturas[GERAR_PAPEL]);
-    compra->setSrcRect(0, 0, 64, 64);
-    compra->setDestRect(480, 648, 64, 64);
 
-    //recursoDinheiroJogador->mudaTextura(texturas[TEXTO_RECURSO]);
-    recursoDinheiroJogador->setSrcRect(0,0,100,64);
-    recursoDinheiroJogador->setDestRect(235, 20, 80,60);
+    // Botao Load
+    bLoad->mudaTextura(texturas[BOTAO_LOAD]);
+    bLoad->setSrcRect(0, 0, 300, 120);
+    bLoad->setDestRect(460, 380, 300, 120);
 
-    //recursoCeluloseJogador->mudaTextura(texturas[TEXTO_RECURSO]);
-    recursoCeluloseJogador->setSrcRect(0,0,100,64);
-    recursoCeluloseJogador->setDestRect(400, 80, 80,60);
-
-    //recursoPedregulhoJogador->mudaTextura(texturas[TEXTO_RECURSO]);
-    recursoPedregulhoJogador->setSrcRect(0,0,100,64);
-    recursoPedregulhoJogador->setDestRect(235, 80, 80,60);
-
-    //recursoMetalJogador->mudaTextura(texturas[TEXTO_RECURSO]);
-    recursoMetalJogador->setSrcRect(0,0,100,64);
-    recursoMetalJogador->setDestRect(400, 20, 80,60);
-
-    //recursoDinheiroCpu->mudaTextura(texturas[TEXTO_RECURSO]);
-    recursoDinheiroCpu->setSrcRect(0,0,100,64);
-    recursoDinheiroCpu->setDestRect(875, 20, 80,60);
-
-    //recursoCeluloseCpu->mudaTextura(texturas[TEXTO_RECURSO]);
-    recursoCeluloseCpu->setSrcRect(0,0,100,64);
-    recursoCeluloseCpu->setDestRect(1040, 80, 80,60);
-
-    //recursoPedregulhoCpu->mudaTextura(texturas[TEXTO_RECURSO]);
-    recursoPedregulhoCpu->setSrcRect(0,0,100,64);
-    recursoPedregulhoCpu->setDestRect(875, 80, 80,60);
-
-    //recursoMetalCpu->mudaTextura(texturas[TEXTO_RECURSO]);
-    recursoMetalCpu->setSrcRect(0,0,100,64);
-    recursoMetalCpu->setDestRect(1040, 20, 80,60);
+    // Iniciando a string do tempo os rects do objeto
+    tempo_val = ("00:00");
+    tempo_Obj->setSrcRect(0, 0, 100, 64);
+    tempo_Obj->setDestRect(560, 32, 160, 100);
 
     return success;
-
 }
 
 SDL_Texture* Jogo::loadTexture(const char* nome) {
     SDL_Texture* novaTextura = NULL;
     SDL_Surface* surfaceTmp = IMG_Load(nome);
 
-    if(surfaceTmp == NULL) {
-        printf( "Não foi possível carregar a imagem %s! SDL_image Error: %s\n", nome, IMG_GetError() );
+    if (surfaceTmp == NULL) {
+        printf("Não foi possível carregar a imagem %s! SDL_image Error: %s\n",
+                nome, IMG_GetError() );
     } else {
         novaTextura = SDL_CreateTextureFromSurface(render, surfaceTmp);
-        if(novaTextura == NULL) {
-            printf( "Unable to create texture from %s! SDL Error: %s\n", nome, SDL_GetError() );
+        if (novaTextura == NULL) {
+            printf("Unable to create texture from %s! SDL Error: %s\n",
+                    nome, SDL_GetError());
         }
         SDL_FreeSurface(surfaceTmp);
     }
     return novaTextura;
+}
 
+void tempoPP(std::string* string) {
+    if (string->at(4) < '9') {
+        string->at(4)++;
+    } else {
+        string->at(4) -= 9;
+        if (string->at(3) < '6') {
+            string->at(3)++;
+        } else {
+            string->at(3) -= 6;
+            if (string->at(1) < '9') {
+                string->at(1)++;
+            } else {
+                string->at(1) -= 9;
+                string->at(0)++;
+            }
+        }
+    }
+}
+
+void Jogo::loadInfoPlayer(FILE* arq) {
+    char aux[60];
+    fscanf(arq, "%[^\n]s", aux);  // Recebe a divisao do Player1
+    fgetc(arq);
+    fscanf(arq, "%[^\n]s", aux);
+    jogador->setVida(atoi(aux));
+    fgetc(arq);
+    fscanf(arq, "%[^\n]s", aux);
+    jogador->setPedregulho(atoi(aux));
+    fgetc(arq);
+    fscanf(arq, "%[^\n]s", aux);
+    jogador->setCelulose(atoi(aux));
+    fgetc(arq);
+    fscanf(arq, "%[^\n]s", aux);
+    jogador->setMetal(atoi(aux));
+    fgetc(arq);
+    fscanf(arq, "%[^\n]s", aux);
+    jogador->setDinheiro(atoi(aux));
+    fgetc(arq);
+    fscanf(arq, "%[^\n]s", aux);
+    jogador->setPontos(atoi(aux));
+    fgetc(arq);
+}
+
+void Jogo::loadInfoCPU(FILE* arq) {
+    char aux[60];
+    fscanf(arq, "%[^\n]s", aux);  // Recebe a divisao do Player2
+    fgetc(arq);
+    fscanf(arq, "%[^\n]s", aux);
+    cpu->setVida(atoi(aux));
+    fgetc(arq);
+    fscanf(arq, "%[^\n]s", aux);
+    cpu->setPedregulho(atoi(aux));
+    fgetc(arq);
+    fscanf(arq, "%[^\n]s", aux);
+    cpu->setCelulose(atoi(aux));
+    fgetc(arq);
+    fscanf(arq, "%[^\n]s", aux);
+    cpu->setMetal(atoi(aux));
+    fgetc(arq);
+    fscanf(arq, "%[^\n]s", aux);
+    cpu->setDinheiro(atoi(aux));
+    fgetc(arq);
+    fscanf(arq, "%[^\n]s", aux);
+    cpu->setPontos(atoi(aux));
+    fgetc(arq);
+}
+
+void Jogo::load() {
+    FILE* arq = fopen("saves/save.txt", "r");
+    char aux[30];
+    int x, y, vida, nivel, tipo, taxa, velocidade, dano;
+    // Load no tempo do jogo
+    fscanf(arq, "%[^\n]s", aux);
+    Jogo::tempo_val = (std::string) aux;
+    fgetc(arq);
+    // Load nas informacoes dos jogador
+    Jogo::loadInfoPlayer(arq);
+    Jogo::loadInfoCPU(arq);
+    // Load nas matrizes da classe jogo
+    fscanf(arq, "%[^\n]s", aux);  // Divao Matriz gera Recuso
+    fgetc(arq);
+    while (!feof(arq) && fgetc(arq) != '#') {
+        fscanf(arq, "%d %d %d %d %d %d", &x, &y, &vida, &nivel, &tipo, &taxa);
+        Jogo::matriz_geraRecurso[x][y] = new GeraRecursos(x, y, tipo);
+        Jogo::matriz_geraRecurso[x][y]->setNivel(nivel);
+        Jogo::matriz_geraRecurso[x][y]->set_vida(vida);
+        Jogo::matriz_geraRecurso[x][y]->setTaxa(taxa);
+        Jogo::matriz_geraRecurso[x][y]->setDestRect
+        ((y + 2) * 80 , (x + 2) * 72, 64, 64);
+        Jogo::matriz_geraRecurso[x][y]->setSrcRect(0, 0, 64, 64);
+        Jogo::matriz_geraRecurso[x][y]->mudaTextura
+        (Jogo::texturas[retorna_textura_recurso(tipo)]);
+    }
+    fscanf(arq, "%[^\n]s", aux);  // Divao Matriz fabrica
+    fgetc(arq);
+    while (!feof(arq) && fgetc(arq) != '#') {
+        fscanf(arq, "%d %d %d %d %d", &x, &y, &vida, &nivel, &tipo);
+        Jogo::matriz_fabrica[x][y] = new Fabrica(x, y, tipo);
+        Jogo::matriz_fabrica[x][y]->set_nivel(nivel);
+        Jogo::matriz_fabrica[x][y]->set_vida(vida);
+        Jogo::matriz_fabrica[x][y]->setDestRect
+        ((y + 2) * 80 , (x + 2) * 72, 64, 64);
+        Jogo::matriz_fabrica[x][y]->setSrcRect(0, 0, 64, 64);
+        Jogo::matriz_fabrica[x][y]->mudaTextura
+        (Jogo::texturas[retorna_textura_fabrica(tipo)]);
+    }
+    fscanf(arq, "%[^\n]s", aux);  // Divao Matriz unidades
+    fgetc(arq);
+    while (!feof(arq) && fgetc(arq) != '#') {
+        fscanf(arq, "%d %d %d %d %d %d %d",
+                &x, &y, &tipo, &vida, &velocidade, &dano, &nivel);
+        Jogo::matriz_unidade[x][y] =
+                new Unidade(x, y, tipo, vida, velocidade, dano, nivel);
+        Jogo::matriz_unidade[x][y]->setDestRect
+        ((y + 2) * 80 , (x + 2) * 72, 64, 64);
+        Jogo::matriz_unidade[x][y]->setSrcRect(0, 0, 64, 64);
+        Jogo::matriz_unidade[x][y]->mudaTextura
+        (Jogo::texturas[retorna_textura_unidade(nivel, tipo)]);
+    }
+}
+
+void Jogo::save() {
+    FILE* arq = fopen("saves/save.txt", "w+");
+    fprintf(arq, "%s\n", Jogo::tempo_val.c_str());  // Convertar para string
+    fprintf(arq, "#----------Info do Player1----------\n");
+    fprintf(arq, "%d\n", jogador->getVida());
+    fprintf(arq, "%d\n", jogador->getPedregulho());
+    fprintf(arq, "%d\n", jogador->getCelulose());
+    fprintf(arq, "%d\n", jogador->getMetal());
+    fprintf(arq, "%d\n", jogador->getDinheiro());
+    fprintf(arq, "%d\n", jogador->getPontos());
+    fprintf(arq, "#---------Info do Player2(CPU)-------\n");
+    fprintf(arq, "%d\n", cpu->getVida());
+    fprintf(arq, "%d\n", cpu->getPedregulho());
+    fprintf(arq, "%d\n", cpu->getCelulose());
+    fprintf(arq, "%d\n", cpu->getMetal());
+    fprintf(arq, "%d\n", cpu->getDinheiro());
+    fprintf(arq, "%d\n", cpu->getPontos());
+    fprintf(arq, "#-----------Matriz gera Recurso-------\n");
+    for (int i=0; i< 6; i++) {
+        for (int j =0; j < 12; j ++) {
+            if (matriz_geraRecurso[i][j] != NULL) {
+                fprintf(arq, "%d %d ", i, j);
+                fprintf(arq, "%d ", matriz_geraRecurso[i][j]->get_vida());
+                fprintf(arq, "%d ", matriz_geraRecurso[i][j]->getNivel());
+                fprintf(arq, "%d ", matriz_geraRecurso[i][j]->getTipo());
+                fprintf(arq, "%d\n", matriz_geraRecurso[i][j]->getTaxa());
+            }
+        }
+    }
+    fprintf(arq, "#-----------Matriz fabrica------------\n");
+    for (int i=0; i< 6; i++) {
+        for (int j =0; j < 12; j ++) {
+            if (matriz_fabrica[i][j] != NULL) {
+                fprintf(arq, "%d %d ", i, j);
+                fprintf(arq, "%d ", matriz_fabrica[i][j]->get_vida());
+                fprintf(arq, "%d ", matriz_fabrica[i][j]->get_nivel());
+                fprintf(arq, "%d\n", matriz_fabrica[i][j]->getTipo());
+            }
+        }
+    }
+    fprintf(arq, "#-----------Matriz unidades-----------\n");
+    for (int i=0; i< 6; i++) {
+        for (int j =0; j < 12; j ++) {
+            if (matriz_unidade[i][j] != NULL) {
+                fprintf(arq, "%d %d ", i, j);
+                fprintf(arq, "%d ", matriz_unidade[i][j]->getTipo());
+                fprintf(arq, "%d ", matriz_unidade[i][j]->getVida());
+                fprintf(arq, "%d ", matriz_unidade[i][j]->getVelocidade());
+                fprintf(arq, "%d ", matriz_unidade[i][j]->getDano());
+                fprintf(arq, "%d\n", matriz_unidade[i][j]->getNivel());
+            }
+        }
+    }
+    fclose(arq);
 }

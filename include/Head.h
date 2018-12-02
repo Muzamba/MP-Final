@@ -1,4 +1,4 @@
-  #pragma once
+#pragma once
 #ifndef HEAD
 #define HEAD
 
@@ -6,6 +6,7 @@ enum UNIDADE {PAPEL, PEDRA, TESOURA};
 enum RECURSO {CELULOSE, PEDREGULHO, METAL};
 enum TEXTURAS {
     MAPA,
+    TEMPO,
     RECURSO_DINHEIRO_PLAYER,
     RECURSO_CELULOSE_PLAYER,
     RECURSO_PEDREGULHO_PLAYER,
@@ -56,14 +57,26 @@ enum TEXTURAS {
 
 enum TIPO {
     NADA,
-    GERA_CELULOSE,
-    GERA_PEDREGULHO,
-    GERA_METAL,
-    GERA_PAPEL,
-    GERA_PEDRA,
-    GERA_TESOURA
+    UNIDADE_PAPEL,
+    UNIDADE_PEDRA,
+    UNIDADE_TESOURA,
+    GERA_CELULOSE, 
+    GERA_PEDREGULHO, 
+    GERA_METAL, 
+    FABRICAR_PAPEL, 
+    FABRICAR_PEDRA, 
+    FABRICAR_TESOURA,
+    U_GERA_CELULOSE, 
+    U_GERA_PEDREGULHO, 
+    U_GERA_METAL, 
+    U_FABRICA_PAPEL, 
+    U_FABRICA_PEDRA, 
+    U_FABRICA_TESOURA
 };
 
+//--------------Define Unidade ------------
+#define PRECO_INICIAL_UNIDADE 50
+#define CUSTO_INICIAL_DO_UPGRADE_UNIDADE 20
 
 //----------Define Player -----------------
 
@@ -74,11 +87,31 @@ enum TIPO {
 
 #define PRECO_RECURSO_FABRICA 100
 #define PRECO_DINHEIRO_FABRICA 100
+#define VIDA_INICIAL_FABRICA 100
+#define TEMPO_ESPERA_INICIAL_FABRICA 20
+#define CUSTO_INICIAL_UPGRADE_FABRICA 20
+
 
 // -------- Define GeraRecuso--------------
 
 #define TAXA_COLETA 1
 #define PRECO_RECURSO_GERA 100
 #define PRECO_DINHEIRO_GERA 100
+#define PRECO_UPGRADE_GERA 20
 
+// --------------Define Atributos Unidades -------------
+#define VIDA_UNIDADE_1 10
+#define VELO_UNIDADE_1 1
+#define DANO_UNIDADE_1 10
+#define PRECO_UNIDADE_1 50
+
+#define VIDA_UNIDADE_2 20
+#define VELO_UNIDADE_2 1
+#define DANO_UNIDADE_2 20
+#define PRECO_UNIDADE_2 75
+
+#define VIDA_UNIDADE_3 30
+#define VELO_UNIDADE_3 1
+#define DANO_UNIDADE_3 30
+#define PRECO_UNIDADE_3 100
 #endif //HEAD

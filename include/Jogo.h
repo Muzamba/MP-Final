@@ -1,4 +1,6 @@
+// copyright 2018 Switch Dreams
 #pragma once
+#include <stdlib.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
@@ -9,15 +11,22 @@
 #include "Fabrica.h"
 #include "GeraRecursos.h"
 #include "Unidade.h"
+#include <iostream>
+
 
 
 class Jogo {
-public:
+ public:
     Jogo();
     void init(const char* titulo, int x_pos, int y_pos, int width, int height);
     bool loadMidia();
     SDL_Texture* loadTexture(const char* nome);
+
     void load();
+    void save();
+    void loadInfoCPU(FILE* arq);
+    void loadInfoPlayer(FILE* arq);
+
     void fim();
     void turnOff();
     void update();
@@ -32,42 +41,54 @@ public:
 
     SDL_Texture* texturas[TEXTURAS::TEX_TOTAL];
     bool menu_inicial = false;
-    bool paused = false;
     SDL_Texture* aloo;
-    //#ifdef TESTE
-    //Player* jogador = NULL;
-    //Player* cpu = NULL;
-    //#endif
-    //Player* jogador = NULL;
+    bool paused = false;
+    // #ifdef TESTE
+    // Player* jogador = NULL;
+    // Player* cpu = NULL;
+    // #endif
+    // Player* jogador = NULL;
     bool comprando = false;
-    SDL_Texture *teste;
+    TIPO tipoCompra = NADA;
+    int nivelCompra = 0;
+    // SDL_Texture *teste;
 
-protected:
+    /* Movimentacao */
+    void movimentacao();
 
+ protected:
+    Objeto* recursoDinheiroJogador = NULL;
+    Objeto* recursoCeluloseJogador = NULL;
+    Objeto* recursoPedregulhoJogador = NULL;
+    Objeto* recursoMetalJogador = NULL;
+    Objeto* recursoDinheiroCpu = NULL;
+    Objeto* recursoCeluloseCpu = NULL;
+    Objeto* recursoPedregulhoCpu = NULL;
+    Objeto* recursoMetalCpu = NULL;
+    Objeto* tempo_Obj = NULL;
 
-    Objeto* recursoDinheiroJogador;
-    Objeto* recursoCeluloseJogador;
-    Objeto* recursoPedregulhoJogador;
-    Objeto* recursoMetalJogador;
-    Objeto* recursoDinheiroCpu;
-    Objeto* recursoCeluloseCpu;
-    Objeto* recursoPedregulhoCpu;
-    Objeto* recursoMetalCpu;
-    SDL_Color cRecurso{0, 0, 0}; //decidir cor
-    SDL_Texture* tRecurso;
+    SDL_Color cRecurso{0, 0, 0};  // decidir cor
+    SDL_Texture* tRecurso;  // talvez possa remover
     TTF_Font* font = NULL;
-    Botao_Compra* compra= NULL;
+
+    Botao_Compra* compra = NULL;
     Botao_Iniciar* bIniciar = NULL;
+    Botao_Load* bLoad = NULL;
     Botao_Pause* pause = NULL;
     Botao_Resume* resume = NULL;
-    Botao_Load* bLoad = NULL;
     Botao_Sair* bSair = NULL;
+
     Objeto* menuInicial = NULL;
     Objeto* mapa = NULL;
-    int tempo = 0;
+    std::string tempo_val;
     bool on;
     SDL_Window* janela = NULL;
 
     SDL_Renderer* render = NULL;
-
 };
+
+int combate_unidade(Unidade** unidade1, Unidade** unidade2);
+int ataca_geraRecurso(Unidade** unidade, GeraRecursos** geradora);
+int ataca_fabrica(Unidade** unidade, Fabrica** fbrc);
+void anda(Unidade** unidade, Unidade** destino);
+void tempoPP(std::string* string);

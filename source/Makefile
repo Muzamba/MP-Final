@@ -1,6 +1,6 @@
 IDIR =../include
 CC=g++
-CFLAGS=-I$(IDIR) -lSDL2 -lSDL2_image
+CFLAGS=-I$(IDIR) -lSDL2 -lSDL2_image -lSDL2_ttf -std=c++11
 
 
 ODIR= obj
@@ -8,10 +8,10 @@ LDIR =../lib
 
 LIBS=-lm
 
-_DEPS = Unidade.h Head.h Fabrica.h Objeto.h Player.h Predio.h GeraRecursos.h Jogo.h
+_DEPS = Unidade.h Head.h Fabrica.h Objeto.h Player.h Predio.h GeraRecursos.h Jogo.h Botao.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ =  Player.o Objeto.o Unidade.o Predio.o Fabrica.o GeraRecursos.o Jogo.o Botao.o teste/testeGeraRecursos.o teste/testePlayer.o teste/testeUnidade.o
+_OBJ =  Player.o Objeto.o Unidade.o Predio.o Botao.o Fabrica.o GeraRecursos.o Jogo.o teste/testeBotao.o teste/testePlayer.o teste/testeGeraRecursos.o teste/testeFabrica.o teste/testeJogo.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 

@@ -1,13 +1,6 @@
 // Copyright 2018 João Pedro Assis
-#define CATCH_CONFIG_MAIN
-#include "../../include/Objeto.h"
-#include "../../lib/catch.hpp"
-
-TEST_CASE("Compile") {
-    SECTION("Compile") {
-        REQUIRE(1 == 1);
-    }
-}
+#include "../include/Objeto.h"
+#include "../include/catch.hpp"
 
 TEST_CASE("Object") {
     SECTION("INIT X Y") {

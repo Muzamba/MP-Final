@@ -1,79 +1,93 @@
+// "Copyright [year] <Pedro>"
 //
 // Created by pedro on 15/11/18.
-//
+// Edited by Joao Pedro
+
 #include <stdio.h>
 #include"../include/Player.h"
 #include"../include/catch.hpp"
+
+
 #include "../include/Jogo.h"
+#include "../include/Fabrica.h"
 
-Jogo *jogo = new Jogo();
-// "Copyright [year] <Pedro>"
 
+Player* cpu ;
+Player* jogador;
+Jogo* jogo = new Jogo();
+
+/*
 TEST_CASE("Construtor da classe Player", "Player") {
-    Player cpu;
-    REQUIRE(cpu.getCelulose() == RECURSO_INICIAL);
-    REQUIRE(cpu.getPedregulho() == RECURSO_INICIAL);
-    REQUIRE(cpu.getPontos()== 0);
-    REQUIRE(cpu.getDinheiro() == DINHEIRO_INICIAL);
-    REQUIRE(cpu.getMetal() == RECURSO_INICIAL);
+    Player player1;
+    REQUIRE(player1.getCelulose() == RECURSO_INICIAL);
+    REQUIRE(player1.getPedregulho() == RECURSO_INICIAL);
+    REQUIRE(player1.getPontos()== 0);
+    REQUIRE(player1.getDinheiro() == DINHEIRO_INICIAL);
+    REQUIRE(player1.getMetal() == RECURSO_INICIAL);
 }
+
 
 TEST_CASE("Compra_GeraRecursos", "Player") {
-    Player jogador;
     int x = 0, y = 0;
-    SECTION(" Jogador sem dinheiro ") {
-        jogador.setDinheiro(0);
-        REQUIRE(!jogador.compra_GeraRecurso(x, y, RECURSO::PEDREGULHO));
+    Player player1;
+    SECTION(" player1 sem dinheiro ") {
+        player1.setDinheiro(0);
+        REQUIRE(!player1.compra_GeraRecurso(x, y, RECURSO::PEDREGULHO));
     }
-    SECTION(" Jogador sem recurso") {
-        jogador.setPedregulho(0);
-        REQUIRE(!jogador.compra_GeraRecurso(x, y, RECURSO::PEDREGULHO));
+    SECTION(" player1 sem recurso") {
+        player1.setPedregulho(0);
+        REQUIRE(!player1.compra_GeraRecurso(x, y, RECURSO::PEDREGULHO));
     }
-    SECTION("Jogador com recurso e dinheiro suficiente") {
-        jogador.setPedregulho(1000);
-        jogador.setDinheiro(1000);
-        REQUIRE(jogador.compra_GeraRecurso(x, y, RECURSO::PEDREGULHO));
-        REQUIRE(jogador.getDinheiro() == 1000 - PRECO_DINHEIRO_GERA);
-        REQUIRE(jogador.getPedregulho() == 1000 - PRECO_RECURSO_GERA);
+    SECTION("player1 com recurso e dinheiro suficiente") {
+        player1.setPedregulho(1000);
+        player1.setDinheiro(1000);
+        REQUIRE(player1.compra_GeraRecurso(1, 1, RECURSO::PEDREGULHO));
+        REQUIRE(player1.getDinheiro() == 1000 - PRECO_DINHEIRO_GERA);
+        REQUIRE(player1.getPedregulho() == 1000 - PRECO_RECURSO_GERA);
     }
+}*/
+
+
+TEST_CASE("Compra Unidades") {
+    Player player1;
+    printf("ENTROU\n");
+    SECTION("player1 sem recursos") {
+        int x = 5, y = 5;
+        player1.setPedregulho(2);
+        REQUIRE(player1.compra_Unidade(x, y, UNIDADE::PEDRA, 1) == false);
+    }
+    SECTION("player1 com recursos") {
+        int x = 5, y = 5;
+        player1.setPedregulho(8000);
+        printf("Antes\n");
+        CHECK(player1.compra_Unidade(x, y, UNIDADE::PEDRA, 1) == true);
+        printf("Depois\n");
+    }
+    printf("PASSOU AQUI\n");
 }
 
+/*
 TEST_CASE("Compra_Fabrica", "Player") {
-    Player jogador;
+    Player player1;
     int x = 2, y = 0;
-    SECTION(" Jogador sem dinheiro ") {
-        jogador.setDinheiro(0);
-        REQUIRE(!jogador.compra_Fabrica(x, y, UNIDADE::PEDRA));
+    SECTION(" player1 sem dinheiro ") {
+        player1.setDinheiro(0);
+        REQUIRE(!player1.compra_Fabrica(x, y, UNIDADE::PEDRA));
     }
-    SECTION(" Jogador sem recurso") {
-        jogador.setPedregulho(0);
-        REQUIRE(!jogador.compra_Fabrica(x, y, UNIDADE::PEDRA));
+    SECTION(" player1 sem recurso") {
+        player1.setPedregulho(0);
+        REQUIRE(!player1.compra_Fabrica(x, y, UNIDADE::PEDRA));
     }
     SECTION("Coluna de tropa") {
         y = 5;
-        REQUIRE(!jogador.compra_Fabrica(x, y, UNIDADE::PEDRA));
+        REQUIRE(!player1.compra_Fabrica(x, y, UNIDADE::PEDRA));
     }
-    SECTION("Jogador com recurso e dinheiro suficiente") {
-        jogador.setPedregulho(1000);
-        jogador.setDinheiro(1000);
-        REQUIRE(jogador.compra_Fabrica(x, y, UNIDADE::PEDRA));
-        REQUIRE(jogador.getDinheiro() == 1000 - PRECO_DINHEIRO_FABRICA);
-        REQUIRE(jogador.getPedregulho() == 1000 - PRECO_RECURSO_FABRICA);
+    SECTION("player1 com recurso e dinheiro suficiente") {
+        player1.setPedregulho(1000);
+        player1.setDinheiro(1000);
+        REQUIRE(player1.compra_Fabrica(x, y, UNIDADE::PEDRA));
+        REQUIRE(player1.getDinheiro() == 1000 - PRECO_DINHEIRO_FABRICA);
+        REQUIRE(player1.getPedregulho() == 1000 - PRECO_RECURSO_FABRICA);
     }
-}
-
-/*TEST_CASE("Atualizar Recursos", "Player") {
-    Player jogador;
-     Player com muitos recursos
-    jogador.setPedregulho(5000);
-    jogador.setDinheiro(5000);
-     Compra 3 gerarRecursos
-    for (int i = 0; i < 3; i++) {
-        jogador.compra_GeraRecurso(RECURSO::PEDREGULHO);
-    }
-     Atualizar Recursos
-    jogador.atualizar_Recursos();
-     Pedregulho inicial - 3 * preco da geraRecurso + 3 * a taxa_coleta
-    REQUIRE(jogador.getPedregulho() ==
-    5000-(3*PRECO_RECURSO_GERA)+(3*TAXA_COLETA));
 }*/
+
