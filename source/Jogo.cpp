@@ -32,6 +32,7 @@ Jogo::Jogo() {
     pause = new Botao_Pause(0, 0);
     resume = new Botao_Resume(0, 0);
     bSair = new Botao_Sair(0, 0);
+    bSalvar = new Botao_Save(0, 0);
 
     recursoDinheiroJogador = new Objeto(0, 0);
     recursoCeluloseJogador = new Objeto(0, 0);
@@ -72,6 +73,8 @@ Jogo::~Jogo() {
     // delete cpu;
     // cpu = NULL;
 
+    delete bSalvar;
+    bSalvar = NULL;
     delete bSair;
     bSair = NULL;
     delete pause;
@@ -416,6 +419,7 @@ void Jogo::handleEvents() {
             } else {
                 pause->handleEvent(&evento);
                 resume->handleEvent(&evento);
+                bSalvar->handleEvent(&evento);
                 buttomEvents(&evento);
             break;
         }
@@ -462,6 +466,7 @@ void Jogo::renderizar() {
         tempo_Obj->render(render);
         pause->render(render);
         resume->render(render);
+        bSalvar->render(render);
     }
     SDL_RenderPresent(render);
 }
@@ -848,6 +853,18 @@ bool Jogo::loadMidia() {
         printf("Failed to load texture botao_load_click.png!\n");
         success = false;
     }
+    texturas[TEXTURAS::BOTAO_SAVE] =
+            loadTexture("imagens/botao_save.png");
+    if (texturas[TEXTURAS::BOTAO_SAVE] == NULL) {
+        printf("Failed to load texture botao_save.png!\n");
+        success = false;
+    }
+    texturas[TEXTURAS::BOTAO_SAVE_SOBRE] =
+            loadTexture("imagens/botao_save_sobre.png");
+    if (texturas[TEXTURAS::BOTAO_SAVE_SOBRE] == NULL) {
+        printf("Failed to load texture botao_save_sobre.png!\n");
+        success = false;
+    }
 
     texturas[TEXTURAS::MAPA] = loadTexture("imagens/Mapa.png");
     if (texturas[TEXTURAS::MAPA] == NULL) {
@@ -856,6 +873,10 @@ bool Jogo::loadMidia() {
     }
     font = TTF_OpenFont("fonts/04B_08__.TTF", 28);
 
+    //  Botao Salvar
+    bSalvar->mudaTextura(texturas[BOTAO_SAVE]);
+    bSalvar->setSrcRect(0, 0, 64, 64);
+    bSalvar->setDestRect(0, 64, 80, 60);
     // Botao Iniciar
     bIniciar->mudaTextura(texturas[BOTAO_INICIAR]);
     bIniciar->setDestRect(460, 240, 300, 120);

@@ -77,6 +77,7 @@ class Jogo {
     Botao_Pause* pause = NULL;
     Botao_Resume* resume = NULL;
     Botao_Sair* bSair = NULL;
+    Botao_Save* bSalvar = NULL;
 
     Objeto* menuInicial = NULL;
     Objeto* mapa = NULL;

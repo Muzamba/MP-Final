@@ -167,6 +167,39 @@ void Botao_Resume::handleEvent(SDL_Event* evento) {
         }
     }
 }
+void Botao_Save::handleEvent(SDL_Event* evento) {
+    //OPERACOES retorno = NADA;
+    int x, y;
+    SDL_GetMouseState(&x,&y);
+    bool dentro = true;
+    if(x < destRect->x) {
+        dentro = false;
+    } else if(x > (destRect->x + destRect->w)) {
+        dentro = false;
+    } else if(y < destRect->y) {
+        dentro = false;
+    } else if(y > (destRect->y + destRect->h)) {
+        dentro = false;
+    }
+    if(!dentro){
+        textura = jogo->texturas[BOTAO_SAVE];
+    } else {
+        switch( evento->type ) {
+            case SDL_MOUSEMOTION:
+                textura = jogo->texturas[BOTAO_SAVE_SOBRE];
+                break;
+            case SDL_MOUSEBUTTONDOWN:
+                textura = jogo->texturas[BOTAO_SAVE_SOBRE];
+                break;
+            case SDL_MOUSEBUTTONUP:
+                textura = jogo->texturas[BOTAO_SAVE_SOBRE];
+                //  implementar funcao save();
+                printf("Jogo Salvo\n");
+                jogo->save();
+                break;
+        }
+    }
+}
 
 void Botao_Compra::handleEvent(SDL_Event* evento){
    /*
