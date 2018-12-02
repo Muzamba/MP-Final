@@ -27,7 +27,6 @@ Jogo::Jogo() {
     mapa = new Objeto(0, 0);/* Set e get depois*/
     bIniciar = new Botao_Iniciar(0, 0);
     menuInicial = new Objeto(0, 0);
-    compra = new Botao_Compra(0, 0);
     bLoad = new Botao_Load(0, 0);
     pause = new Botao_Pause(0, 0);
     resume = new Botao_Resume(0, 0);
@@ -89,8 +88,6 @@ Jogo::~Jogo() {
     menuInicial = NULL;
     delete mapa;
     mapa = NULL;
-    delete compra;
-    compra = NULL;
     delete recursoDinheiroJogador;
     recursoDinheiroJogador = NULL;
     delete recursoCeluloseJogador;
@@ -154,9 +151,71 @@ int combate_unidade(Unidade** atacante, Unidade** defensor) {
         return 3;
     }
     if ((*defensor)->getVida() <= 0) {
+        if((*atacante)->getNivel() == 1){
+            if((*atacante)->getVida() < (1 * (VIDA_UNIDADE_1 / 3))) {
+
+                (*atacante)->setSrcRect(128, (*atacante)->srcRect->y,
+                (*atacante)->srcRect->w,(*atacante)->srcRect->h);
+            } else if((*atacante)->getVida() < (2 * (VIDA_UNIDADE_1 / 3))) {
+                (*atacante)->setSrcRect(64, (*atacante)->srcRect->y,
+                (*atacante)->srcRect->w, (*atacante)->srcRect->h);
+            }
+
+        } else if((*atacante)->getNivel() == 2) {
+            if((*atacante)->getVida() < (1 * (VIDA_UNIDADE_2 / 3))) {
+
+                (*atacante)->setSrcRect(128, (*atacante)->srcRect->y,
+                (*atacante)->srcRect->w, (*atacante)->srcRect->h);
+            } else if((*atacante)->getVida() < (2 * (VIDA_UNIDADE_2 / 3))) {
+                (*atacante)->setSrcRect(64, (*atacante)->srcRect->y,
+                (*atacante)->srcRect->w, (*atacante)->srcRect->h);
+            }
+
+        } else if((*atacante)->getNivel() == 3) {
+            if((*atacante)->getVida() < (1 * (VIDA_UNIDADE_3 / 3))) {
+
+                (*atacante)->setSrcRect(128, (*atacante)->srcRect->y,
+                (*atacante)->srcRect->w, (*atacante)->srcRect->h);
+            } else if((*atacante)->getVida() < (2 * (VIDA_UNIDADE_3 / 3))) {
+                (*atacante)->setSrcRect(64, (*atacante)->srcRect->y,
+                (*atacante)->srcRect->w, (*atacante)->srcRect->h);
+            }
+
+        }
         return 2;
     }
     if ((*atacante)->getVida() <= 0) {
+        if ((*defensor)->getNivel() == 1){
+            if ((*defensor)->getVida() < (1 * (VIDA_UNIDADE_1 / 3))) {
+
+                (*defensor)->setSrcRect(128, (*defensor)->srcRect->y,
+                (*defensor)->srcRect->w, (*defensor)->srcRect->h);
+            } else if ((*defensor)->getVida() < (2 * (VIDA_UNIDADE_1 / 3))) {
+                (*defensor)->setSrcRect(64, (*defensor)->srcRect->y,
+                (*defensor)->srcRect->w, (*defensor)->srcRect->h);
+            }
+
+        } else if ((*defensor)->getNivel() == 2) {
+            if ((*defensor)->getVida() < (1 * (VIDA_UNIDADE_2 / 3))) {
+
+                (*defensor)->setSrcRect(128, (*defensor)->srcRect->y,
+                (*defensor)->srcRect->w, (*defensor)->srcRect->h);
+            } else if((*defensor)->getVida() < (2 * (VIDA_UNIDADE_2 / 3))) {
+                (*defensor)->setSrcRect(64, (*defensor)->srcRect->y,
+                (*defensor)->srcRect->w, (*defensor)->srcRect->h);
+            }
+
+        } else if ((*defensor)->getNivel() == 3) {
+            if ((*defensor)->getVida() < (1 * (VIDA_UNIDADE_3 / 3))) {
+
+                (*defensor)->setSrcRect(128, (*defensor)->srcRect->y,
+                (*defensor)->srcRect->w, (*defensor)->srcRect->h);
+            } else if ((*defensor)->getVida() < (2 * (VIDA_UNIDADE_3 / 3))) {
+                (*defensor)->setSrcRect(64, (*defensor)->srcRect->y,
+                (*defensor)->srcRect->w, (*defensor)->srcRect->h);
+            }
+
+        }
         return 1;
     }
 }
@@ -177,6 +236,14 @@ int ataca_fabrica(Unidade** unidade1, Fabrica** fbrc1) {
     if ((*fbrc1)->get_vida() <= 0) {
         return 1;
     }
+    if ((*fbrc1)->get_vida() < (1 * (VIDA_INICIAL_FABRICA))) {
+        (*fbrc1)->setSrcRect(128, (*fbrc1)->srcRect->y, (*fbrc1)->srcRect->w,
+        (*fbrc1)->srcRect->h);
+    } else if ((*fbrc1)->get_vida() < (2 * (VIDA_INICIAL_FABRICA))) {
+        (*fbrc1)->setSrcRect(64, (*fbrc1)->srcRect->y,(*fbrc1)->srcRect->w,
+        (*fbrc1)->srcRect->h);
+    }
+
     return 0;
 }
 
@@ -188,6 +255,13 @@ int ataca_geraRecurso(Unidade** unidade1, GeraRecursos** geradora) {
     // Se geradora não tem vida, é destruida
     if ((*geradora)->get_vida() <= 0) {
         return 1;
+    }
+    if ((*geradora)->get_vida() < (1 * (VIDA_INICIAL_FABRICA))) {
+        (*geradora)->setSrcRect(128, (*geradora)->srcRect->y,
+        (*geradora)->srcRect->w, (*geradora)->srcRect->h);
+    } else if ((*geradora)->get_vida() < (2 * (VIDA_INICIAL_FABRICA))) {
+        (*geradora)->setSrcRect(64, (*geradora)->srcRect->y,
+        (*geradora)->srcRect->w, (*geradora)->srcRect->h);
     }
     return 0;
 }
@@ -399,7 +473,6 @@ void Jogo::init(const char* nome, int x, int y, int w, int h) {
             /* Set e get depois*/
             menu_inicial = true;
 
-            compra->mudaTipo(GERA_CELULOSE);
         }
         on = true;
     } else {
@@ -618,127 +691,127 @@ bool Jogo::loadMidia() {
 
     // Load PNG texture
     texturas[TEXTURAS::TROPA_PAPEL] =
-            loadTexture("imagens/papel.png");
+            loadTexture("imagens/papel-Vida.png");
     if ( texturas[TEXTURAS::TROPA_PAPEL] == NULL ) {
-        printf("Failed to load texture papel.png!\n");
+        printf("Failed to load texture papel-Vida.png!\n");
         success = false;
     }
 
     texturas[TEXTURAS::TROPA_PAPEL_CPU] =
-            loadTexture("imagens/papel_cpu.png");
+            loadTexture("imagens/papel_cpu-Vida.png");
     if ( texturas[TEXTURAS::TROPA_PAPEL] == NULL ) {
-        printf("Failed to load texture papel_cpu.png!\n");
+        printf("Failed to load texture papel_cpu-Vida.png!\n");
         success = false;
     }
 
     texturas[TEXTURAS::TROPA_PEDRA] =
-            loadTexture("imagens/pedra.png");
+            loadTexture("imagens/pedra-Vida.png");
     if ( texturas[TEXTURAS::TROPA_PEDRA] == NULL ) {
-        printf("Failed to load texture pedra.png!\n");
+        printf("Failed to load texture pedra-Vida.png!\n");
         success = false;
     }
 
     texturas[TEXTURAS::TROPA_PEDRA_CPU] =
-            loadTexture("imagens/pedra_cpu.png");
+            loadTexture("imagens/pedra_cpu-Vida.png");
     if ( texturas[TEXTURAS::TROPA_PEDRA] == NULL ) {
-        printf("Failed to load texture pedra_cpu.png!\n");
+        printf("Failed to load texture pedra_cpu-Vida.png!\n");
         success = false;
     }
 
     texturas[TEXTURAS::TROPA_TESOURA] =
-            loadTexture("imagens/tesoura.png");
+            loadTexture("imagens/tesoura-Vida.png");
     if ( texturas[TEXTURAS::TROPA_TESOURA] == NULL ) {
-        printf("Failed to load texture tesoura.png!\n");
+        printf("Failed to load texture tesoura-Vida.png!\n");
         success = false;
     }
 
     texturas[TEXTURAS::TROPA_TESOURA_CPU] =
-            loadTexture("imagens/tesoura_cpu.png");
+            loadTexture("imagens/tesoura_cpu-Vida.png");
     if ( texturas[TEXTURAS::TROPA_TESOURA] == NULL ) {
-        printf("Failed to load texture tesoura_cpu.png!\n");
+        printf("Failed to load texture tesoura_cpu-Vida-Vida.png!\n");
         success = false;
     }
 
     texturas[TEXTURAS::TROPA_PAPEL2] =
-            loadTexture("imagens/aviao_de_papel.png");
+            loadTexture("imagens/aviao_de_papel-Vida.png");
     if ( texturas[TEXTURAS::TROPA_PAPEL2] == NULL ) {
-        printf("Failed to load texture aviao_de_papel.png!\n");
+        printf("Failed to load texture aviao_de_papel-Vida.png!\n");
         success = false;
     }
 
     texturas[TEXTURAS::TROPA_PAPEL2_CPU] =
-            loadTexture("imagens/aviao_de_papel_cpu.png");
+            loadTexture("imagens/aviao_de_papel_cpu-Vida.png");
     if ( texturas[TEXTURAS::TROPA_PAPEL2] == NULL ) {
-        printf("Failed to load texture aviao_de_papel_cpu.png!\n");
+        printf("Failed to load texture aviao_de_papel_cpu-Vida.png!\n");
         success = false;
     }
 
     texturas[TEXTURAS::TROPA_PEDRA2] =
-            loadTexture("imagens/Golem_de_pedra.png");
+            loadTexture("imagens/Golem_de_pedra-Vida.png");
     if ( texturas[TEXTURAS::TROPA_PEDRA2] == NULL ) {
-        printf("Failed to load texture Golem_de_pedra.png!\n");
+        printf("Failed to load texture Golem_de_pedra-Vida.png!\n");
         success = false;
     }
 
     texturas[TEXTURAS::TROPA_PEDRA2_CPU] =
-            loadTexture("imagens/golem_de_pedra_cpu.png");
+            loadTexture("imagens/golem_de_pedra_cpu-Vida.png");
     if ( texturas[TEXTURAS::TROPA_PEDRA2] == NULL ) {
-        printf("Failed to load texture Golem_de_pedra.png!\n");
+        printf("Failed to load texture Golem_de_pedra-Vida.png!\n");
         success = false;
     }
 
     texturas[TEXTURAS::TROPA_TESOURA2] =
-            loadTexture("imagens/katana.png");
+            loadTexture("imagens/katana-Vida.png");
     if ( texturas[TEXTURAS::TROPA_TESOURA2] == NULL ) {
-        printf("Failed to load texture katana.png!\n");
+        printf("Failed to load texture katana-Vida.png!\n");
         success = false;
     }
 
     texturas[TEXTURAS::TROPA_TESOURA2_CPU] =
-            loadTexture("imagens/katana_cpu.png");
+            loadTexture("imagens/katana_cpu-Vida.png");
     if ( texturas[TEXTURAS::TROPA_TESOURA2] == NULL ) {
-        printf("Failed to load texture katana_cpu.png!\n");
+        printf("Failed to load texture katana_cpu-Vida.png!\n");
         success = false;
     }
 
     texturas[TEXTURAS::FABRICA_PAPEL] =
-            loadTexture("imagens/GeraTropaPapel.png");
+            loadTexture("imagens/GeraTropaPapel-Vida.png");
     if ( texturas[TEXTURAS::FABRICA_PAPEL] == NULL ) {
-        printf("Failed to load texture GeraTropaPapel.png!\n");
+        printf("Failed to load texture GeraTropaPapel-Vida.png!\n");
         success = false;
     }
 
     texturas[TEXTURAS::FABRICA_PEDRA] =
-            loadTexture("imagens/GeraTropaPedra.png");
+            loadTexture("imagens/GeraTropaPedra-Vida.png");
     if ( texturas[TEXTURAS::FABRICA_PEDRA] == NULL ) {
-        printf("Failed to load texture GeraTropaPedra.png!\n");
+        printf("Failed to load texture GeraTropaPedra-Vida.png!\n");
         success = false;
     }
 
     texturas[TEXTURAS::FABRICA_TESOURA] =
-            loadTexture("imagens/GeraTropaTesoura.png");
+            loadTexture("imagens/GeraTropaTesoura-Vida.png");
     if ( texturas[TEXTURAS::FABRICA_TESOURA] == NULL ) {
-        printf("Failed to load texture GeraTropaTesoura.png!\n");
+        printf("Failed to load texture GeraTropaTesoura-Vida.png!\n");
         success = false;
     }
 
     texturas[TEXTURAS::GERAR_PAPEL] =
-            loadTexture("imagens/Gerador_Madeira.png");
+            loadTexture("imagens/Gerador_Madeira-Vida.png");
     if ( texturas[TEXTURAS::GERAR_PAPEL] == NULL ) {
         printf("Failed to load texture Gerador_Madeira.png!\n");
         success = false;
     }
 
-    texturas[TEXTURAS::GERAR_PEDRA] = loadTexture("imagens/Gerador_Pedra.png");
+    texturas[TEXTURAS::GERAR_PEDRA] = loadTexture("imagens/Gerador_Pedra-Vida.png");
     if ( texturas[TEXTURAS::GERAR_PEDRA] == NULL ) {
-        printf("Failed to load texture Gerador_Pedra.png!\n");
+        printf("Failed to load texture Gerador_Pedra-Vida.png!\n");
         success = false;
     }
 
     texturas[TEXTURAS::GERAR_TESOURA] =
-            loadTexture("imagens/Gerador_Metal.png");
+            loadTexture("imagens/Gerador_Metal-Vida.png");
     if ( texturas[TEXTURAS::GERAR_TESOURA] == NULL ) {
-        printf("Failed to load texture Gerador_Metal.png!\n");
+        printf("Failed to load texture Gerador_Metal-Vida.png!\n");
         success = false;
     }
 
@@ -897,9 +970,7 @@ bool Jogo::loadMidia() {
     mapa->mudaTextura(texturas[MAPA]);
     mapa->setSrcRect(0, 0, 1280, 720);
     mapa->setDestRect(0, 0, 1280, 720);
-    // compra->mudaTextura(texturas[GERAR_PAPEL]);
-    compra->setSrcRect(0, 0, 64, 64);
-    compra->setDestRect(480, 648, 64, 64);
+    
     //  Botao Sair
     bSair->mudaTextura(texturas[BOTAO_SAIR]);
     bSair->setSrcRect(0, 0, 300, 120);
@@ -983,10 +1054,10 @@ void tempoPP(std::string* string) {
         string->at(4)++;
     } else {
         string->at(4) -= 9;
-        if (string->at(3) < '6') {
+        if (string->at(3) < '5') {
             string->at(3)++;
         } else {
-            string->at(3) -= 6;
+            string->at(3) -= 5;
             if (string->at(1) < '9') {
                 string->at(1)++;
             } else {

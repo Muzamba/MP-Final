@@ -1,10 +1,21 @@
+/**
+ * @file Head.h
+ * 
+ * @brief Arquivo cabeçalho para defines e declaraçoes de enum's
+ * 
+ * @copyright Copyright (c) 2018 (nao sei o que colocar aqui)
+ */
 #pragma once
 #ifndef HEAD
 #define HEAD
 
+/******************************************************************************
+ *  Enum's
+ *****************************************************************************/
 enum UNIDADE {PAPEL, PEDRA, TESOURA};
 enum RECURSO {CELULOSE, PEDREGULHO, METAL};
 enum TEXTURAS {
+    
     MAPA,
     TEMPO,
     RECURSO_DINHEIRO_PLAYER,
@@ -56,7 +67,6 @@ enum TEXTURAS {
     TEX_TOTAL
 };
 
-
 enum TIPO {
     NADA,
     UNIDADE_PAPEL,
@@ -75,19 +85,22 @@ enum TIPO {
     U_FABRICA_PEDRA, 
     U_FABRICA_TESOURA
 };
-
-//--------------Define Unidade ------------
+/******************************************************************************
+ *  Define Unidade
+ *****************************************************************************/
 #define PRECO_INICIAL_UNIDADE 50
 #define CUSTO_INICIAL_DO_UPGRADE_UNIDADE 20
 
-//----------Define Player -----------------
-
+/******************************************************************************
+ *  Define Player
+ *****************************************************************************/
 #define VIDA_INCIAL_PLAYER 1000
 #define RECURSO_INICIAL 200
 #define DINHEIRO_INICIAL 100
 
-//---------_Define Fabrica ----------------
-
+/******************************************************************************
+ *  Define Fabrica
+ *****************************************************************************/
 #define PRECO_RECURSO_FABRICA 100
 #define PRECO_DINHEIRO_FABRICA 100
 #define VIDA_INICIAL_FABRICA 100
@@ -95,14 +108,17 @@ enum TIPO {
 #define CUSTO_INICIAL_UPGRADE_FABRICA 20
 
 
-// -------- Define GeraRecuso--------------
-
+/******************************************************************************
+ *  Define GeraRecurso
+ *****************************************************************************/
 #define TAXA_COLETA 1
 #define PRECO_RECURSO_GERA 100
 #define PRECO_DINHEIRO_GERA 100
 #define PRECO_UPGRADE_GERA 20
 
-// --------------Define Atributos Unidades -------------
+/******************************************************************************
+ *  Define Atributos Unidades
+ *****************************************************************************/
 #define VIDA_UNIDADE_1 10
 #define VELO_UNIDADE_1 1
 #define DANO_UNIDADE_1 10
@@ -118,7 +134,9 @@ enum TIPO {
 #define DANO_UNIDADE_3 30
 #define PRECO_UNIDADE_3 100
 
-// -------------Define para melhor entendimento do codigo ------
+/******************************************************************************
+ *  Define para melhor entendimento do codigo
+ *****************************************************************************/
 #define PLAYER_MORREU 1
 #define PLAYER_N_MORREU 0
 #endif //HEAD
