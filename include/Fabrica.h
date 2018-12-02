@@ -34,7 +34,7 @@ class Fabrica : public Predio {
     void set_nivel(int nivel);
 
     bool can_upgrade_fabrica(int custo, int capital);
-    void upgrade_fabrica(int* dinheiro);
+    bool upgrade_fabrica(int* dinheiro);
 
     void atributos_unidade(FABRICA nivel);
     Unidade* geraUnidade(int matI, int matJ);
@@ -49,7 +49,7 @@ class Fabrica : public Predio {
     //  -------------------- Variáveis da Fábrica em si -----------------------
     int tipo;
     FABRICA tempoEspera;  // T de espera para uma unidade ser gerada
-    FABRICA nivel;  // Nível da fábrica (nível maior, menor tempo de espera)
+    int nivel = 1;  // Nível da fábrica (nível maior, menor tempo de espera)
     // FABRICA tipo;  // Variável não deve ser alterada
     FABRICA preco_recurso = PRECO_RECURSO_FABRICA;
     FABRICA custo_upgrade_fab = CUSTO_INICIAL_DO_UPGRADE_UNIDADE;

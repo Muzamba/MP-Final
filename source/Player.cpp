@@ -14,6 +14,7 @@ Player::Player() {
     metal = RECURSO_INICIAL;
     pontos = 0;
     dinheiro = DINHEIRO_INICIAL;
+    vida = VIDA_INCIAL_PLAYER;
 }
 
 /** coompra_GeraRecurso
@@ -113,8 +114,8 @@ bool Player::possui_recursos_unidade(int tipo, int nivel) {
             custo = PRECO_UNIDADE_3;
             break;
         default:
-            custo = 32000;
-            printf("ERRO : Nivel Invalido : compra unidade");
+            custo = PRECO_UNIDADE_1;
+            //printf("ERRO : Nivel Invalido %d: compra unidade\n", nivel);
     }
 
     switch (tipo) {

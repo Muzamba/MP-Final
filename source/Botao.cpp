@@ -311,6 +311,7 @@ void buttomEvents(SDL_Event* evento) {
                         jogo->tipoCompra = NADA;
                         break;
                     case UNIDADE_PAPEL:
+                        printf("Jogo nivel compra %d\n",jogo->nivelCompra);
                         if (jogador->compra_Unidade(y, x, UNIDADE::PAPEL, jogo->nivelCompra)) {
                             printf("Tropa papel comprada com sucesso \n");
                         } else {
@@ -320,6 +321,7 @@ void buttomEvents(SDL_Event* evento) {
                         jogo->tipoCompra = NADA;
                         jogo->nivelCompra = 0;
                     case UNIDADE_PEDRA:
+                        printf("Jogo nivel compra %d\n",jogo->nivelCompra);
                         if (jogador->compra_Unidade(y, x, UNIDADE::PEDRA, jogo->nivelCompra)) {
                             printf("Tropa pedra comprada com sucesso \n");
                         } else {
@@ -329,6 +331,7 @@ void buttomEvents(SDL_Event* evento) {
                         jogo->tipoCompra = NADA;
                         jogo->nivelCompra = 0;
                     case UNIDADE_TESOURA:
+                        printf("Jogo nivel compra %d\n",jogo->nivelCompra);
                         if (jogador->compra_Unidade(y, x, UNIDADE::TESOURA, jogo->nivelCompra)) {
                             printf("Tropa tesoura comprada com sucesso \n");
                         } else {
@@ -340,9 +343,12 @@ void buttomEvents(SDL_Event* evento) {
                     case U_FABRICA_PAPEL:
                         if (jogo->matriz_fabrica[y][x] != NULL) {
                             if (jogo->matriz_fabrica[y][x]->tipo == UNIDADE::PAPEL) {
-                                printf("Upgrade realizado FABRICA PAPEL\n");
-                                jogo->matriz_fabrica[y][x]->upgrade_fabrica(&(jogador->dinheiro));
-                                printf("Novo nivel da fabrica %d\n", jogo->matriz_fabrica[y][x]->get_nivel());
+                                if (jogo->matriz_fabrica[y][x]->upgrade_fabrica(&(jogador->dinheiro))) {
+                                    printf("Upgrade realizado FABRICA PAPEL\n");
+                                    printf("Novo nivel da fabrica %d\n", jogo->matriz_fabrica[y][x]->get_nivel());
+                                } else {
+                                    printf("Nao foi possivel realizar o upgrade\n");
+                                }
                             }
                         }
                         jogo->comprando = false;
@@ -351,8 +357,12 @@ void buttomEvents(SDL_Event* evento) {
                     case U_FABRICA_PEDRA:
                         if (jogo->matriz_fabrica[y][x] != NULL) {
                             if (jogo->matriz_fabrica[y][x]->tipo == UNIDADE::PEDRA) {
-                                printf("Upgrade realizado FABRICA PEDRA\n");
-                                jogo->matriz_fabrica[y][x]->upgrade_fabrica(&(jogador->dinheiro));
+                                if (jogo->matriz_fabrica[y][x]->upgrade_fabrica(&(jogador->dinheiro))) {
+                                    printf("Upgrade realizado FABRICA PAPEL\n");
+                                    printf("Novo nivel da fabrica %d\n", jogo->matriz_fabrica[y][x]->get_nivel());
+                                } else {
+                                    printf("Nao foi possivel realizar o upgrade\n");
+                                }
                             }
                         }
                         jogo->comprando = false;
@@ -361,8 +371,12 @@ void buttomEvents(SDL_Event* evento) {
                     case U_FABRICA_TESOURA:
                         if (jogo->matriz_fabrica[y][x] != NULL) {
                             if (jogo->matriz_fabrica[y][x]->tipo == UNIDADE::TESOURA) {
-                                printf("Upgrade realizado FABRICA PEDRA\n");
-                                jogo->matriz_fabrica[y][x]->upgrade_fabrica(&(jogador->dinheiro));
+                                if (jogo->matriz_fabrica[y][x]->upgrade_fabrica(&(jogador->dinheiro))) {
+                                    printf("Upgrade realizado FABRICA PAPEL\n");
+                                    printf("Novo nivel da fabrica %d\n", jogo->matriz_fabrica[y][x]->get_nivel());
+                                } else {
+                                    printf("Nao foi possivel realizar o upgrade\n");
+                                }
                             }
                         }
                         jogo->comprando = false;
@@ -463,8 +477,8 @@ void buttomEvents(SDL_Event* evento) {
             } /* if */else{
                 retornaBotao(&x, &y);
             }// else
-            printf("tipo: %d , comprando: %d\n",
-                    jogo->tipoCompra,(jogo->comprando  ? 1 : 0 ));
+            printf("tipo: %d , comprando: %d, nivelCompra: %d \n",
+                    jogo->tipoCompra,(jogo->comprando  ? 1 : 0 ), jogo->tipoCompra);
             // printf("x: %d , y: %d\n", x, y);
     }
 }

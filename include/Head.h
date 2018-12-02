@@ -82,6 +82,7 @@ enum TIPO {
 
 //----------Define Player -----------------
 
+#define VIDA_INCIAL_PLAYER 1000
 #define RECURSO_INICIAL 200
 #define DINHEIRO_INICIAL 100
 
@@ -116,4 +117,8 @@ enum TIPO {
 #define VELO_UNIDADE_3 1
 #define DANO_UNIDADE_3 30
 #define PRECO_UNIDADE_3 100
+
+// -------------Define para melhor entendimento do codigo ------
+#define PLAYER_MORREU 1
+#define PLAYER_N_MORREU 0
 #endif //HEAD

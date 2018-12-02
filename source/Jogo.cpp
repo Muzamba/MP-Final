@@ -111,14 +111,13 @@ Jogo::~Jogo() {
     tempo_Obj = NULL;
 }
 
-void ataca_base(Unidade* unidade, Player* jogador) {
+int ataca_base(Unidade* unidade, Player* jogador) {
     jogador->setVida(jogador->getVida() - unidade->getDano());
-    delete unidade;
-    unidade = NULL;
+    printf("Atacou a Base: Vida atual %d\n", jogador->getVida());
     if (jogador->getVida() <= 0) {
-        // Finalizar jogo
-        // Jogo::isOn();
+        return PLAYER_MORREU;
     }
+    return PLAYER_N_MORREU;
 }
 
 void Jogo::turnOff() {
@@ -200,12 +199,22 @@ void Jogo::movimentacao() {
         if (Jogo::matriz_unidade[lin][11] != NULL
         && Jogo::matriz_unidade[lin][11]->getVelocidade() > 0) {
             // ataca base cpu, e despois se auto destroi
-            ataca_base(Jogo::matriz_unidade[lin][11], cpu);
+            if (ataca_base(Jogo::matriz_unidade[lin][11], cpu) == PLAYER_MORREU) {
+                Jogo::turnOff();
+                printf("CPU Perdeu...");
+            }
+            delete Jogo::matriz_unidade[lin][11];
+            Jogo::matriz_unidade[lin][11] = NULL;
         }
         if (Jogo::matriz_unidade[lin][0] != NULL
         && Jogo::matriz_unidade[lin][0]->getVelocidade() < 0) {
             // ataca base player, e despois se auto destroi
-            ataca_base(Jogo::matriz_unidade[lin][0], jogador);
+            if (ataca_base(Jogo::matriz_unidade[lin][0], jogador) == PLAYER_MORREU) {
+                Jogo::turnOff();
+                printf("Jogador Perdeu...");
+            }
+            delete Jogo::matriz_unidade[lin][0];
+            Jogo::matriz_unidade[lin][0] = NULL;
         }
 
         /* Na 11 ja foi verificado, e so pode ser criado apartir da

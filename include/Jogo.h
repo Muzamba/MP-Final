@@ -50,7 +50,7 @@ class Jogo {
     // Player* jogador = NULL;
     bool comprando = false;
     TIPO tipoCompra = NADA;
-    int nivelCompra = 0;
+    int nivelCompra = -1;
     // SDL_Texture *teste;
 
     /* Movimentacao */
