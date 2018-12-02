@@ -34,6 +34,7 @@ Jogo::Jogo() {
     bSair = new Botao_Sair(0, 0);
     bSalvar = new Botao_Save(0, 0);
     vitoria = new Objeto(0, 0);
+    derrota = new Objeto(0, 0);
 
     recursoDinheiroJogador = new Objeto(0, 0);
     recursoCeluloseJogador = new Objeto(0, 0);
@@ -112,6 +113,8 @@ Jogo::~Jogo() {
     tempo_Obj = NULL;
     delete vitoria;
     vitoria = NULL;
+    delete derrota;
+    derrota = NULL;
 }
 
 int ataca_base(Unidade* unidade, Player* jogador) {
@@ -213,7 +216,7 @@ void Jogo::movimentacao() {
         && Jogo::matriz_unidade[lin][0]->getVelocidade() < 0) {
             // ataca base player, e despois se auto destroi
             if (ataca_base(Jogo::matriz_unidade[lin][0], jogador) == PLAYER_MORREU) {
-                Jogo::turnOff();
+                perdeu = true;
                 printf("Jogador Perdeu...");
             }
             delete Jogo::matriz_unidade[lin][0];
@@ -471,6 +474,9 @@ void Jogo::renderizar() {
         if(ganhou){
           vitoria->render(render);
         }
+        if(perdeu){
+          derrota->render(render);
+        }
         recursoDinheiroJogador->render(render);
         recursoCeluloseJogador->render(render);
         recursoPedregulhoJogador->render(render);
@@ -510,6 +516,11 @@ void Jogo::update() {
       SDL_Delay(5000);
       turnOff();
     }
+    if(perdeu){
+      SDL_Delay(5000);
+      turnOff();
+    }
+
     static int cont = 0;
     static int cont2 = 0;
     static int cont_mov = 0;
@@ -939,12 +950,21 @@ bool Jogo::loadMidia() {
         printf("Failed to load texture vitoria.png!\n");
         success = false;
     }
+    texturas[TEXTURAS::DERROTA] = loadTexture("imagens/derrota.png");
+    if (texturas[TEXTURAS::DERROTA] == NULL) {
+        printf("Failed to load texture derrota.png!\n");
+        success = false;
+    }
     font = TTF_OpenFont("fonts/04B_08__.TTF", 28);
 
     // VITORIA
     vitoria->mudaTextura(texturas[VITORIA]);
     vitoria->setSrcRect(0, 0, 700, 360);
     vitoria->setDestRect(310, 150, 700, 360);
+    // derrota
+    derrota->mudaTextura(texturas[DERROTA]);
+    derrota->setSrcRect(0, 0, 700, 360);
+    derrota->setDestRect(310, 150, 700, 360);
     // Botao Iniciar
     bIniciar->mudaTextura(texturas[BOTAO_INICIAR]);
     bIniciar->setDestRect(460, 240, 300, 120);
