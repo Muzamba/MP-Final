@@ -34,19 +34,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /home/pedro/clion-2018.2.5/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /home/waliffcordeiro/Downloads/clion-2018.2.5/bin/cmake/linux/bin/cmake
 
 # The command to remove a file.
-RM = /home/pedro/clion-2018.2.5/bin/cmake/linux/bin/cmake -E remove -f
+RM = /home/waliffcordeiro/Downloads/clion-2018.2.5/bin/cmake/linux/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/pedro/MP-Final
+CMAKE_SOURCE_DIR = /home/waliffcordeiro/UnB/MP/MP-Final
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/pedro/MP-Final/cmake-build-debug
+CMAKE_BINARY_DIR = /home/waliffcordeiro/UnB/MP/MP-Final/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/Fabrica.dir/depend.make
@@ -59,16 +59,16 @@ include CMakeFiles/Fabrica.dir/flags.make
 
 CMakeFiles/Fabrica.dir/source/Fabrica.cpp.o: CMakeFiles/Fabrica.dir/flags.make
 CMakeFiles/Fabrica.dir/source/Fabrica.cpp.o: ../source/Fabrica.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/pedro/MP-Final/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Fabrica.dir/source/Fabrica.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Fabrica.dir/source/Fabrica.cpp.o -c /home/pedro/MP-Final/source/Fabrica.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waliffcordeiro/UnB/MP/MP-Final/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Fabrica.dir/source/Fabrica.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Fabrica.dir/source/Fabrica.cpp.o -c /home/waliffcordeiro/UnB/MP/MP-Final/source/Fabrica.cpp
 
 CMakeFiles/Fabrica.dir/source/Fabrica.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Fabrica.dir/source/Fabrica.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/pedro/MP-Final/source/Fabrica.cpp > CMakeFiles/Fabrica.dir/source/Fabrica.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/waliffcordeiro/UnB/MP/MP-Final/source/Fabrica.cpp > CMakeFiles/Fabrica.dir/source/Fabrica.cpp.i
 
 CMakeFiles/Fabrica.dir/source/Fabrica.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Fabrica.dir/source/Fabrica.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/pedro/MP-Final/source/Fabrica.cpp -o CMakeFiles/Fabrica.dir/source/Fabrica.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/waliffcordeiro/UnB/MP/MP-Final/source/Fabrica.cpp -o CMakeFiles/Fabrica.dir/source/Fabrica.cpp.s
 
 # Object files for target Fabrica
 Fabrica_OBJECTS = \
@@ -80,7 +80,7 @@ Fabrica_EXTERNAL_OBJECTS =
 libFabrica.a: CMakeFiles/Fabrica.dir/source/Fabrica.cpp.o
 libFabrica.a: CMakeFiles/Fabrica.dir/build.make
 libFabrica.a: CMakeFiles/Fabrica.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/pedro/MP-Final/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library libFabrica.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/waliffcordeiro/UnB/MP/MP-Final/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library libFabrica.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/Fabrica.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Fabrica.dir/link.txt --verbose=$(VERBOSE)
 
@@ -94,6 +94,6 @@ CMakeFiles/Fabrica.dir/clean:
 .PHONY : CMakeFiles/Fabrica.dir/clean
 
 CMakeFiles/Fabrica.dir/depend:
-	cd /home/pedro/MP-Final/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/pedro/MP-Final /home/pedro/MP-Final /home/pedro/MP-Final/cmake-build-debug /home/pedro/MP-Final/cmake-build-debug /home/pedro/MP-Final/cmake-build-debug/CMakeFiles/Fabrica.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/waliffcordeiro/UnB/MP/MP-Final/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/waliffcordeiro/UnB/MP/MP-Final /home/waliffcordeiro/UnB/MP/MP-Final /home/waliffcordeiro/UnB/MP/MP-Final/cmake-build-debug /home/waliffcordeiro/UnB/MP/MP-Final/cmake-build-debug /home/waliffcordeiro/UnB/MP/MP-Final/cmake-build-debug/CMakeFiles/Fabrica.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/Fabrica.dir/depend
 

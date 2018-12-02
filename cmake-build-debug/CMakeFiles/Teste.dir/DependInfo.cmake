@@ -4,9 +4,9 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/pedro/MP-Final/source/teste/testeBotao.cpp" "/home/pedro/MP-Final/cmake-build-debug/CMakeFiles/Teste.dir/source/teste/testeBotao.cpp.o"
-  "/home/pedro/MP-Final/source/teste/testeGeraRecursos.cpp" "/home/pedro/MP-Final/cmake-build-debug/CMakeFiles/Teste.dir/source/teste/testeGeraRecursos.cpp.o"
-  "/home/pedro/MP-Final/source/teste/testeJogo.cpp" "/home/pedro/MP-Final/cmake-build-debug/CMakeFiles/Teste.dir/source/teste/testeJogo.cpp.o"
+  "/home/waliffcordeiro/UnB/MP/MP-Final/source/teste/testeBotao.cpp" "/home/waliffcordeiro/UnB/MP/MP-Final/cmake-build-debug/CMakeFiles/Teste.dir/source/teste/testeBotao.cpp.o"
+  "/home/waliffcordeiro/UnB/MP/MP-Final/source/teste/testeGeraRecursos.cpp" "/home/waliffcordeiro/UnB/MP/MP-Final/cmake-build-debug/CMakeFiles/Teste.dir/source/teste/testeGeraRecursos.cpp.o"
+  "/home/waliffcordeiro/UnB/MP/MP-Final/source/teste/testeJogo.cpp" "/home/waliffcordeiro/UnB/MP/MP-Final/cmake-build-debug/CMakeFiles/Teste.dir/source/teste/testeJogo.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

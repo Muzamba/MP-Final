@@ -66,7 +66,6 @@ public:
 
     void setPontos(int pontos);
 
-private:
     /* Metodos auxiliares */
     void retira_recurso_fabrica(UNIDADE tipo);
 

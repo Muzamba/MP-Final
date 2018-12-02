@@ -6,7 +6,7 @@
 #include "../include/Jogo.h"
 
 TEST_CASE("Anda") {
-    Unidade* atual = new Unidade(0, 0, UNIDADE::TESOURA, 300, 1, 2);
+    Unidade* atual = new Unidade(0, 0, UNIDADE::TESOURA, 300, 1, 2 ,1);
     Unidade* destino = NULL;
     anda(&atual, &destino);
     CHECK(atual == NULL);
@@ -21,8 +21,8 @@ TEST_CASE("Anda") {
 
 TEST_CASE("Combate Unidade") {
     // X, Y, tipo, vida, velocidade, dano
-    Unidade* unidade1 = new Unidade(2, 20, UNIDADE::PAPEL, 200, 1, 100);
-    Unidade* unidade2 = new Unidade(1, 20, UNIDADE::PEDRA, 200, -1, 100);
+    Unidade* unidade1 = new Unidade(2, 20, UNIDADE::PAPEL, 200, 1, 100, 1);
+    Unidade* unidade2 = new Unidade(1, 20, UNIDADE::PEDRA, 200, -1, 100, 1);
 
     SECTION("Combate Unidade2 morre") {
         combate_unidade(&unidade1, &unidade2);
@@ -53,15 +53,11 @@ SECTION("Combate Unidade2 morre") {
     }
 }
 TEST_CASE("Ataca Geradora") {
-    Unidade* unidade = new Unidade(2, 20, UNIDADE::PAPEL, 200, 1, 20);
+    Unidade* unidade = new Unidade(2, 20, UNIDADE::PAPEL, 200, 1, 20, 1);
     GeraRecursos* geradora = new GeraRecursos(3, 20, UNIDADE::PAPEL);
     SECTION("Geradora não morre") {
         geradora->set_vida(21);
-        printf("\ndano unidade: %d\n", unidade->getDano());
-        printf("\nvida geradora: %d\n", geradora->get_vida());
         REQUIRE(ataca_geraRecurso(&unidade, &geradora) == 0);
-        printf("\ndano unidade: %d\n", unidade->getDano());
-        printf("\nvida geradora: %d\n", geradora->get_vida());
         REQUIRE(geradora->get_vida() == 1);
     }
     SECTION("Geradora morre") {
@@ -78,7 +74,7 @@ TEST_CASE("Ataca Geradora") {
 }
 
 TEST_CASE("Ataca Fabrica") {
-    Unidade* unidade = new Unidade(2, 20, UNIDADE::PAPEL, 200, 1, 5);
+    Unidade* unidade = new Unidade(2, 20, UNIDADE::PAPEL, 200, 1, 5, 1);
     Fabrica* fbrc = new Fabrica(3, 20, UNIDADE::PEDRA);
     SECTION("Fabrica não morre") {
     fbrc->set_vida(11);

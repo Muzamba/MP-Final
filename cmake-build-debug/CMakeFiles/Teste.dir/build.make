@@ -34,19 +34,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /home/pedro/clion-2018.2.5/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /home/waliffcordeiro/Downloads/clion-2018.2.5/bin/cmake/linux/bin/cmake
 
 # The command to remove a file.
-RM = /home/pedro/clion-2018.2.5/bin/cmake/linux/bin/cmake -E remove -f
+RM = /home/waliffcordeiro/Downloads/clion-2018.2.5/bin/cmake/linux/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/pedro/MP-Final
+CMAKE_SOURCE_DIR = /home/waliffcordeiro/UnB/MP/MP-Final
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/pedro/MP-Final/cmake-build-debug
+CMAKE_BINARY_DIR = /home/waliffcordeiro/UnB/MP/MP-Final/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/Teste.dir/depend.make
@@ -59,42 +59,42 @@ include CMakeFiles/Teste.dir/flags.make
 
 CMakeFiles/Teste.dir/source/teste/testeGeraRecursos.cpp.o: CMakeFiles/Teste.dir/flags.make
 CMakeFiles/Teste.dir/source/teste/testeGeraRecursos.cpp.o: ../source/teste/testeGeraRecursos.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/pedro/MP-Final/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Teste.dir/source/teste/testeGeraRecursos.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Teste.dir/source/teste/testeGeraRecursos.cpp.o -c /home/pedro/MP-Final/source/teste/testeGeraRecursos.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waliffcordeiro/UnB/MP/MP-Final/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Teste.dir/source/teste/testeGeraRecursos.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Teste.dir/source/teste/testeGeraRecursos.cpp.o -c /home/waliffcordeiro/UnB/MP/MP-Final/source/teste/testeGeraRecursos.cpp
 
 CMakeFiles/Teste.dir/source/teste/testeGeraRecursos.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Teste.dir/source/teste/testeGeraRecursos.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/pedro/MP-Final/source/teste/testeGeraRecursos.cpp > CMakeFiles/Teste.dir/source/teste/testeGeraRecursos.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/waliffcordeiro/UnB/MP/MP-Final/source/teste/testeGeraRecursos.cpp > CMakeFiles/Teste.dir/source/teste/testeGeraRecursos.cpp.i
 
 CMakeFiles/Teste.dir/source/teste/testeGeraRecursos.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Teste.dir/source/teste/testeGeraRecursos.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/pedro/MP-Final/source/teste/testeGeraRecursos.cpp -o CMakeFiles/Teste.dir/source/teste/testeGeraRecursos.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/waliffcordeiro/UnB/MP/MP-Final/source/teste/testeGeraRecursos.cpp -o CMakeFiles/Teste.dir/source/teste/testeGeraRecursos.cpp.s
 
 CMakeFiles/Teste.dir/source/teste/testeJogo.cpp.o: CMakeFiles/Teste.dir/flags.make
 CMakeFiles/Teste.dir/source/teste/testeJogo.cpp.o: ../source/teste/testeJogo.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/pedro/MP-Final/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Teste.dir/source/teste/testeJogo.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Teste.dir/source/teste/testeJogo.cpp.o -c /home/pedro/MP-Final/source/teste/testeJogo.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waliffcordeiro/UnB/MP/MP-Final/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Teste.dir/source/teste/testeJogo.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Teste.dir/source/teste/testeJogo.cpp.o -c /home/waliffcordeiro/UnB/MP/MP-Final/source/teste/testeJogo.cpp
 
 CMakeFiles/Teste.dir/source/teste/testeJogo.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Teste.dir/source/teste/testeJogo.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/pedro/MP-Final/source/teste/testeJogo.cpp > CMakeFiles/Teste.dir/source/teste/testeJogo.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/waliffcordeiro/UnB/MP/MP-Final/source/teste/testeJogo.cpp > CMakeFiles/Teste.dir/source/teste/testeJogo.cpp.i
 
 CMakeFiles/Teste.dir/source/teste/testeJogo.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Teste.dir/source/teste/testeJogo.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/pedro/MP-Final/source/teste/testeJogo.cpp -o CMakeFiles/Teste.dir/source/teste/testeJogo.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/waliffcordeiro/UnB/MP/MP-Final/source/teste/testeJogo.cpp -o CMakeFiles/Teste.dir/source/teste/testeJogo.cpp.s
 
 CMakeFiles/Teste.dir/source/teste/testeBotao.cpp.o: CMakeFiles/Teste.dir/flags.make
 CMakeFiles/Teste.dir/source/teste/testeBotao.cpp.o: ../source/teste/testeBotao.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/pedro/MP-Final/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Teste.dir/source/teste/testeBotao.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Teste.dir/source/teste/testeBotao.cpp.o -c /home/pedro/MP-Final/source/teste/testeBotao.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waliffcordeiro/UnB/MP/MP-Final/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Teste.dir/source/teste/testeBotao.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Teste.dir/source/teste/testeBotao.cpp.o -c /home/waliffcordeiro/UnB/MP/MP-Final/source/teste/testeBotao.cpp
 
 CMakeFiles/Teste.dir/source/teste/testeBotao.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Teste.dir/source/teste/testeBotao.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/pedro/MP-Final/source/teste/testeBotao.cpp > CMakeFiles/Teste.dir/source/teste/testeBotao.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/waliffcordeiro/UnB/MP/MP-Final/source/teste/testeBotao.cpp > CMakeFiles/Teste.dir/source/teste/testeBotao.cpp.i
 
 CMakeFiles/Teste.dir/source/teste/testeBotao.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Teste.dir/source/teste/testeBotao.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/pedro/MP-Final/source/teste/testeBotao.cpp -o CMakeFiles/Teste.dir/source/teste/testeBotao.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/waliffcordeiro/UnB/MP/MP-Final/source/teste/testeBotao.cpp -o CMakeFiles/Teste.dir/source/teste/testeBotao.cpp.s
 
 # Object files for target Teste
 Teste_OBJECTS = \
@@ -110,7 +110,7 @@ Teste: CMakeFiles/Teste.dir/source/teste/testeJogo.cpp.o
 Teste: CMakeFiles/Teste.dir/source/teste/testeBotao.cpp.o
 Teste: CMakeFiles/Teste.dir/build.make
 Teste: CMakeFiles/Teste.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/pedro/MP-Final/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable Teste"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/waliffcordeiro/UnB/MP/MP-Final/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable Teste"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Teste.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -123,6 +123,6 @@ CMakeFiles/Teste.dir/clean:
 .PHONY : CMakeFiles/Teste.dir/clean
 
 CMakeFiles/Teste.dir/depend:
-	cd /home/pedro/MP-Final/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/pedro/MP-Final /home/pedro/MP-Final /home/pedro/MP-Final/cmake-build-debug /home/pedro/MP-Final/cmake-build-debug /home/pedro/MP-Final/cmake-build-debug/CMakeFiles/Teste.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/waliffcordeiro/UnB/MP/MP-Final/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/waliffcordeiro/UnB/MP/MP-Final /home/waliffcordeiro/UnB/MP/MP-Final /home/waliffcordeiro/UnB/MP/MP-Final/cmake-build-debug /home/waliffcordeiro/UnB/MP/MP-Final/cmake-build-debug /home/waliffcordeiro/UnB/MP/MP-Final/cmake-build-debug/CMakeFiles/Teste.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/Teste.dir/depend
 

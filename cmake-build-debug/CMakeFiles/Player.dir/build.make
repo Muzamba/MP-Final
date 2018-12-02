@@ -34,19 +34,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /home/pedro/clion-2018.2.5/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /home/waliffcordeiro/Downloads/clion-2018.2.5/bin/cmake/linux/bin/cmake
 
 # The command to remove a file.
-RM = /home/pedro/clion-2018.2.5/bin/cmake/linux/bin/cmake -E remove -f
+RM = /home/waliffcordeiro/Downloads/clion-2018.2.5/bin/cmake/linux/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/pedro/MP-Final
+CMAKE_SOURCE_DIR = /home/waliffcordeiro/UnB/MP/MP-Final
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/pedro/MP-Final/cmake-build-debug
+CMAKE_BINARY_DIR = /home/waliffcordeiro/UnB/MP/MP-Final/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/Player.dir/depend.make
@@ -59,16 +59,16 @@ include CMakeFiles/Player.dir/flags.make
 
 CMakeFiles/Player.dir/source/Player.cpp.o: CMakeFiles/Player.dir/flags.make
 CMakeFiles/Player.dir/source/Player.cpp.o: ../source/Player.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/pedro/MP-Final/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Player.dir/source/Player.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Player.dir/source/Player.cpp.o -c /home/pedro/MP-Final/source/Player.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waliffcordeiro/UnB/MP/MP-Final/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Player.dir/source/Player.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Player.dir/source/Player.cpp.o -c /home/waliffcordeiro/UnB/MP/MP-Final/source/Player.cpp
 
 CMakeFiles/Player.dir/source/Player.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Player.dir/source/Player.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/pedro/MP-Final/source/Player.cpp > CMakeFiles/Player.dir/source/Player.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/waliffcordeiro/UnB/MP/MP-Final/source/Player.cpp > CMakeFiles/Player.dir/source/Player.cpp.i
 
 CMakeFiles/Player.dir/source/Player.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Player.dir/source/Player.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/pedro/MP-Final/source/Player.cpp -o CMakeFiles/Player.dir/source/Player.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/waliffcordeiro/UnB/MP/MP-Final/source/Player.cpp -o CMakeFiles/Player.dir/source/Player.cpp.s
 
 # Object files for target Player
 Player_OBJECTS = \
@@ -80,7 +80,7 @@ Player_EXTERNAL_OBJECTS =
 libPlayer.a: CMakeFiles/Player.dir/source/Player.cpp.o
 libPlayer.a: CMakeFiles/Player.dir/build.make
 libPlayer.a: CMakeFiles/Player.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/pedro/MP-Final/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library libPlayer.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/waliffcordeiro/UnB/MP/MP-Final/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library libPlayer.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/Player.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Player.dir/link.txt --verbose=$(VERBOSE)
 
@@ -94,6 +94,6 @@ CMakeFiles/Player.dir/clean:
 .PHONY : CMakeFiles/Player.dir/clean
 
 CMakeFiles/Player.dir/depend:
-	cd /home/pedro/MP-Final/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/pedro/MP-Final /home/pedro/MP-Final /home/pedro/MP-Final/cmake-build-debug /home/pedro/MP-Final/cmake-build-debug /home/pedro/MP-Final/cmake-build-debug/CMakeFiles/Player.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/waliffcordeiro/UnB/MP/MP-Final/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/waliffcordeiro/UnB/MP/MP-Final /home/waliffcordeiro/UnB/MP/MP-Final /home/waliffcordeiro/UnB/MP/MP-Final/cmake-build-debug /home/waliffcordeiro/UnB/MP/MP-Final/cmake-build-debug /home/waliffcordeiro/UnB/MP/MP-Final/cmake-build-debug/CMakeFiles/Player.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/Player.dir/depend
 
