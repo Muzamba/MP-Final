@@ -399,10 +399,10 @@ void Jogo::handleEvents(){
             if (menu_inicial) {
                 bIniciar->handleEvent(&evento);
                 bLoad->handleEvent(&evento);
-                pause->handleEvent(&evento);
-                resume->handleEvent(&evento);
                 bSair->handleEvent(&evento);
             } else {
+                pause->handleEvent(&evento);
+                resume->handleEvent(&evento);
                 buttomEvents( &evento);
             break;
         }
