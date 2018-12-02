@@ -100,6 +100,7 @@ void Botao_Load::handleEvent(SDL_Event* evento) {
             case SDL_MOUSEBUTTONUP:
                 textura = jogo->texturas[BOTAO_LOAD_CLICK];
                 jogo->load();
+                jogo->menu_inicial = false;
                 break;
         }
     }
