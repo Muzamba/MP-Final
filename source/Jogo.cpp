@@ -33,6 +33,7 @@ Jogo::Jogo() {
     resume = new Botao_Resume(0, 0);
     bSair = new Botao_Sair(0, 0);
     bSalvar = new Botao_Save(0, 0);
+    vitoria = new Objeto(0, 0);
 
     recursoDinheiroJogador = new Objeto(0, 0);
     recursoCeluloseJogador = new Objeto(0, 0);
@@ -109,6 +110,8 @@ Jogo::~Jogo() {
     recursoMetalCpu = NULL;
     delete tempo_Obj;
     tempo_Obj = NULL;
+    delete vitoria;
+    vitoria = NULL;
 }
 
 int ataca_base(Unidade* unidade, Player* jogador) {
@@ -200,7 +203,7 @@ void Jogo::movimentacao() {
         && Jogo::matriz_unidade[lin][11]->getVelocidade() > 0) {
             // ataca base cpu, e despois se auto destroi
             if (ataca_base(Jogo::matriz_unidade[lin][11], cpu) == PLAYER_MORREU) {
-                Jogo::turnOff();
+                ganhou = true;
                 printf("CPU Perdeu...");
             }
             delete Jogo::matriz_unidade[lin][11];
@@ -430,6 +433,7 @@ void Jogo::handleEvents() {
                 resume->handleEvent(&evento);
                 bSalvar->handleEvent(&evento);
                 buttomEvents(&evento);
+
             break;
         }
         default:
@@ -463,6 +467,9 @@ void Jogo::renderizar() {
                 }
                 cont++;
             }
+        }
+        if(ganhou){
+          vitoria->render(render);
         }
         recursoDinheiroJogador->render(render);
         recursoCeluloseJogador->render(render);
@@ -499,6 +506,10 @@ void Jogo::fim() {
 }
 
 void Jogo::update() {
+    if(ganhou){
+      SDL_Delay(2000);
+      turnOff();
+    }
     static int cont = 0;
     static int cont2 = 0;
     static int cont_mov = 0;
@@ -923,8 +934,17 @@ bool Jogo::loadMidia() {
         printf("Failed to load texture Mapa.png!\n");
         success = false;
     }
+    texturas[TEXTURAS::VITORIA] = loadTexture("imagens/vitoria.png");
+    if (texturas[TEXTURAS::VITORIA] == NULL) {
+        printf("Failed to load texture vitoria.png!\n");
+        success = false;
+    }
     font = TTF_OpenFont("fonts/04B_08__.TTF", 28);
 
+    // VITORIA
+    vitoria->mudaTextura(texturas[VITORIA]);
+    vitoria->setSrcRect(0, 0, 700, 360);
+    vitoria->setDestRect(310, 150, 700, 360);
     // Botao Iniciar
     bIniciar->mudaTextura(texturas[BOTAO_INICIAR]);
     bIniciar->setDestRect(460, 240, 300, 120);

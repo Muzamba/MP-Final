@@ -43,6 +43,7 @@ class Jogo {
     bool menu_inicial = false;
     SDL_Texture* aloo;
     bool paused = false;
+    bool ganhou = false;
     // #ifdef TESTE
     // Player* jogador = NULL;
     // Player* cpu = NULL;
@@ -66,6 +67,7 @@ class Jogo {
     Objeto* recursoPedregulhoCpu = NULL;
     Objeto* recursoMetalCpu = NULL;
     Objeto* tempo_Obj = NULL;
+    Objeto* vitoria = NULL;
 
     SDL_Color cRecurso{0, 0, 0};  // decidir cor
     SDL_Texture* tRecurso;  // talvez possa remover
