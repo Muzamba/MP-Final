@@ -6,5 +6,5 @@ CXX_FLAGS = -g   -std=gnu++11
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/pedro/MP-Final/include -I/home/pedro/MP-Final/lib -I/home/pedro/MP-Final/source 
+CXX_INCLUDES = -I/home/waliffcordeiro/UnB/MP/MP-Final/include -I/home/waliffcordeiro/UnB/MP/MP-Final/lib -I/home/waliffcordeiro/UnB/MP/MP-Final/source 
 

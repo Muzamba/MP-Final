@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/pedro/MP-Final/source/Player.cpp" "/home/pedro/MP-Final/cmake-build-debug/CMakeFiles/Player.dir/source/Player.cpp.o"
+  "/home/waliffcordeiro/UnB/MP/MP-Final/source/Player.cpp" "/home/waliffcordeiro/UnB/MP/MP-Final/cmake-build-debug/CMakeFiles/Player.dir/source/Player.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

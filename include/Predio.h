@@ -1,3 +1,13 @@
+/**
+ * @file Predio.h
+ * @author Nome do time (a definir)
+ * @brief Definiçao e implementaçao da classe Predio.
+ * @version 0.99
+ * @date 2018-12-02
+ * 
+ * @copyright Copyright (c) 2018 (nao sei o que colocar aqui)
+ * 
+ */
 #pragma once
 // Copyright 2018 João Pedro Assis
 #ifndef PREDIO
@@ -22,11 +32,12 @@ class Predio : public Objeto {
     *  O Prédio é construído da mesa maneira que um Objeto, pois a inicialização
     *  da variável "vida" é de responsabilidade da classe Fabrica
     * 
-    * @param X 
-    * @param Y
+    * @param X - Coordenada X.
+    * @param Y - Coordenada Y.
     */
     Predio(int X, int Y) : Objeto(X, Y) {}
-
+    
+    //provavel remoçao
     void destroy();
     /**
     * @brief Destrói o objeto Predio
@@ -35,20 +46,23 @@ class Predio : public Objeto {
 
     ~Predio() {}
     /**
-    * @brief Inicializa a variável vida
+    * @brief Inicializa a variável vida.
     * 
-    * @param vida 
+    * @param vida - Vida desejada.
     */
     void set_vida(int vida);
 
     /**
-     * @brief Retorna a variável vida
+     * @brief Retorna a variável vida.
      * 
-     * @return int vida 
+     * @return int - Vida. 
      */
     int get_vida();
 
  protected:
+    /**************************************************************************
+     *  Variaveis Protegidas
+     *************************************************************************/
     int vida_predio;
     //  Menu menu();
 };

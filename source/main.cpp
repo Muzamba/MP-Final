@@ -25,7 +25,7 @@ int main() {
     jogo = new Jogo();
     // jogador = new Player();
     // cpu = new Player();
-    jogo->init("teste", SDL_WINDOWPOS_CENTERED,
+    jogo->init("Jankenpo", SDL_WINDOWPOS_CENTERED,
             SDL_WINDOWPOS_CENTERED, 1280, 720);
     jogo->loadMidia();
 
@@ -55,8 +55,3 @@ int main() {
 
      return 0;
 }
-
-
-
-
-

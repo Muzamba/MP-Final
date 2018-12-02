@@ -114,8 +114,8 @@ bool Player::possui_recursos_unidade(int tipo, int nivel) {
             custo = PRECO_UNIDADE_3;
             break;
         default:
-            custo = PRECO_UNIDADE_1;
-            //printf("ERRO : Nivel Invalido %d: compra unidade\n", nivel);
+            printf("ERRO : Nivel Invalido %d: compra unidade\n", nivel);
+            return false;
     }
 
     switch (tipo) {
@@ -132,7 +132,13 @@ bool Player::possui_recursos_unidade(int tipo, int nivel) {
             printf("ERRO : Recurso Invalido : compra_unidade \n");
             return false;
     }
-    return recurso >= custo;
+
+    if (recurso >= custo ) {
+        return true;
+    } else {
+        Mix_PlayChannel(-1, jogo->efeitos[SEM_RECURSO], 0);
+        return false;
+    }
 }
 
 void Player::retira_recurso_unidade(UNIDADE tipo, int nivel) {
@@ -168,7 +174,11 @@ void Player::retira_recurso_unidade(UNIDADE tipo, int nivel) {
 }
 
 bool verifica_espaco_unidade(int x, int y) {
-    return y >= 2 && y <= 9;
+    if ( y >= 2 && y <= 9 ) {
+        return true;
+    }
+    Mix_PlayChannel(-1, jogo->efeitos[LUGAR_INV], 0);
+    return false;
 }
 
 TEXTURAS retorna_textura_unidade(int nivel, int tipo) {
@@ -355,10 +365,12 @@ bool Player::possui_recursos_fabrica(UNIDADE tipo) {
             return true;
         } else {
             /* Mensagem de não ter dinheiro */
+            Mix_PlayChannel(-1, jogo->efeitos[SEM_DINHEIRO], 0);
             return false;
         }
     } else {
         /* Mensagem de não ter recurso */
+        Mix_PlayChannel(-1, jogo->efeitos[SEM_RECURSO], 0);
         return false;
     }
 }
@@ -403,10 +415,12 @@ bool Player::possui_recursos_geraRecurso(RECURSO tipo) {
         if ( Player::dinheiro >= PRECO_DINHEIRO_GERA ) {
             return true;
         } else {
+            Mix_PlayChannel(-1, jogo->efeitos[SEM_DINHEIRO], 0);
             /* Mensagem de não ter dinheiro */
             return false;
         }
     } else {
+        Mix_PlayChannel(-1, jogo->efeitos[SEM_RECURSO], 0);
         /* Mensagem de não ter recurso */
         return false;
     }
@@ -432,15 +446,26 @@ void Player::retira_recurso_geraRecurso(RECURSO tipo) {
 }
 
 bool Player::verifica_espaco_predio(int x, int y) {
-    return y < 2;
+    if (y < 2){
+        return true;
+    } else {
+        Mix_PlayChannel(-1, jogo->efeitos[LUGAR_INV], 0);
+        return false;
+    }
 }
 
 bool Player::verifica_espaco_ocupado(int x, int y) {
     if (x >= 0 && y >=0 && x < 6 && y < 12) {
-        return jogo->matriz_fabrica[x][y] == NULL &&
-               jogo->matriz_geraRecurso[x][y] == NULL &&
-               jogo->matriz_unidade[x][y] == NULL;
+        if (jogo->matriz_fabrica[x][y] == NULL &&
+            jogo->matriz_geraRecurso[x][y] == NULL &&
+            jogo->matriz_unidade[x][y] == NULL) {
+            return true;
+        } else {
+            Mix_PlayChannel(-1, jogo->efeitos[LUGAR_INV], 0);
+            return false;
+        }
     }
+    Mix_PlayChannel(-1, jogo->efeitos[LUGAR_INV], 0);
     return false;
 }
 

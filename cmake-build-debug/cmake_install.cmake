@@ -1,4 +1,4 @@
-# Install script for directory: /home/pedro/MP-Final
+# Install script for directory: /home/waliffcordeiro/UnB/MP/MP-Final
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/pedro/MP-Final/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/waliffcordeiro/UnB/MP/MP-Final/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
