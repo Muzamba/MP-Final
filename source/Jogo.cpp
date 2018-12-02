@@ -507,7 +507,7 @@ void Jogo::fim() {
 
 void Jogo::update() {
     if(ganhou){
-      SDL_Delay(2000);
+      SDL_Delay(5000);
       turnOff();
     }
     static int cont = 0;
