@@ -40,7 +40,7 @@ void Fabrica::upgrade_fabrica(int* dinheiro) {
         if (Fabrica::tempoEspera < 5) {
             Fabrica::tempoEspera = 5;
         }
-    }else{
+    } else {
         /* Mensagem de erro sem dinheiro */
     }
 }

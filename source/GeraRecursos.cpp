@@ -1,6 +1,9 @@
 //
 // Created by pedro on 14/11/18.
 //
+
+// "Copyright [2018] <Pedro>"
+
 #include <GeraRecursos.h>
 
 /**
@@ -8,7 +11,7 @@
  * @brief acrescenta o recurso dessa determinada geradora(de acordo com a taxa) para o jogador passado de parametro
  * @param jogador - Jogador no qual sera adicionado o recurso
  */
-int GeraRecursos::produzirRecurso(){
+int GeraRecursos::produzirRecurso() {
     return GeraRecursos::taxa;
 }
 
@@ -19,10 +22,10 @@ int GeraRecursos::produzirRecurso(){
  * @return true se conseguiu realizar o upgrade
  *         false se o upgrade não obteve sucesso
  */
-bool GeraRecursos::upgrade(int *dinheiro){
+bool GeraRecursos::upgrade(int *dinheiro) {
     if (GeraRecursos::nivel >= 3) {
         return false;
-    }else if (*dinheiro >= PRECO_UPGRADE_GERA) {
+    } else if (*dinheiro >= PRECO_UPGRADE_GERA) {
         *dinheiro -= PRECO_UPGRADE_GERA;
         GeraRecursos::nivel += 1;
         GeraRecursos::taxa *= 2;

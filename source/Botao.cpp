@@ -424,19 +424,17 @@ void buttomEvents(SDL_Event* evento) {
                         printf("aaaa\n");
                         jogo->comprando = false;
                         jogo->tipoCompra = NADA;
-
                 }// switch
-
             } /* if */else{
                 retornaBotao(&x, &y);
             }// else
-            printf("tipo: %d , comprando: %d\n", jogo->tipoCompra,(jogo->comprando  ? 1 : 0 ));
+            printf("tipo: %d , comprando: %d\n",
+                    jogo->tipoCompra,(jogo->comprando  ? 1 : 0 ));
             // printf("x: %d , y: %d\n", x, y);
-
     }
 }
 
-bool in_range_mapa(int x, int y){
+bool in_range_mapa (int x, int y) {
     return x >= 0 && y >=0 && x < 6 && y < 12;
 }
 

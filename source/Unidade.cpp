@@ -68,7 +68,8 @@ void Unidade::setDano(int dano) {
     Unidade::dano = dano;
 }
 
-Unidade::Unidade(int X, int Y, int tipo, int vida, int velocidade, int dano, int nivel) :
+Unidade::Unidade(int X, int Y, int tipo, int vida,
+        int velocidade, int dano, int nivel) :
 Objeto(X, Y), tipo(tipo), vida(vida),
 velocidade(velocidade), dano(dano), nivel(nivel) {}
 

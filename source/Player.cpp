@@ -37,7 +37,8 @@ bool Player::compra_GeraRecurso(int x, int y, RECURSO tipo) {
             jogo->matriz_geraRecurso[x][y] = new GeraRecursos(x, y, tipo);
             TEXTURAS text = retorna_textura_recurso(tipo);
             jogo->matriz_geraRecurso[x][y]->mudaTextura(jogo->texturas[text]);
-            jogo->matriz_geraRecurso[x][y]->setDestRect((y + 2) * 80 ,(x + 2) * 72, 64, 64);
+            jogo->matriz_geraRecurso[x][y]->setDestRect
+            ((y + 2) * 80 , (x + 2) * 72, 64, 64);
             jogo->matriz_geraRecurso[x][y]->setSrcRect(0, 0, 64, 64);
         } else {
             return false;
@@ -48,8 +49,8 @@ bool Player::compra_GeraRecurso(int x, int y, RECURSO tipo) {
     }
 }
 
-TEXTURAS retorna_textura_recurso(int tipo){
-    switch(tipo){
+TEXTURAS retorna_textura_recurso(int tipo) {
+    switch (tipo) {
         case RECURSO::CELULOSE:
             return TEXTURAS::GERAR_PAPEL;
         case RECURSO::PEDREGULHO:
@@ -72,7 +73,8 @@ bool Player::compra_Fabrica(int x, int y, UNIDADE tipo) {
             jogo->matriz_fabrica[x][y] = new Fabrica(x, y, tipo);
             TEXTURAS text = retorna_textura_fabrica(tipo);
             jogo->matriz_fabrica[x][y]->mudaTextura(jogo->texturas[text]);
-            jogo->matriz_fabrica[x][y]->setDestRect((y + 2) * 80 ,(x + 2) * 72, 64, 64);
+            jogo->matriz_fabrica[x][y]->setDestRect
+            ((y + 2) * 80 , (x + 2) * 72, 64, 64);
             jogo->matriz_fabrica[x][y]->setSrcRect(0, 0, 64, 64);
             return true;
         } else { /* Se a posicao e invalida */
@@ -84,8 +86,8 @@ bool Player::compra_Fabrica(int x, int y, UNIDADE tipo) {
 }
 
 
-TEXTURAS retorna_textura_fabrica(int tipo){
-    switch(tipo){
+TEXTURAS retorna_textura_fabrica(int tipo) {
+    switch (tipo) {
         case RECURSO::CELULOSE:
             return TEXTURAS::FABRICA_PAPEL;
         case RECURSO::PEDREGULHO:
@@ -164,14 +166,13 @@ void Player::retira_recurso_unidade(UNIDADE tipo, int nivel) {
     }
 }
 
-bool verifica_espaco_unidade(int x,int y) {
+bool verifica_espaco_unidade(int x, int y) {
     return y >= 2 && y <= 9;
-
 }
 
 TEXTURAS retorna_textura_unidade(int nivel, int tipo) {
     if (nivel == 1 || nivel == 2) {
-        switch (tipo){
+        switch (tipo) {
             case UNIDADE::PEDRA:
                 return TEXTURAS::TROPA_PEDRA;
             case UNIDADE ::PAPEL:
@@ -180,7 +181,7 @@ TEXTURAS retorna_textura_unidade(int nivel, int tipo) {
                 return TEXTURAS ::TROPA_TESOURA;
         }
     } else {
-        switch (tipo){
+        switch (tipo) {
             case UNIDADE::PEDRA:
                 return TEXTURAS::TROPA_PEDRA2;
             case UNIDADE ::PAPEL:
@@ -197,22 +198,32 @@ bool Player::compra_Unidade(int x, int y, UNIDADE tipo, int nivel) {
             retira_recurso_unidade(tipo, nivel);
             switch (nivel) {
                 case 1:
-                    jogo->matriz_unidade[x][y] = new Unidade(x, y, tipo, VIDA_UNIDADE_1, VELO_UNIDADE_1, DANO_UNIDADE_1, 1);
-                    jogo->matriz_unidade[x][y]->mudaTextura(jogo->texturas[retorna_textura_unidade(1, tipo)]);
+                    jogo->matriz_unidade[x][y] =
+                            new Unidade(x, y, tipo, VIDA_UNIDADE_1,
+                                    VELO_UNIDADE_1, DANO_UNIDADE_1, 1);
+                    jogo->matriz_unidade[x][y]->mudaTextura
+                    (jogo->texturas[retorna_textura_unidade(1, tipo)]);
                     break;
                 case 2:
-                    jogo->matriz_unidade[x][y] = new Unidade(x, y, tipo, VIDA_UNIDADE_2, VELO_UNIDADE_2, DANO_UNIDADE_2, 2);
-                    jogo->matriz_unidade[x][y]->mudaTextura(jogo->texturas[retorna_textura_unidade(2, tipo)]);
+                    jogo->matriz_unidade[x][y] =
+                            new Unidade(x, y, tipo, VIDA_UNIDADE_2,
+                                    VELO_UNIDADE_2, DANO_UNIDADE_2, 2);
+                    jogo->matriz_unidade[x][y]->mudaTextura
+                    (jogo->texturas[retorna_textura_unidade(2, tipo)]);
                     break;
                 case 3:
-                    jogo->matriz_unidade[x][y] = new Unidade(x, y, tipo, VIDA_UNIDADE_3, VELO_UNIDADE_3, DANO_UNIDADE_3, 3);
-                    jogo->matriz_unidade[x][y]->mudaTextura(jogo->texturas[retorna_textura_unidade(3, tipo)]);
+                    jogo->matriz_unidade[x][y] =
+                            new Unidade(x, y, tipo, VIDA_UNIDADE_3,
+                                    VELO_UNIDADE_3, DANO_UNIDADE_3, 3);
+                    jogo->matriz_unidade[x][y]->mudaTextura
+                    (jogo->texturas[retorna_textura_unidade(3, tipo)]);
                     break;
                 default:
                     printf("NIVEL INVALIDO :: COMPRA UNIDADE\n");
                     break;
             }
-            jogo->matriz_unidade[x][y]->setDestRect((y + 2) * 80 ,(x + 2) * 72, 64, 64);
+            jogo->matriz_unidade[x][y]->setDestRect
+            ((y + 2) * 80 , (x + 2) * 72, 64, 64);
             jogo->matriz_unidade[x][y]->setSrcRect(0, 0, 64, 64);
             return true;
         }
@@ -247,22 +258,26 @@ bool Player::compra_Unidade(int x, int y, UNIDADE tipo, int nivel) {
         return false;
     }
 }*/
+
 /** Função atualizar_Recursos
  * @brief A função percorre a lista de geraRecursos e soma os recursos gerados nos atributos do player
  * */
 void Player::atualizar_Recursos() {
-    for(int i = 0;i < 6;++i) {
+    for (int i = 0; i < 6; ++i) {
         for (int j = 0; j < 2; ++j) {
             if (jogo->matriz_geraRecurso[i][j] != NULL) {
                 switch (jogo->matriz_geraRecurso[i][j]->getTipo()) {
                     case RECURSO::PEDREGULHO:
-                        Player::pedregulho += jogo->matriz_geraRecurso[i][j]->getTaxa();
+                        Player::pedregulho +=
+                                jogo->matriz_geraRecurso[i][j]->getTaxa();
                         break;
                     case RECURSO::METAL:
-                        Player::metal += jogo->matriz_geraRecurso[i][j]->getTaxa();
+                        Player::metal +=
+                                jogo->matriz_geraRecurso[i][j]->getTaxa();
                         break;
                     case RECURSO::CELULOSE:
-                        Player::celulose += jogo->matriz_geraRecurso[i][j]->getTaxa();
+                        Player::celulose +=
+                                jogo->matriz_geraRecurso[i][j]->getTaxa();
                         break;
                     default:
                         printf("ERRO: atualizar_Recursos\n");
@@ -420,13 +435,12 @@ bool Player::verifica_espaco_predio(int x, int y) {
 }
 
 bool Player::verifica_espaco_ocupado(int x, int y) {
-    if(x >= 0 && y >=0 && x < 6 && y < 12){
+    if (x >= 0 && y >=0 && x < 6 && y < 12) {
         return jogo->matriz_fabrica[x][y] == NULL &&
                jogo->matriz_geraRecurso[x][y] == NULL &&
                jogo->matriz_unidade[x][y] == NULL;
     }
     return false;
-
 }
 
 int Player::getVida() const {
