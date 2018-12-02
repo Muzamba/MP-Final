@@ -37,6 +37,40 @@ void Botao_Sair::handleEvent(SDL_Event* evento) {
     }
 }
 
+void Botao_Save::handleEvent(SDL_Event* evento) {
+    //OPERACOES retorno = NADA;
+    int x, y;
+    SDL_GetMouseState(&x,&y);
+    bool dentro = true;
+    if(x < destRect->x) {
+        dentro = false;
+    } else if(x > (destRect->x + destRect->w)) {
+        dentro = false;
+    } else if(y < destRect->y) {
+        dentro = false;
+    } else if(y > (destRect->y + destRect->h)) {
+        dentro = false;
+    }
+    if(!dentro){
+        textura = jogo->texturas[BOTAO_SAVE];
+    } else {
+        switch( evento->type ) {
+            case SDL_MOUSEMOTION:
+                textura = jogo->texturas[BOTAO_SAVE_SOBRE];
+                break;
+            case SDL_MOUSEBUTTONDOWN:
+                textura = jogo->texturas[BOTAO_SAVE_SOBRE];
+                break;
+            case SDL_MOUSEBUTTONUP:
+                textura = jogo->texturas[BOTAO_SAVE_SOBRE];
+                //  implementar funcao save();
+                printf("Jogo Salvo\n");
+                jogo->save();
+                break;
+        }
+    }
+}
+
 void Botao_Iniciar::handleEvent(SDL_Event* evento) {
     //OPERACOES retorno = NADA;
     int x, y;
@@ -99,6 +133,7 @@ void Botao_Load::handleEvent(SDL_Event* evento) {
                 break;
             case SDL_MOUSEBUTTONUP:
                 textura = jogo->texturas[BOTAO_LOAD_CLICK];
+                jogo->load();
                 jogo->menu_inicial = false;
                 break;
         }
@@ -163,39 +198,6 @@ void Botao_Resume::handleEvent(SDL_Event* evento) {
             case SDL_MOUSEBUTTONUP:
                 textura = jogo->texturas[BOTAO_RESUME_CLICK];
                 jogo->paused = false;
-                break;
-        }
-    }
-}
-void Botao_Save::handleEvent(SDL_Event* evento) {
-    //OPERACOES retorno = NADA;
-    int x, y;
-    SDL_GetMouseState(&x,&y);
-    bool dentro = true;
-    if(x < destRect->x) {
-        dentro = false;
-    } else if(x > (destRect->x + destRect->w)) {
-        dentro = false;
-    } else if(y < destRect->y) {
-        dentro = false;
-    } else if(y > (destRect->y + destRect->h)) {
-        dentro = false;
-    }
-    if(!dentro){
-        textura = jogo->texturas[BOTAO_SAVE];
-    } else {
-        switch( evento->type ) {
-            case SDL_MOUSEMOTION:
-                textura = jogo->texturas[BOTAO_SAVE_SOBRE];
-                break;
-            case SDL_MOUSEBUTTONDOWN:
-                textura = jogo->texturas[BOTAO_SAVE_SOBRE];
-                break;
-            case SDL_MOUSEBUTTONUP:
-                textura = jogo->texturas[BOTAO_SAVE_SOBRE];
-                //  implementar funcao save();
-                printf("Jogo Salvo\n");
-                jogo->save();
                 break;
         }
     }
@@ -309,6 +311,7 @@ void buttomEvents(SDL_Event* evento) {
                         jogo->tipoCompra = NADA;
                         break;
                     case UNIDADE_PAPEL:
+                        printf("Jogo nivel compra %d\n",jogo->nivelCompra);
                         if (jogador->compra_Unidade(y, x, UNIDADE::PAPEL, jogo->nivelCompra)) {
                             printf("Tropa papel comprada com sucesso \n");
                         } else {
@@ -318,6 +321,7 @@ void buttomEvents(SDL_Event* evento) {
                         jogo->tipoCompra = NADA;
                         jogo->nivelCompra = 0;
                     case UNIDADE_PEDRA:
+                        printf("Jogo nivel compra %d\n",jogo->nivelCompra);
                         if (jogador->compra_Unidade(y, x, UNIDADE::PEDRA, jogo->nivelCompra)) {
                             printf("Tropa pedra comprada com sucesso \n");
                         } else {
@@ -327,6 +331,7 @@ void buttomEvents(SDL_Event* evento) {
                         jogo->tipoCompra = NADA;
                         jogo->nivelCompra = 0;
                     case UNIDADE_TESOURA:
+                        printf("Jogo nivel compra %d\n",jogo->nivelCompra);
                         if (jogador->compra_Unidade(y, x, UNIDADE::TESOURA, jogo->nivelCompra)) {
                             printf("Tropa tesoura comprada com sucesso \n");
                         } else {
@@ -338,9 +343,12 @@ void buttomEvents(SDL_Event* evento) {
                     case U_FABRICA_PAPEL:
                         if (jogo->matriz_fabrica[y][x] != NULL) {
                             if (jogo->matriz_fabrica[y][x]->tipo == UNIDADE::PAPEL) {
-                                printf("Upgrade realizado FABRICA PAPEL\n");
-                                jogo->matriz_fabrica[y][x]->upgrade_fabrica(&(jogador->dinheiro));
-                                printf("Novo nivel da fabrica %d\n", jogo->matriz_fabrica[y][x]->get_nivel());
+                                if (jogo->matriz_fabrica[y][x]->upgrade_fabrica(&(jogador->dinheiro))) {
+                                    printf("Upgrade realizado FABRICA PAPEL\n");
+                                    printf("Novo nivel da fabrica %d\n", jogo->matriz_fabrica[y][x]->get_nivel());
+                                } else {
+                                    printf("Nao foi possivel realizar o upgrade\n");
+                                }
                             }
                         }
                         jogo->comprando = false;
@@ -349,8 +357,12 @@ void buttomEvents(SDL_Event* evento) {
                     case U_FABRICA_PEDRA:
                         if (jogo->matriz_fabrica[y][x] != NULL) {
                             if (jogo->matriz_fabrica[y][x]->tipo == UNIDADE::PEDRA) {
-                                printf("Upgrade realizado FABRICA PEDRA\n");
-                                jogo->matriz_fabrica[y][x]->upgrade_fabrica(&(jogador->dinheiro));
+                                if (jogo->matriz_fabrica[y][x]->upgrade_fabrica(&(jogador->dinheiro))) {
+                                    printf("Upgrade realizado FABRICA PAPEL\n");
+                                    printf("Novo nivel da fabrica %d\n", jogo->matriz_fabrica[y][x]->get_nivel());
+                                } else {
+                                    printf("Nao foi possivel realizar o upgrade\n");
+                                }
                             }
                         }
                         jogo->comprando = false;
@@ -359,8 +371,12 @@ void buttomEvents(SDL_Event* evento) {
                     case U_FABRICA_TESOURA:
                         if (jogo->matriz_fabrica[y][x] != NULL) {
                             if (jogo->matriz_fabrica[y][x]->tipo == UNIDADE::TESOURA) {
-                                printf("Upgrade realizado FABRICA PEDRA\n");
-                                jogo->matriz_fabrica[y][x]->upgrade_fabrica(&(jogador->dinheiro));
+                                if (jogo->matriz_fabrica[y][x]->upgrade_fabrica(&(jogador->dinheiro))) {
+                                    printf("Upgrade realizado FABRICA PAPEL\n");
+                                    printf("Novo nivel da fabrica %d\n", jogo->matriz_fabrica[y][x]->get_nivel());
+                                } else {
+                                    printf("Nao foi possivel realizar o upgrade\n");
+                                }
                             }
                         }
                         jogo->comprando = false;
@@ -461,8 +477,8 @@ void buttomEvents(SDL_Event* evento) {
             } /* if */else{
                 retornaBotao(&x, &y);
             }// else
-            printf("tipo: %d , comprando: %d\n",
-                    jogo->tipoCompra,(jogo->comprando  ? 1 : 0 ));
+            printf("tipo: %d , comprando: %d, nivelCompra: %d \n",
+                    jogo->tipoCompra,(jogo->comprando  ? 1 : 0 ), jogo->tipoCompra);
             // printf("x: %d , y: %d\n", x, y);
     }
 }

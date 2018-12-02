@@ -28,20 +28,27 @@ bool Fabrica::can_upgrade_fabrica(int custo, int capital) {
     return capital >= custo;
 }
 
-void Fabrica::upgrade_fabrica(int* dinheiro) {
-    if (Fabrica::can_upgrade_fabrica(Fabrica::custo_upgrade_fab, *dinheiro)) {
-        *dinheiro = *dinheiro - Fabrica::custo_upgrade_fab;
-        Fabrica::nivel++;
-        Fabrica::custo_upgrade_fab += 20 * Fabrica::nivel;
-        Fabrica::custo_unidade += 10 * Fabrica::nivel;
-        Fabrica::atributos_unidade(Fabrica::nivel);
-        Fabrica::set_vida(Fabrica::nivel * VIDA_INICIAL_FABRICA);
-        Fabrica::tempoEspera -= 5;  // cte que pode ser mudado
-        if (Fabrica::tempoEspera < 5) {
-            Fabrica::tempoEspera = 5;
+bool Fabrica::upgrade_fabrica(int* dinheiro) {
+    if (Fabrica::nivel <= 2) {
+        if (Fabrica::can_upgrade_fabrica(Fabrica::custo_upgrade_fab, *dinheiro)) {
+            *dinheiro = *dinheiro - Fabrica::custo_upgrade_fab;
+            Fabrica::nivel++;
+            Fabrica::custo_upgrade_fab += 20 * Fabrica::nivel;
+            Fabrica::custo_unidade += 10 * Fabrica::nivel;
+            Fabrica::atributos_unidade(Fabrica::nivel);
+            Fabrica::set_vida(Fabrica::nivel * VIDA_INICIAL_FABRICA);
+            Fabrica::tempoEspera -= 5;  // cte que pode ser mudado
+            if (Fabrica::tempoEspera < 5) {
+                Fabrica::tempoEspera = 5;
+            }
+            return true;
+        } else {
+            /* Mensagem de erro sem dinheiro */
+            return false;
         }
     } else {
-        /* Mensagem de erro sem dinheiro */
+        /* Mensagem de erro nivel máximo */
+        return false;
     }
 }
 

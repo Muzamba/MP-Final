@@ -33,7 +33,7 @@ public:
 
     void setVida(int vida);
 
-    int vida;
+    int vida = 700;
 
     /*Listas de Objetos*/
     std::vector<GeraRecursos> lista_GeraRecursos;
