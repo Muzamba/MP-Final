@@ -21,9 +21,14 @@ class Jogo {
     void init(const char* titulo, int x_pos, int y_pos, int width, int height);
     bool loadMidia();
     SDL_Texture* loadTexture(const char* nome);
-    void load();
-    void fim();
 
+    void load();
+    void save();
+    void loadInfoCPU(FILE* arq);
+    void loadInfoPlayer(FILE* arq);
+
+    void fim();
+    void turnOff();
     void update();
     void handleEvents();
     void renderizar();
@@ -37,6 +42,7 @@ class Jogo {
     SDL_Texture* texturas[TEXTURAS::TEX_TOTAL];
     bool menu_inicial = false;
     SDL_Texture* aloo;
+    bool paused = false;
     // #ifdef TESTE
     // Player* jogador = NULL;
     // Player* cpu = NULL;
@@ -64,8 +70,14 @@ class Jogo {
     SDL_Color cRecurso{0, 0, 0};  // decidir cor
     SDL_Texture* tRecurso;  // talvez possa remover
     TTF_Font* font = NULL;
+
     Botao_Compra* compra = NULL;
     Botao_Iniciar* bIniciar = NULL;
+    Botao_Load* bLoad = NULL;
+    Botao_Pause* pause = NULL;
+    Botao_Resume* resume = NULL;
+    Botao_Sair* bSair = NULL;
+
     Objeto* menuInicial = NULL;
     Objeto* mapa = NULL;
     std::string tempo_val;

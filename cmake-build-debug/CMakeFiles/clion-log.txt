@@ -1,1 +1,4 @@
-CMakeLists.txt not found in /home/pedro/MP-Final Select CMakeLists.txt file...
+/home/pedro/clion-2018.2.5/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/pedro/MP-Final
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/pedro/MP-Final/cmake-build-debug

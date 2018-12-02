@@ -19,7 +19,7 @@ typedef int UNIDADES;
 
 class Fabrica : public Predio {
  public:
-    Fabrica(int X, int Y, UNIDADE tipo)
+    Fabrica(int X, int Y, int tipo)
     : Predio(X, Y) {
        Fabrica::tipo = tipo;
        Fabrica::tempoEspera = TEMPO_ESPERA_INICIAL_FABRICA;
@@ -38,14 +38,16 @@ class Fabrica : public Predio {
 
     void atributos_unidade(FABRICA nivel);
     Unidade* geraUnidade(int matI, int matJ);
+
+    int getTipo() const;
+
+    void setTipo(int tipo);
+
     ~Fabrica() {}
 
-    UNIDADE getTipo() const;
-
-    void setTipo(UNIDADE tipo);
 
     //  -------------------- Variáveis da Fábrica em si -----------------------
-    UNIDADE tipo;
+    int tipo;
     FABRICA tempoEspera;  // T de espera para uma unidade ser gerada
     FABRICA nivel;  // Nível da fábrica (nível maior, menor tempo de espera)
     // FABRICA tipo;  // Variável não deve ser alterada

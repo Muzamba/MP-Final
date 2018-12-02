@@ -48,7 +48,7 @@ bool Player::compra_GeraRecurso(int x, int y, RECURSO tipo) {
     }
 }
 
-TEXTURAS retorna_textura_recurso(RECURSO tipo){
+TEXTURAS retorna_textura_recurso(int tipo){
     switch(tipo){
         case RECURSO::CELULOSE:
             return TEXTURAS::GERAR_PAPEL;
@@ -57,7 +57,7 @@ TEXTURAS retorna_textura_recurso(RECURSO tipo){
         case RECURSO::METAL:
             return TEXTURAS::GERAR_TESOURA;
         default:
-            return TEXTURAS::BOTAO_INICIAR_P;
+            return TEXTURAS::BOTAO_INICIAR;
     }
 }
 
@@ -84,7 +84,7 @@ bool Player::compra_Fabrica(int x, int y, UNIDADE tipo) {
 }
 
 
-TEXTURAS retorna_textura_fabrica(UNIDADE tipo){
+TEXTURAS retorna_textura_fabrica(int tipo){
     switch(tipo){
         case RECURSO::CELULOSE:
             return TEXTURAS::FABRICA_PAPEL;
@@ -93,7 +93,7 @@ TEXTURAS retorna_textura_fabrica(UNIDADE tipo){
         case RECURSO::METAL:
             return TEXTURAS::FABRICA_TESOURA;
         default:
-            return TEXTURAS::BOTAO_INICIAR_P;
+            return TEXTURAS::BOTAO_INICIAR;
     }
 }
 
@@ -169,7 +169,7 @@ bool verifica_espaco_unidade(int x,int y) {
 
 }
 
-TEXTURAS retorna_textura_unidade(int nivel, UNIDADE tipo) {
+TEXTURAS retorna_textura_unidade(int nivel, int tipo) {
     if (nivel == 1 || nivel == 2) {
         switch (tipo){
             case UNIDADE::PEDRA:
@@ -197,19 +197,19 @@ bool Player::compra_Unidade(int x, int y, UNIDADE tipo, int nivel) {
             retira_recurso_unidade(tipo, nivel);
             switch (nivel) {
                 case 1:
-                    jogo->matriz_unidade[x][y] = new Unidade(x, y, tipo, VIDA_UNIDADE_1, VELO_UNIDADE_1, DANO_UNIDADE_1);
+                    jogo->matriz_unidade[x][y] = new Unidade(x, y, tipo, VIDA_UNIDADE_1, VELO_UNIDADE_1, DANO_UNIDADE_1, 1);
                     jogo->matriz_unidade[x][y]->mudaTextura(jogo->texturas[retorna_textura_unidade(1, tipo)]);
                     break;
                 case 2:
-                    jogo->matriz_unidade[x][y] = new Unidade(x, y, tipo, VIDA_UNIDADE_2, VELO_UNIDADE_2, DANO_UNIDADE_2);
+                    jogo->matriz_unidade[x][y] = new Unidade(x, y, tipo, VIDA_UNIDADE_2, VELO_UNIDADE_2, DANO_UNIDADE_2, 2);
                     jogo->matriz_unidade[x][y]->mudaTextura(jogo->texturas[retorna_textura_unidade(2, tipo)]);
                     break;
                 case 3:
-                    jogo->matriz_unidade[x][y] = new Unidade(x, y, tipo, VIDA_UNIDADE_3, VELO_UNIDADE_3, DANO_UNIDADE_3);
+                    jogo->matriz_unidade[x][y] = new Unidade(x, y, tipo, VIDA_UNIDADE_3, VELO_UNIDADE_3, DANO_UNIDADE_3, 3);
                     jogo->matriz_unidade[x][y]->mudaTextura(jogo->texturas[retorna_textura_unidade(3, tipo)]);
                     break;
                 default:
-                    printf("NIVEL INVALIDO :: COMPRA UNIDADE");
+                    printf("NIVEL INVALIDO :: COMPRA UNIDADE\n");
                     break;
             }
             jogo->matriz_unidade[x][y]->setDestRect((y + 2) * 80 ,(x + 2) * 72, 64, 64);

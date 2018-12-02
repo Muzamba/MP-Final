@@ -45,15 +45,10 @@ void Fabrica::upgrade_fabrica(int* dinheiro) {
     }
 }
 
-Unidade* Fabrica::geraUnidade(int matI, int matJ) {
-    return new Unidade(matI, matJ, Fabrica::tipo, Fabrica::vida,
-    Fabrica::velocidade, Fabrica::dano);
-}
-
-UNIDADE Fabrica::getTipo() const {
+int Fabrica::getTipo() const {
     return tipo;
 }
 
-void Fabrica::setTipo(UNIDADE tipo) {
+void Fabrica::setTipo(int tipo) {
     Fabrica::tipo = tipo;
 }

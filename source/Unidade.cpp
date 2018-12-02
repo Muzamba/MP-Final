@@ -68,9 +68,9 @@ void Unidade::setDano(int dano) {
     Unidade::dano = dano;
 }
 
-Unidade::Unidade(int X, int Y, int tipo, int vida, int velocidade, int dano) :
+Unidade::Unidade(int X, int Y, int tipo, int vida, int velocidade, int dano, int nivel) :
 Objeto(X, Y), tipo(tipo), vida(vida),
-velocidade(velocidade), dano(dano) {}
+velocidade(velocidade), dano(dano), nivel(nivel) {}
 
 Unidade::~Unidade() {
 }
@@ -81,4 +81,12 @@ int Unidade::getTipo() const {
 
 void Unidade::setTipo(int tipo) {
     Unidade::tipo = tipo;
+}
+
+int Unidade::getNivel() const {
+    return nivel;
+}
+
+void Unidade::setNivel(int nivel) {
+    Unidade::nivel = nivel;
 }

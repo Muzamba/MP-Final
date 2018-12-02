@@ -34,6 +34,10 @@ printf("\n\n\n1\n\n\n");
         //printf("teste\n");
         jogo->handleEvents();
 
+        while(jogo->paused){
+            jogo->handleEvents();
+        }
+
         jogo->update();
         jogo->renderizar();
 

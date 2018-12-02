@@ -1,0 +1,2 @@
+/usr/bin/ar qc libBotao.a  CMakeFiles/Botao.dir/source/Botao.cpp.o
+/usr/bin/ranlib libBotao.a

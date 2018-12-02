@@ -17,7 +17,7 @@
 
 class Unidade : public Objeto {
  public:
-    Unidade(int X, int Y, int tipo, int vida, int velocidade, int dano);
+    Unidade(int X, int Y, int tipo, int vida, int velocidade, int dano, int nivel);
 
     virtual ~Unidade();
 
@@ -61,6 +61,13 @@ class Unidade : public Objeto {
 
     int tipo;
  protected:
+    int nivel;
+public:
+    int getNivel() const;
+
+    void setNivel(int nivel);
+
+protected:
 
     int vida;
 

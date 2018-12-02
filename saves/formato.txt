@@ -1,0 +1,22 @@
+Formato do save e load game segue o seguinte:
+-Tempo de jogo
+#----------Info do Player1----------
+Vida
+pedregulho;
+celulose;
+metal;
+dinheiro;
+pontos;
+#---------Info do Player2(CPU)-------
+Vida
+pedregulho;
+celulose;
+metal;
+dinheiro;
+pontos;
+#-----------Matriz gera Recurso-------
+-x y vida nivel tipo taxa
+#-----------Matriz fabrica------------
+-x y vida nivel tipo
+#-----------Matriz unidades-----------
+-x y tipo vida velocidade dano nivel

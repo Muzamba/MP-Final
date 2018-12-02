@@ -1,0 +1,104 @@
+Jogo.h
+void save();
+Jogo.cpp
+
+void Jogo::load() {
+    FILE* arq = fopen("saves/save.txt", "r");
+    char aux[30];
+    int x,y,vida,nivel,tipo,taxa, velocidade, dano;
+    // Load no tempo do jogo
+    fscanf(arq, "%[^\n]s", &Jogo::tempo);
+    fgetc(arq);
+    // Load nas informacoes dos jogador
+    Jogo::loadInfoPlayer(arq);
+    Jogo::loadInfoCPU(arq);
+    // Load nas matrizes da classe jogo
+    fscanf(arq, "%[^\n]s", aux); // Divao Matriz gera Recuso
+    fgetc(arq);
+    while(!feof(arq) && fgetc(arq) != '#') {
+        fscanf(arq, "%d %d %d %d %d %d", &x, &y, &vida, &nivel, &tipo, &taxa);
+        Jogo::matriz_geraRecurso[x][y] = new GeraRecursos(x, y, tipo);
+        Jogo::matriz_geraRecurso[x][y]->setNivel(nivel);
+        Jogo::matriz_geraRecurso[x][y]->set_vida(vida);
+        Jogo::matriz_geraRecurso[x][y]->setTaxa(taxa);
+        Jogo::matriz_geraRecurso[x][y]->setDestRect((y + 2) * 80 ,(x + 2) * 72, 64, 64);
+        Jogo::matriz_geraRecurso[x][y]->setSrcRect(0, 0, 64, 64);
+        Jogo::matriz_geraRecurso[x][y]->mudaTextura(Jogo::texturas[retorna_textura_recurso(tipo)]);
+    }
+    fscanf(arq, "%[^\n]s", aux); // Divao Matriz fabrica
+    fgetc(arq);
+    while(!feof(arq) && fgetc(arq) != '#') {
+        fscanf(arq, "%d %d %d %d %d", &x, &y, &vida, &nivel, &tipo);
+        Jogo::matriz_fabrica[x][y] = new Fabrica(x, y, tipo);
+        Jogo::matriz_fabrica[x][y]->set_nivel(nivel);
+        Jogo::matriz_fabrica[x][y]->set_vida(vida);
+        Jogo::matriz_fabrica[x][y]->setDestRect((y + 2) * 80 ,(x + 2) * 72, 64, 64);
+        Jogo::matriz_fabrica[x][y]->setSrcRect(0, 0, 64, 64);
+        Jogo::matriz_fabrica[x][y]->mudaTextura(Jogo::texturas[retorna_textura_fabrica(tipo)]);
+    }
+    fscanf(arq, "%[^\n]s", aux); // Divao Matriz unidades
+    fgetc(arq);
+    while(!feof(arq) && fgetc(arq) != '#') {
+        fscanf(arq, "%d %d %d %d %d %d %d", &x, &y, &tipo, &vida, &velocidade, &dano, &nivel);
+        Jogo::matriz_unidade[x][y] = new Unidade(x, y, tipo, vida, velocidade, dano, nivel);
+        Jogo::matriz_unidade[x][y]->setDestRect((y + 2) * 80 ,(x + 2) * 72, 64, 64);
+        Jogo::matriz_unidade[x][y]->setSrcRect(0, 0, 64, 64);
+        Jogo::matriz_unidade[x][y]->mudaTextura(Jogo::texturas[retorna_textura_unidade(nivel, tipo)]);
+    }
+}
+
+void Jogo::save() {
+    FILE* arq = fopen("saves/save.txt", "w+");
+    fprintf(arq,"%d\n", Jogo::tempo);
+    fprintf(arq, "#----------Info do Player1----------\n");
+    fprintf(arq, "%d\n",jogador->getVida());
+    fprintf(arq, "%d\n",jogador->getPedregulho());
+    fprintf(arq, "%d\n",jogador->getCelulose());
+    fprintf(arq, "%d\n",jogador->getMetal());
+    fprintf(arq, "%d\n",jogador->getDinheiro());
+    fprintf(arq, "%d\n",jogador->getPontos());
+    fprintf(arq, "#---------Info do Player2(CPU)-------\n");
+    fprintf(arq, "%d\n",cpu->getVida());
+    fprintf(arq, "%d\n",cpu->getPedregulho());
+    fprintf(arq, "%d\n",cpu->getCelulose());
+    fprintf(arq, "%d\n",cpu->getMetal());
+    fprintf(arq, "%d\n",cpu->getDinheiro());
+    fprintf(arq, "%d\n",cpu->getPontos());
+    fprintf(arq, "#-----------Matriz gera Recurso-------\n");
+    for(int i=0; i< 6; i++){
+        for(int j =0; j < 12; j ++){
+            if(matriz_geraRecurso[i][j] != NULL){
+                fprintf(arq, "%d %d ", i, j);
+                fprintf(arq, "%d ", matriz_geraRecurso[i][j]->get_vida());
+                fprintf(arq, "%d ", matriz_geraRecurso[i][j]->getNivel());
+                fprintf(arq, "%d ", matriz_geraRecurso[i][j]->getTipo());
+                fprintf(arq, "%d\n", matriz_geraRecurso[i][j]->getTaxa());
+            }
+        }
+    }
+    fprintf(arq, "#-----------Matriz fabrica------------\n");
+    for(int i=0; i< 6; i++){
+        for(int j =0; j < 12; j ++){
+            if(matriz_fabrica[i][j] != NULL){
+                fprintf(arq, "%d %d ", i, j);
+                fprintf(arq, "%d ", matriz_fabrica[i][j]->get_vida());
+                fprintf(arq, "%d ", matriz_fabrica[i][j]->get_nivel());
+                fprintf(arq, "%d\n", matriz_fabrica[i][j]->getTipo());
+            }
+        }
+    }
+    fprintf(arq, "#-----------Matriz unidades-----------\n");
+    for(int i=0; i< 6; i++){
+        for(int j =0; j < 12; j ++){
+            if(matriz_unidade[i][j] != NULL){
+                fprintf(arq, "%d %d ", i, j);
+                fprintf(arq, "%d ", matriz_unidade[i][j]->getTipo());
+                fprintf(arq, "%d ", matriz_unidade[i][j]->getVida());
+                fprintf(arq, "%d ", matriz_unidade[i][j]->getVelocidade());
+                fprintf(arq, "%d ", matriz_unidade[i][j]->getDano());
+                fprintf(arq, "%d\n", matriz_unidade[i][j]->getNivel());
+            }
+        }
+    }
+    fclose(arq);
+}

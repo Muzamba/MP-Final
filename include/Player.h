@@ -19,8 +19,6 @@ public:
 
     bool compra_Fabrica(int x, int y, UNIDADE tipo);
 
-    //bool compra_Unidade(int x, int y, Fabrica fabrica);
-
     bool compra_Unidade(int x, int y, UNIDADE tipo, int nivel);
 
     void atualizar_Recursos();
@@ -88,11 +86,11 @@ private:
 };
 
 /* Funções auxiliares para compra */
-TEXTURAS retorna_textura_recurso(RECURSO tipo);
+TEXTURAS retorna_textura_recurso(int tipo);
 
-TEXTURAS retorna_textura_fabrica(UNIDADE tipo);
+TEXTURAS retorna_textura_fabrica(int tipo);
 
-TEXTURAS retorna_textura_unidade(int nivel, UNIDADE tipo);
+TEXTURAS retorna_textura_unidade(int nivel, int tipo);
 #define TESTE
 
 #endif  // INCLUDE_PLAYER_H_
