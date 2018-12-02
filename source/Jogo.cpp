@@ -44,6 +44,8 @@ Jogo::Jogo() {
     recursoPedregulhoCpu = new Objeto(0, 0);
     recursoMetalCpu = new Objeto(0, 0);
     tempo_Obj = new Objeto(0, 0);
+
+    ultima_acao.last = reinterpret_cast<bool*>(malloc(16*sizeof(bool)));
 }
 
 Jogo::~Jogo() {
@@ -112,6 +114,8 @@ Jogo::~Jogo() {
     recursoMetalCpu = NULL;
     delete tempo_Obj;
     tempo_Obj = NULL;
+
+    free(ultima_acao.last);
 }
 
 int ataca_base(Unidade* unidade, Player* jogador) {
@@ -177,50 +181,43 @@ int combate_unidade(Unidade** atacante, Unidade** defensor) {
                 (*atacante)->srcRect->w, (*atacante)->srcRect->h);
             }
 
-        } else if((*atacante)->getNivel() == 3) {
-            if((*atacante)->getVida() < (1 * (VIDA_UNIDADE_3 / 3))) {
-
+        } else if ((*atacante)->getNivel() == 3) {
+            if ((*atacante)->getVida() < (1 * (VIDA_UNIDADE_3 / 3))) {
                 (*atacante)->setSrcRect(128, (*atacante)->srcRect->y,
                 (*atacante)->srcRect->w, (*atacante)->srcRect->h);
-            } else if((*atacante)->getVida() < (2 * (VIDA_UNIDADE_3 / 3))) {
+            } else if ((*atacante)->getVida() < (2 * (VIDA_UNIDADE_3 / 3))) {
                 (*atacante)->setSrcRect(64, (*atacante)->srcRect->y,
                 (*atacante)->srcRect->w, (*atacante)->srcRect->h);
             }
-
         }
         return 2;
     }
     if ((*atacante)->getVida() <= 0) {
-        if ((*defensor)->getNivel() == 1){
+        if ((*defensor)->getNivel() == 1) {
             if ((*defensor)->getVida() < (1 * (VIDA_UNIDADE_1 / 3))) {
-
                 (*defensor)->setSrcRect(128, (*defensor)->srcRect->y,
                 (*defensor)->srcRect->w, (*defensor)->srcRect->h);
             } else if ((*defensor)->getVida() < (2 * (VIDA_UNIDADE_1 / 3))) {
                 (*defensor)->setSrcRect(64, (*defensor)->srcRect->y,
                 (*defensor)->srcRect->w, (*defensor)->srcRect->h);
             }
-
         } else if ((*defensor)->getNivel() == 2) {
             if ((*defensor)->getVida() < (1 * (VIDA_UNIDADE_2 / 3))) {
-
                 (*defensor)->setSrcRect(128, (*defensor)->srcRect->y,
                 (*defensor)->srcRect->w, (*defensor)->srcRect->h);
-            } else if((*defensor)->getVida() < (2 * (VIDA_UNIDADE_2 / 3))) {
+            } else if ((*defensor)->getVida() < (2 * (VIDA_UNIDADE_2 / 3))) {
                 (*defensor)->setSrcRect(64, (*defensor)->srcRect->y,
                 (*defensor)->srcRect->w, (*defensor)->srcRect->h);
             }
 
         } else if ((*defensor)->getNivel() == 3) {
             if ((*defensor)->getVida() < (1 * (VIDA_UNIDADE_3 / 3))) {
-
                 (*defensor)->setSrcRect(128, (*defensor)->srcRect->y,
                 (*defensor)->srcRect->w, (*defensor)->srcRect->h);
             } else if ((*defensor)->getVida() < (2 * (VIDA_UNIDADE_3 / 3))) {
                 (*defensor)->setSrcRect(64, (*defensor)->srcRect->y,
                 (*defensor)->srcRect->w, (*defensor)->srcRect->h);
             }
-
         }
         return 1;
     }
@@ -246,7 +243,7 @@ int ataca_fabrica(Unidade** unidade1, Fabrica** fbrc1) {
         (*fbrc1)->setSrcRect(128, (*fbrc1)->srcRect->y, (*fbrc1)->srcRect->w,
         (*fbrc1)->srcRect->h);
     } else if ((*fbrc1)->get_vida() < (2 * (VIDA_INICIAL_FABRICA))) {
-        (*fbrc1)->setSrcRect(64, (*fbrc1)->srcRect->y,(*fbrc1)->srcRect->w,
+        (*fbrc1)->setSrcRect(64, (*fbrc1)->srcRect->y, (*fbrc1)->srcRect->w,
         (*fbrc1)->srcRect->h);
     }
 
@@ -376,7 +373,7 @@ void Jogo::movimentacao() {
 
         /* Na 0 ja foi verificado, e so pode ser criado apartir da 9
          * as tropas com velocidade negativa */
-        for (int col = 1; col < 9; col ++) {
+        for (int col = 1; col < 10; col ++) {
             if (Jogo::matriz_unidade[lin][col] != NULL) {
                 if (Jogo::matriz_unidade[lin][col]->getVelocidade() < 0) {
                     if (Jogo::matriz_unidade[lin][col - 1] != NULL) {
@@ -443,7 +440,7 @@ void Jogo::movimentacao() {
                     } else {
                         // anda para esquerda
                         Jogo::matriz_unidade[lin][col]->setDestRect
-                        ((col + 2) * 80 , (lin + 1) * 72, 64, 64);
+                        ((col + 2) * 80 , (lin + 2) * 72, 64, 64);
                         anda(&Jogo::matriz_unidade[lin][col],
                                 &Jogo::matriz_unidade[lin][col - 1]);
                     }
@@ -477,13 +474,13 @@ void Jogo::init(const char* nome, int x, int y, int w, int h) {
                 on = false;
             }
 
-            //Initialize SDL_mixer
+            // Initialize SDL_mixer
             if ( Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0 ) {
-                printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
+                printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n",
+                 Mix_GetError());
             }
             /* Set e get depois*/
             menu_inicial = true;
-
         }
         on = true;
     } else {
@@ -497,27 +494,28 @@ bool Jogo::isOn() {
 
 void Jogo::handleEvents() {
     SDL_Event evento;
-    SDL_PollEvent(&evento);
-    switch (evento.type) {
-        case SDL_QUIT:
-            turnOff();
-            break;
-        case SDL_MOUSEBUTTONDOWN:
-        case SDL_MOUSEBUTTONUP:
-        case SDL_MOUSEMOTION:
-            if (menu_inicial) {
-                bIniciar->handleEvent(&evento);
-                bLoad->handleEvent(&evento);
-                bSair->handleEvent(&evento);
-            } else {
-                pause->handleEvent(&evento);
-                resume->handleEvent(&evento);
-                bSalvar->handleEvent(&evento);
-                buttomEvents(&evento);
-            break;
+    while (SDL_PollEvent(&evento)) {
+        switch (evento.type) {
+            case SDL_QUIT:
+                turnOff();
+                break;
+            case SDL_MOUSEBUTTONDOWN:
+            case SDL_MOUSEBUTTONUP:
+            case SDL_MOUSEMOTION:
+                if (menu_inicial) {
+                    bIniciar->handleEvent(&evento);
+                    bLoad->handleEvent(&evento);
+                    bSair->handleEvent(&evento);
+                } else {
+                    pause->handleEvent(&evento);
+                    resume->handleEvent(&evento);
+                    bSalvar->handleEvent(&evento);
+                    buttomEvents(&evento);
+                    break;
+                }
+            default:
+                break;
         }
-        default:
-            break;
     }
 }
 
@@ -541,7 +539,7 @@ void Jogo::renderizar() {
             Mix_HaltMusic();
             musica_parou = false;
         }
-        if(!Mix_PlayingMusic()){
+        if (!Mix_PlayingMusic()) {
             Mix_PlayMusic(musicas[MUS_JOGO_NARUTO], -1);
         }
         mapa->render(render);
@@ -561,10 +559,10 @@ void Jogo::renderizar() {
                 cont++;
             }
         }
-        if(ganhou){
+        if (ganhou) {
           vitoria->render(render);
         }
-        if(perdeu){
+        if (perdeu) {
           derrota->render(render);
         }
         recursoDinheiroJogador->render(render);
@@ -613,11 +611,11 @@ void Jogo::fim() {
 }
 
 void Jogo::update() {
-    if(ganhou){
+    if (ganhou) {
       SDL_Delay(5000);
       turnOff();
     }
-    if(perdeu){
+    if (perdeu) {
       SDL_Delay(5000);
       turnOff();
     }
@@ -709,6 +707,7 @@ void Jogo::update() {
             jogador->atualizar_Recursos();
 
             cpu->setDinheiro(cpu->getDinheiro() + 1);
+            cpu->atualizar_Recursos_CPU();
             cont = 0;
             cont2++;
         }
@@ -732,6 +731,9 @@ void Jogo::update() {
     // sTempo.push_back(tempo);
     // SDL_Surface* textSurface =
     // TTF_RenderText_Solid( font, .c_str(), textColor );
+
+    Jogo::bota_no_mapa();
+    Jogo::clear_ultima_acao();
 }
 
 bool Jogo::loadMidia() {
@@ -1393,4 +1395,214 @@ void Jogo::save() {
     }
     fprintf(arq, "#---------------Fim-------------------");
     fclose(arq);
+}
+
+// ------------------ Funções da CPU -----------------------------------------
+
+void Jogo::clear_ultima_acao() {
+    for (int i = 0; i < 16; i++) {
+        Jogo::ultima_acao.last[i] = false;
+    }
+    Jogo::ultima_acao.ondeX = -1;
+    Jogo::ultima_acao.ondeY = -1;
+}
+
+int Jogo::counter(bool* ultima_compra) {
+    for (int i = 0; i < 16; i++) {
+        if (ultima_compra[i] == true) {
+            if (i == 0) {
+                return 0;
+            } else if (i%3 == 0 || i%3 == 2) {
+                return (i-1);
+            } else {
+                return (i+2);
+            }
+        }
+    }
+}
+
+UNIDADE Jogo::retorna_tipo_und(int acao) {
+    if (acao%3 == 0) {
+        return TESOURA;
+    } else if (acao%3 == 2) {
+        return PEDRA;
+    } else {
+        return PAPEL;
+    }
+}
+
+RECURSO Jogo::retorna_tipo_rec(int acao) {
+    if (acao%3 == 0) {
+        return METAL;
+    } else if (acao%3 == 2) {
+        return PEDREGULHO;
+    } else {
+        return CELULOSE;
+    }
+}
+
+int Jogo::max_index(int* vector, int n) {
+    if (n <= 0) return -1;
+    int i, max_i = 0;
+    int max = vector[0];
+    for (i = 1; i < n; i++) {
+        if (vector[i] > max) {
+            max = vector[i];
+            max_i = i;
+            }
+        }
+    return max_i;
+}
+
+int Jogo::qual_fbrc(UNIDADE tipo) {
+    int hist_fab[6] = {0};
+    int onde;
+    for (int col = 0; col < 6; col++) {
+        if (Jogo::matriz_fabrica[col][10] != NULL) {
+            switch (tipo) {
+                case UNIDADE::PAPEL:
+                    if (Jogo::matriz_fabrica[col][10]->
+                    custo_unidade <= cpu->getCelulose()) {
+                        hist_fab[col] += 1;
+                        hist_fab[col] +=
+                         Jogo::matriz_fabrica[col][10]->get_nivel();
+                    }
+                    break;
+                case UNIDADE::PEDRA:
+                    if (Jogo::matriz_fabrica[col][10]->
+                    custo_unidade <= cpu->getPedregulho()) {
+                        hist_fab[col] += 1;
+                        hist_fab[col] +=
+                         Jogo::matriz_fabrica[col][10]->get_nivel();
+                    }
+                    break;
+                case UNIDADE::TESOURA:
+                    if (Jogo::matriz_fabrica[col][10]->
+                    custo_unidade <= cpu->getMetal()) {
+                        hist_fab[col] += 1;
+                        hist_fab[col] +=
+                         Jogo::matriz_fabrica[col][10]->get_nivel();
+                    }
+                    break;
+            }
+        }
+    }
+    onde = Jogo::max_index(hist_fab, 6);
+    return Jogo::matriz_fabrica[onde][10]->get_nivel();
+}
+
+void Jogo::menor_nivel(UNIDADE tipo, int* X, int* Y ) {
+    int min_index = 0;
+    int index_hist[6] = {0};
+    printf("MENOR\n");
+    for (int col = 0; col < 6; col++) {
+        printf("LOOOOOP\n");
+        if (Jogo::matriz_fabrica[col][10] != NULL) {
+            switch (tipo) {
+                case UNIDADE::PAPEL:
+                    index_hist[col] = Jogo::matriz_fabrica[col][10]->get_nivel();
+                    printf("PAPEEEL\n");
+                    break;
+                case UNIDADE::PEDRA:
+                    printf("TOOOOOP\n");
+                    index_hist[col] = Jogo::matriz_fabrica[col][10]->get_nivel();
+                    break;
+                case UNIDADE::TESOURA:
+                    index_hist[col] = Jogo::matriz_fabrica[col][10]->get_nivel();
+                    break;
+            }
+        } else {
+            index_hist[col] = 1000;
+        }
+    }
+    for (int i = 1; i < 6; i++) {
+        if (index_hist[i] < index_hist[min_index]) {
+            min_index = i;
+        }
+    }
+    *X = Jogo::matriz_fabrica[min_index][10]->get_x();
+    *Y = Jogo::matriz_fabrica[min_index][10]->get_y();
+}
+
+
+void Jogo::onde_botar(int* X, int* Y, int counter) {
+    if (counter >= 4 && counter <= 6) {
+        int posX = 11, posY = 0;
+        while (jogador->verifica_espaco_ocupado(posY, posX) == false) {
+            // printf("loop\n");
+            if (posY == 5) {
+                posY = posX = -1;
+                break;
+            }
+            posY++;
+        }
+        *X = posX;
+        *Y = posY;
+    } else if (counter >= 7 && counter <= 9) {
+        int posX = 10, posY = 0;
+        while (jogador->verifica_espaco_ocupado(posY, posX) == false) {
+            if (posY == 5) {
+                posY = posX = -1;
+                break;
+            }
+            posY++;
+        }
+        *X = posX;
+        *Y = posY;
+    } else if (counter >= 1 && counter <= 3) {
+        int posX = 9, posY = Jogo::ultima_acao.ondeY;
+        while (jogador->verifica_espaco_ocupado(posY, posX) == false) {
+            if (posX == 7) {
+                posX = 0;
+            }
+            posX++;
+        }
+        *X = posX;
+        *Y = posY;
+    } else {
+        return;
+    }
+}
+
+void Jogo::bota_no_mapa() {
+    int counter = Jogo::counter(Jogo::ultima_acao.last);
+    int nivel;
+    UNIDADE tipo_und = Jogo::retorna_tipo_und(counter);
+    RECURSO tipo_rec = Jogo::retorna_tipo_rec(counter);
+    TEXTURAS textura;
+
+    int X = -1, Y = -1;
+    if (counter > 0 && counter < 10) {
+        Jogo::onde_botar(&X, &Y, counter);
+    }
+    // printf("coord %d : %d\n", X, Y);
+
+    if (counter >= 7 && counter <= 9) {
+        cpu->compra_Fabrica(Y, X, tipo_und);
+    } else if (counter >=4 && counter <= 6) {
+        cpu->compra_GeraRecurso(Y, X, tipo_rec);
+    } else if (counter >=1 && counter <= 3) {
+        printf("ENTROU PORRA UND\n");
+        nivel = Jogo::qual_fbrc(tipo_und);
+        printf("JA TEMOS O NIVEL %d\n", nivel);
+        cpu->compra_Unidade_CPU(Y, X, tipo_und, nivel);
+    } else if (counter >= 13 && counter <= 15) {
+        Jogo::menor_nivel(tipo_und, &X, &Y);
+        printf("OPAAAAA\n");
+        Jogo::matriz_fabrica[X][Y]->upgrade_fabrica(&cpu->dinheiro);
+        switch (tipo_und) {
+            case UNIDADE::PAPEL:
+                Jogo::matriz_fabrica[X][Y]->
+                mudaTextura(Jogo::texturas[FABRICA_PAPEL_UP]);
+                break;
+            case UNIDADE::PEDRA:
+                Jogo::matriz_fabrica[X][Y]->
+                mudaTextura(Jogo::texturas[FABRICA_PEDRA_UP]);
+                break;
+            case UNIDADE::TESOURA:
+                Jogo::matriz_fabrica[X][Y]->
+                mudaTextura(Jogo::texturas[FABRICA_TESOURA_UP]);
+                break;
+        }
+    }
 }

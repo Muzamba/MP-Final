@@ -1,0 +1,13 @@
+Data |Horas | Tipo Tarefa              | Descrição da Tarefa Realizada
+13/11| 2:34 | Projetar                 | Definição do escopo e organização das classes|
+14/11| 2:58 | estudar                  | Classe e Herança
+15/11| 2:53 | codificar módulo e testes| Unidades
+19/11| 7:06 | codificar módulo e testes| Set, Get, Destroy (Unidades)|
+20/11| 3:21 | Projetar                 | Reestruturação do jogo
+21/11| 3:17 | codificar módulo e testes| Função anda
+22/11| 3:24 | codificar módulo         | Funções de upgrade
+28/11| 2:29 | codificar módulo         | Movimentação
+29/11| 8:21 | codificar módulo e testes| Movimentação e combate
+02/12| 1:19 | testes e cpplint         | Jogo.c
+02/12| 0:18 | Relatorio                | Esse relatorio
+Total = 38h

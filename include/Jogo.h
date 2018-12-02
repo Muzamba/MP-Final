@@ -23,7 +23,16 @@
 #include "GeraRecursos.h"
 #include "Unidade.h"
 #include <iostream>
+/**
+ * @brief 
+ * 
+ */
+struct Acao{
+    bool* last;
 
+    int ondeX;
+    int ondeY;
+};
 
 /**
  * @class Jogo Jogo.h
@@ -130,6 +139,102 @@ class Jogo {
      */
     bool isOn();
 
+    //-------------------- Métodos da cpu ------------------------------
+
+    /**
+     * @brief Limpa o vetor de que registra a última ação do jogador.
+     * 
+     */
+    void clear_ultima_acao();
+
+    /**
+     * @brief A partir da última ação feita pelo jogador, calcula qual
+     *  a jogada ótima a ser feita.
+     * 
+     * @param ultima_compra - Vetor de booleanos que diz qual foi
+     *  a última jogada do Player.
+     * 
+     * @return int - número da jogada a ser feita pela CPU
+     */
+    int counter(bool* ultima_compra);
+
+    /**
+     * @brief Recebe a ação a ser feita pela CPU e retorna qual o tipo
+     *  de unidade a jogada se refere.
+     * 
+     * @param acao - Jogada da CPU.
+     * @return UNIDADE - Tipo da jogada.
+     */
+    UNIDADE retorna_tipo_und(int acao);
+
+    /**
+     * @brief Recebe a ação a ser feita pela CPU e retorna qual o tipo
+     *  de recurso a jogada se refere.
+     * 
+     * @param acao - Jogada da CPU.
+     * @return RECURSO - Recurso que deverá ser utilizado.
+     */
+    RECURSO retorna_tipo_rec(int acao);
+
+    /**
+     * @brief Calcula a posição X e Y de onde deve ser feita a próxima jogada
+     * 
+     *  Caso a próxima jogada seja colocar uma fábrica, sempre a colocar
+     * na fileira de número 10. Caso a posição já esteja ocupada, procurar 
+     * na posição abaixo. Caso não exista nenhum lugar disponível, a fábrica
+     * não será posicionada.
+     * 
+     * Caso a próxima jogada seja colocar uma geraRecursos, sempre a colocar
+     * na fileira de número 11. Caso a posição já esteja ocupada, procurar 
+     * na posição abaixo. Caso não exista nenhum lugar disponível, a fábrica
+     * não será posicionada.
+     * 
+     * Caso a próxima jogada seja colocar uma unidade, colocar na mesma linha
+     * que o jogador posicionou a própria tropa. Caso o espaço esteja ocupado,
+     * verificar horizontalmente por uma posição válida. Caso esta não seja
+     * encontrada, voltar para o final da linha, visto que as unidades se movem
+     * e o espaço pode estar vazio.
+     * 
+     * @param X - Posição X da jogada da CPU
+     * @param Y - Posição Y da jogada da CPU
+     * @param counter - Ação a ser tomada pela CPU
+     */
+    void onde_botar(int* X, int* Y, int counter);
+
+    /**
+     * @brief - Calcula, por meio de uma soma ponderada num histograma, a melhor 
+     * fábrica para comprar uma unidade. 
+     * 
+     * @param tipo - tipo da fábrica
+     * @return int - nível da melhor fábrica para se comprar uma unidade.
+     */
+    int qual_fbrc(UNIDADE tipo);
+
+    /**
+     * @brief - retorna o índice da posição que possui o maior valor
+     * em um array
+     * 
+     * @param vector - array a ser analisadp 
+     * @param n - tamanho do vetor
+     * @return int - indice da posição que possui o maior valor
+     */
+    int max_index(int* vector, int n);
+
+    /**
+     * @brief - Retorna qual a posição da fábrica que possui o menor nível
+     * 
+     * @param tipo - tipo da fábrica a ser analisada
+     * @param X - Posição X da fábrica de menor nível
+     * @param Y - Posição Y da fábrica de menor nível
+     */
+    void menor_nivel(UNIDADE tipo, int* X, int* Y);
+
+    /**
+     * @brief Coloca no mapa a jogada da CPU
+     * 
+     */
+    void bota_no_mapa();
+
     /**
      * @brief Destrutor do objeto Jogo.
      *
@@ -167,6 +272,7 @@ class Jogo {
     TIPO tipoCompra = NADA;
     int nivelCompra = -1;
     // SDL_Texture *teste;
+    Acao ultima_acao;
 
 
 

@@ -1,0 +1,21 @@
+Data     | Tempo | Tipo de Tarefa            | Descrição da tarefa
+____________________________________________________________________________________________________
+ 13/11/18 | 01:00 | Fazer diagramas           | Fazendo diagrama das relações das classes do jogo
+ 15/11/18 | 04:06 | Programar                 | Classe Objeto
+ 15/11/18 | 02:37 | Programar                 | Classe Prédio
+ 16/11/18 | 02:16 | Programar                 | Classe Fábrica
+ 18/11/18 | 01:53 | Programar                 | Classe Fábrica
+ 18/11/18 | 01:00 | Programar                 | Classe Player
+ 20/11/18 | 05:00 | Reunião                   | Reunião do grupo, merge nos módulos, definições, protótipos do que fazer a seguir
+ 21/11/18 | 03:00 | Programar                 | Redefinição da classe Fábrica
+ 21/11/18 | 02:38 | Programar                 | Função de andar
+ 21/11/18 | 02:00 | Programar                 | Upgrade das unidades
+ 22/11/18 | 00:40 | Programar                 | Upgrade das unidades
+ 22/11/18 | 01:00 | Programar                 | Função para gerar unidades
+ 22/11/18 | 02:30 | Programar                 | Função para a compra de unidades
+ 01/12/18 | 09:19 | Programar                 | Codificação da CPU
+ 02/12/18 | 00:30 | Audio                     | Seleção e corte dos audios do jogo
+ 02/12/18 | 08:55 | Programar                 | Codificação da CPU
+
+ Tempo total dedicado ao projeto: Aproximadamente 48 horas
+ Tempos adquiridos pelo aplicativo toggl

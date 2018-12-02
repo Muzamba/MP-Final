@@ -1,0 +1,21 @@
+Data |Horas | Tipo Tarefa              | Descrição da Tarefa Realizada            |
+06/11| 0:30 | estudar                  | Estudar básico SDL2
+07/11| 2:00 | estudar                  | Estudar SDL
+12/11| 2:00 | projetar                 | laboratório onde definimos partes essenciais
+15/11| 4:00 | design                   | Criando arte das estruturas do jogo
+15/11| 3:00 | design                   | Criando arte das tropas e esqueleto do mapa
+16/11| 1:25 | design                   | Experimentando design do mapa do jogo
+20/11| 1:30 | design                   | Criando arte do mapa definitiva
+26/11| 1:30 | codificar módulo         | Terminando o display dos recursos na tela
+30/11| 0:30 | design                   | Adicionando tropas da CPU
+30/11| 0:30 | codificar módulo         | Implementando botao Load
+30/11| 0:40 | codificar módulo         | Implementando botoes Pausar e Resumir
+01/11| 0:30 | design                   | Mudando textura do botao iniciar e criando botao sair
+01/11| 0:30 | codificar módulo         | Implementando botao Sair
+02/11| 0:30 | codificar módulo         | Implementando botao Salvar
+02/11| 0:30 | design                   | Modificando textura dos edifícios
+02/11| 0:40 | codificar módulo         | Implementando mudanca de textura conforme upgrade
+02/11| 0:50 | codificar módulo         | Display de "DERROTA" ou "VITORIA" ao fim do jogo
+02/11| 0:30 | design                   | Colocando vida nas estruturas com upgrade
+02/11| 0:25 | relatorio                | Relatando atividades
+Total = 22h

@@ -66,10 +66,29 @@ class Player {
     bool compra_Unidade(int x, int y, UNIDADE tipo, int nivel);
 
     /**
+     * @brief Compra uma Unidade da CPU
+     * 
+     * @param x - Coordenada X de onde sera efetuada a compra.
+     * @param y - Coordenada Y de onde sera efetuada a compra. 
+     * @param tipo - Tipo da Unidade comprada. 
+     * @param nivel - Nivel da Unidade comprada. 
+     * @return true - Compra realizada com sucesso.
+     * @return false -Falha na compra. 
+     */
+
+    bool compra_Unidade_CPU(int x, int y, UNIDADE tipo, int nivel);
+
+    /**
      * @brief Atualiza os recursos de acordo com as suas GeraRecursos.
      * 
      */
     void atualizar_Recursos();
+
+    /**
+     * @brief Atualiza os recursos da CPU de acordo com as suas GeraRecursos.
+     * 
+     */
+    void atualizar_Recursos_CPU();
 
     /**
      * @brief Retorna Vida.
@@ -86,9 +105,9 @@ class Player {
     void setVida(int vida);
 
     /*Listas de Objetos*/
-    //std::vector<GeraRecursos> lista_GeraRecursos;
-    //std::vector<Fabrica> lista_Fabrica;
-    //std::vector<Unidade> lista_Unidade;
+    // std::vector<GeraRecursos> lista_GeraRecursos;
+    // std::vector<Fabrica> lista_Fabrica;
+    // std::vector<Unidade> lista_Unidade;
 
     /* Construtor e destrutor(depende do obj) */
     /**
@@ -158,7 +177,7 @@ class Player {
      * @param dinheiro - Dinheiro desejado.
      */
     void setDinheiro(int dinheiro);
-    
+
     /**
      * @brief Returna Pontos.
      * 
@@ -182,7 +201,7 @@ class Player {
     int metal;       // Tesoura
     int dinheiro;
     int pontos;
-private:
+
     /* Metodos auxiliares */
     /**
      * @brief Retira recursos na hora da compra.
@@ -280,5 +299,15 @@ TEXTURAS retorna_textura_fabrica(int tipo);
  * @return TEXTURAS - Textura que sera utilizada.
  */
 TEXTURAS retorna_textura_unidade(int nivel, int tipo);
+
+/**
+ * @brief Funçao auxiliar para definir uma textura na hora a compra uma Unidade da CPU
+ * 
+ * @param nivel - Nivel da Unidade comprada.
+ * @param tipo - Tipo da Compra.
+ * @return TEXTURAS - Textura que sera utilizada.
+ */
+
+TEXTURAS retorna_textura_unidade_CPU(int nivel, int tipo);
 
 #endif  // INCLUDE_PLAYER_H_

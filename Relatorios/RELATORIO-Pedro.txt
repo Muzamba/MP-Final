@@ -1,0 +1,26 @@
+Data |Horas | Tipo Tarefa              | Descrição da Tarefa Realizada
+12/11| 0:50 | Projetar                 | Criando git,trello,toggl, aprender como projetar um jogo|
+12/11| 1:40 | estudar                  | Aprender SDL
+13/11| 0:25 | estudar                  | Aprender SDL
+13/11| 1:15 | Projetar                 | Projetar main menu
+15/11| 4:00 | codificar módulo e testes| Classe GeraRecursos
+15/11| 3:00 | codificar módulo e testes| Classe Player
+18/11| 1:34 | codificar módulo         | Classe GeraRecursos
+18/11| 1:28 | codificar módulo         | Classe Player
+20/11| 1:40 | fazer diagramas          | Reuniao onde fizemos diagramas de classes
+20/11| 3:00 | especificar módulos      | Reuniao onde definimos funcionalidades
+20/11| 3:00 | especificar as funções   | Reuniao onde definimos funcionalidades
+21/11| 0:24 | codificar módulo         | Upgrade
+22/11| 1:31 | codificar módulo         | Botoes
+26/11| 4:00 | revisar código do módulo | Realizar o merge e revisar o codigo
+29/11| 4:00 | codificar módulo e testes| Combate
+30/11| 1:40 | codificar módulo e testes| Load e save
+01/12| 1:40 | revisar código do módulo | Realizar o merge e revisar o codigo
+01/12| 1:00 | Cpplint                  | cpplint em todas as .cpp
+02/12| 0:40 | realizar os testes       | Teste Load e Save
+02/12| 0:50 | revisar código do módulo | Corrigir erros de movimentação,upgrade e de compra
+02/12| 1:00 | realizar os testes       | Teste da mecanica do jogo
+02/12| 0:30 | revisar código do módulo | Realizar o merge e revisar o codigo
+02/12| 1:51 | codificar módulo e testes| Audio
+02/12| 0:20 | Relatorio                | Esse relatorio
+Total = 41h

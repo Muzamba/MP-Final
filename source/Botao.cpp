@@ -227,6 +227,7 @@ void buttomEvents(SDL_Event* evento) {
                 }
                 switch (jogo->tipoCompra) {
                     case NADA:
+                        jogo->ultima_acao.last[NADA] = true;
                         jogo->comprando = false;
                         jogo->tipoCompra = NADA;
                         break;
@@ -237,6 +238,9 @@ void buttomEvents(SDL_Event* evento) {
                         } else {
                             printf("Falha na compra da tropa papel\n");
                         }
+                        jogo->ultima_acao.last[UNIDADE_PAPEL] = true;
+                        jogo->ultima_acao.ondeX = x;
+                        jogo->ultima_acao.ondeY = y;
                         jogo->comprando = false;
                         jogo->tipoCompra = NADA;
                         jogo->nivelCompra = 0;
@@ -248,6 +252,9 @@ void buttomEvents(SDL_Event* evento) {
                         } else {
                             printf("Falha na compra da tropa pedra\n");
                         }
+                        jogo->ultima_acao.last[UNIDADE_PEDRA] = true;
+                        jogo->ultima_acao.ondeX = x;
+                        jogo->ultima_acao.ondeY = y;
                         jogo->comprando = false;
                         jogo->tipoCompra = NADA;
                         jogo->nivelCompra = 0;
@@ -259,6 +266,9 @@ void buttomEvents(SDL_Event* evento) {
                         } else {
                             printf("Falha na compra da tropa tesoura\n");
                         }
+                        jogo->ultima_acao.last[UNIDADE_TESOURA] = true;
+                        jogo->ultima_acao.ondeX = x;
+                        jogo->ultima_acao.ondeY = y;
                         jogo->comprando = false;
                         jogo->tipoCompra = NADA;
                         jogo->nivelCompra = 0;
@@ -280,6 +290,9 @@ void buttomEvents(SDL_Event* evento) {
                                 }
                             }
                         }
+                        jogo->ultima_acao.last[U_FABRICA_PAPEL] = true;
+                        jogo->ultima_acao.ondeX = x;
+                        jogo->ultima_acao.ondeY = y;
                         jogo->comprando = false;
                         jogo->tipoCompra = NADA;
                         break;
@@ -300,6 +313,9 @@ void buttomEvents(SDL_Event* evento) {
                                 }
                             }
                         }
+                        jogo->ultima_acao.last[U_FABRICA_PEDRA] = true;
+                        jogo->ultima_acao.ondeX = x;
+                        jogo->ultima_acao.ondeY = y;
                         jogo->comprando = false;
                         jogo->tipoCompra = NADA;
                         break;
@@ -320,6 +336,9 @@ void buttomEvents(SDL_Event* evento) {
                                 }
                             }
                         }
+                        jogo->ultima_acao.last[U_FABRICA_TESOURA] = true;
+                        jogo->ultima_acao.ondeX = x;
+                        jogo->ultima_acao.ondeY = y;
                         jogo->comprando = false;
                         jogo->tipoCompra = NADA;
                         break;
@@ -336,6 +355,9 @@ void buttomEvents(SDL_Event* evento) {
                                 printf("Upgrade negado gera metal\n");
                             }
                         }
+                        jogo->ultima_acao.last[U_GERA_METAL] = true;
+                        jogo->ultima_acao.ondeX = x;
+                        jogo->ultima_acao.ondeY = y;
                         jogo->comprando = false;
                         jogo->tipoCompra = NADA;
                         break;
@@ -353,6 +375,9 @@ void buttomEvents(SDL_Event* evento) {
                                 printf("Upgrade negado gera pedregulho\n");
                             }
                         }
+                        jogo->ultima_acao.last[U_GERA_PEDREGULHO] = true;
+                        jogo->ultima_acao.ondeX = x;
+                        jogo->ultima_acao.ondeY = y;
                         jogo->comprando = false;
                         jogo->tipoCompra = NADA;
                         break;
@@ -370,24 +395,36 @@ void buttomEvents(SDL_Event* evento) {
                                 printf("Upgrade negado gera celulose\n");
                             }
                         }
+                        jogo->ultima_acao.last[U_GERA_CELULOSE] = true;
+                        jogo->ultima_acao.ondeX = x;
+                        jogo->ultima_acao.ondeY = y;
                         jogo->comprando = false;
                         jogo->tipoCompra = NADA;
                         break;
 
                     case FABRICAR_PAPEL:
                         jogador->compra_Fabrica(y, x, PAPEL);
+                        jogo->ultima_acao.last[FABRICAR_PAPEL] = true;
+                        jogo->ultima_acao.ondeX = x;
+                        jogo->ultima_acao.ondeY = y;
                         jogo->comprando = false;
                         jogo->tipoCompra = NADA;
                         break;
 
                     case FABRICAR_TESOURA:
                         jogador->compra_Fabrica(y, x, TESOURA);
+                        jogo->ultima_acao.last[FABRICAR_TESOURA] = true;
+                        jogo->ultima_acao.ondeX = x;
+                        jogo->ultima_acao.ondeY = y;
                         jogo->comprando = false;
                         jogo->tipoCompra = NADA;
                         break;
 
                     case FABRICAR_PEDRA:
                         jogador->compra_Fabrica(y, x, PEDRA);
+                        jogo->ultima_acao.last[FABRICAR_PEDRA] = true;
+                        jogo->ultima_acao.ondeX = x;
+                        jogo->ultima_acao.ondeY = y;
                         jogo->comprando = false;
                         jogo->tipoCompra = NADA;
                         break;
@@ -398,6 +435,9 @@ void buttomEvents(SDL_Event* evento) {
                         } else {
                             printf("Falha na compra\n");
                         }
+                        jogo->ultima_acao.last[GERA_CELULOSE] = true;
+                        jogo->ultima_acao.ondeX = x;
+                        jogo->ultima_acao.ondeY = y;
                         jogo->comprando = false;
                         jogo->tipoCompra = NADA;
                     break;
@@ -408,6 +448,9 @@ void buttomEvents(SDL_Event* evento) {
                         } else {
                             printf("Falha na compra\n");
                         }
+                        jogo->ultima_acao.last[GERA_PEDREGULHO] = true;
+                        jogo->ultima_acao.ondeX = x;
+                        jogo->ultima_acao.ondeY = y;
                         jogo->comprando = false;
                         jogo->tipoCompra = NADA;
                         break;
@@ -418,6 +461,9 @@ void buttomEvents(SDL_Event* evento) {
                         } else {
                             printf("Falha na compra\n");
                         }
+                        jogo->ultima_acao.last[GERA_METAL] = true;
+                        jogo->ultima_acao.ondeX = x;
+                        jogo->ultima_acao.ondeY = y;
                         jogo->comprando = false;
                         jogo->tipoCompra = NADA;
                         break;

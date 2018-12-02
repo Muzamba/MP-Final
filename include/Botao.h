@@ -18,22 +18,21 @@
  * @brief Classe do Botao iniciar que esta na tela inicial.
  */
 class Botao_Iniciar : public Objeto {
-public:
+ public:
     /**
      * @brief Constroi um objeto Botao_Iniciar.
      * 
      * @param X - Posiçao X do Botao na tela.
      * @param Y - Posiçao Y do Botao na tela.
      */
-    Botao_Iniciar(int X, int Y) : Objeto(X, Y){}
-    
+    Botao_Iniciar(int X, int Y) : Objeto(X, Y) {}
+
     /**
      * @brief Faz o jogo iniciar quando for clicado em cima do botao.
      * 
      * @param evento - Evento que esta sendo manipulado no momento.
      */
     void handleEvent(SDL_Event* evento);
-
 };
 
 /**
@@ -41,7 +40,7 @@ public:
  * @brief Classe do botao de load que esta na tela inicial.
  */
 class Botao_Load : public Objeto {
-public:
+ public:
     /**
      * @brief Constroi um objeto Botao_Load.
      * 
@@ -64,7 +63,7 @@ public:
  * @brief Classe do botao de pause que esta presente durante o jogo inteiro.
  */
 class Botao_Pause : public Objeto {
-public:
+ public:
     /**
      * @brief Constroi um objeto Botao_Pause.
      * 
@@ -87,7 +86,7 @@ public:
  * esta presente durante o jogo inteiro.
  */
 class Botao_Resume : public Objeto {
-public:
+ public:
     /**
      * @brief Constroi um objeto Botao_Resume.
      * 
@@ -108,7 +107,7 @@ public:
  * @brief Classe do botao sair que esta presente na tela inicial.
  */
 class Botao_Sair : public Objeto {
-public:
+ public:
     /**
      * @brief Constroi um objeto Botao_Sair.
      * 
@@ -133,7 +132,7 @@ public:
  * 
  */
 class Botao_Save : public Objeto {
-public:
+ public:
     /**
      * @brief Constroi um objeto Botao_Save.
      * 

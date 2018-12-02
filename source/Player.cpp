@@ -31,7 +31,7 @@ bool Player::compra_GeraRecurso(int x, int y, RECURSO tipo) {
     /* Verifica se o jogador tem recursos suficientes */
     if (possui_recursos_geraRecurso(tipo)) {
         /*  Verifica se a matriz de posicao esta vazia */
-        if (verifica_espaco_ocupado(x, y) && verifica_espaco_predio(x, y)) {
+        if (verifica_espaco_ocupado(x, y) /*&& verifica_espaco_predio(x, y)*/) {
             /* Retira o dinheiro da compra */
             Player::retira_recurso_geraRecurso(tipo);
             /* Adiciona a fabrica na lista da classe Player*/
@@ -67,7 +67,7 @@ bool Player::compra_Fabrica(int x, int y, UNIDADE tipo) {
     if (possui_recursos_fabrica(tipo)) {
         /* Retira o dinheiro da compra */
         /*  Verifica se a matriz de posicao esta vazia */
-        if (verifica_espaco_ocupado(x, y) && verifica_espaco_predio(x, y)) {
+        if (verifica_espaco_ocupado(x, y) /*&& verifica_espaco_predio(x, y)*/) {
             /* Retira o dinheiro da compra */
             Player::retira_recurso_fabrica(tipo);
             /* Adiciona a fabrica na lista da classe Player*/
@@ -133,7 +133,7 @@ bool Player::possui_recursos_unidade(int tipo, int nivel) {
             return false;
     }
 
-    if (recurso >= custo ) {
+    if (recurso >= custo) {
         return true;
     } else {
         Mix_PlayChannel(-1, jogo->efeitos[SEM_RECURSO], 0);
@@ -203,9 +203,31 @@ TEXTURAS retorna_textura_unidade(int nivel, int tipo) {
     }
 }
 
+TEXTURAS retorna_textura_unidade_CPU(int nivel, int tipo) {
+    if (nivel == 1 || nivel == 2) {
+        switch (tipo) {
+            case UNIDADE::PEDRA:
+                return TEXTURAS::TROPA_PEDRA_CPU;
+            case UNIDADE ::PAPEL:
+                return TEXTURAS ::TROPA_PAPEL_CPU;
+            case UNIDADE ::TESOURA:
+                return TEXTURAS ::TROPA_TESOURA_CPU;
+        }
+    } else {
+        switch (tipo) {
+            case UNIDADE::PEDRA:
+                return TEXTURAS::TROPA_PEDRA2_CPU;
+            case UNIDADE ::PAPEL:
+                return TEXTURAS ::TROPA_PAPEL2_CPU;
+            case UNIDADE ::TESOURA:
+                return TEXTURAS ::TROPA_TESOURA2_CPU;
+        }
+    }
+}
+
 bool Player::compra_Unidade(int x, int y, UNIDADE tipo, int nivel) {
     if (possui_recursos_unidade(tipo, nivel)) {
-        if (verifica_espaco_ocupado(x, y) && verifica_espaco_unidade(x, y)) {
+        if (verifica_espaco_ocupado(x, y) /*&& verifica_espaco_unidade(x, y)*/) {
             retira_recurso_unidade(tipo, nivel);
             switch (nivel) {
                 case 1:
@@ -228,6 +250,47 @@ bool Player::compra_Unidade(int x, int y, UNIDADE tipo, int nivel) {
                                     VELO_UNIDADE_3, DANO_UNIDADE_3, 3);
                     jogo->matriz_unidade[x][y]->mudaTextura
                     (jogo->texturas[retorna_textura_unidade(3, tipo)]);
+                    break;
+                default:
+                    printf("NIVEL INVALIDO :: COMPRA UNIDADE\n");
+                    break;
+            }
+            jogo->matriz_unidade[x][y]->setDestRect
+            ((y + 2) * 80 , (x + 2) * 72, 64, 64);
+            jogo->matriz_unidade[x][y]->setSrcRect(0, 0, 64, 64);
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Player::compra_Unidade_CPU(int x, int y, UNIDADE tipo, int nivel) {
+    if (possui_recursos_unidade(tipo, nivel)) {
+        printf("ENTROU1 UND\n");
+        if (verifica_espaco_ocupado(x, y)) {
+            retira_recurso_unidade(tipo, nivel);
+            printf("OK PASSOU AQUI\n");
+            switch (nivel) {
+                case 1:
+                    jogo->matriz_unidade[x][y] =
+                            new Unidade(x, y, tipo, VIDA_UNIDADE_1,
+                                    VELO_UNIDADE_1_CPU, DANO_UNIDADE_1, 1);
+                    jogo->matriz_unidade[x][y]->mudaTextura
+                    (jogo->texturas[retorna_textura_unidade_CPU(1, tipo)]);
+                    break;
+                case 2:
+                    jogo->matriz_unidade[x][y] =
+                            new Unidade(x, y, tipo, VIDA_UNIDADE_2,
+                                    VELO_UNIDADE_2_CPU, DANO_UNIDADE_2, 2);
+                    jogo->matriz_unidade[x][y]->mudaTextura
+                    (jogo->texturas[retorna_textura_unidade_CPU(2, tipo)]);
+                    break;
+                case 3:
+                    jogo->matriz_unidade[x][y] =
+                            new Unidade(x, y, tipo, VIDA_UNIDADE_3,
+                                    VELO_UNIDADE_3_CPU, DANO_UNIDADE_3, 3);
+                    jogo->matriz_unidade[x][y]->mudaTextura
+                    (jogo->texturas[retorna_textura_unidade_CPU(3, tipo)]);
                     break;
                 default:
                     printf("NIVEL INVALIDO :: COMPRA UNIDADE\n");
@@ -276,6 +339,32 @@ bool Player::compra_Unidade(int x, int y, UNIDADE tipo, int nivel) {
 void Player::atualizar_Recursos() {
     for (int i = 0; i < 6; ++i) {
         for (int j = 0; j < 2; ++j) {
+            if (jogo->matriz_geraRecurso[i][j] != NULL) {
+                switch (jogo->matriz_geraRecurso[i][j]->getTipo()) {
+                    case RECURSO::PEDREGULHO:
+                        Player::pedregulho +=
+                                jogo->matriz_geraRecurso[i][j]->getTaxa();
+                        break;
+                    case RECURSO::METAL:
+                        Player::metal +=
+                                jogo->matriz_geraRecurso[i][j]->getTaxa();
+                        break;
+                    case RECURSO::CELULOSE:
+                        Player::celulose +=
+                                jogo->matriz_geraRecurso[i][j]->getTaxa();
+                        break;
+                    default:
+                        printf("ERRO: atualizar_Recursos\n");
+                        return;
+                }
+            }
+        }
+    }
+}
+
+void Player::atualizar_Recursos_CPU() {
+    for (int i = 0; i < 6; ++i) {
+        for (int j = 10; j < 12; ++j) {
             if (jogo->matriz_geraRecurso[i][j] != NULL) {
                 switch (jogo->matriz_geraRecurso[i][j]->getTipo()) {
                     case RECURSO::PEDREGULHO:
@@ -446,7 +535,7 @@ void Player::retira_recurso_geraRecurso(RECURSO tipo) {
 }
 
 bool Player::verifica_espaco_predio(int x, int y) {
-    if (y < 2){
+    if (y < 2) {
         return true;
     } else {
         Mix_PlayChannel(-1, jogo->efeitos[LUGAR_INV], 0);

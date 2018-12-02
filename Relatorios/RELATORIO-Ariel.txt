@@ -1,0 +1,20 @@
+ Data     | Tempo | Tipo de Tarefa            | Descrição da tarefa
+____________________________________________________________________________________________________
+ 13/11/18 | 01:00 | Fazer diagramas           | Fazendo diagrama das relações das classes do jogo
+ 13/11/18 | 05:00 | Codificar modulo          | Definindo todas as classes e implementando a classe jogo
+ 14/11/18 | 02:35 | Projetar                  | Projetando como seria a main
+ 14/11/18 | 02:00 | Estudar                   | Aprender SDL e tambem programação de jogos
+ 15/11/18 | 03:00 | Design                    | Projetando artes dos jogo
+ 15/11/18 | 04:00 | Design                    | Fazendo algumas artes do jogo
+ 18/11/18 | 03:30 | Codificar modulo          | Criando parte da engine base
+ 20/11/18 | 01:40 | Fazer diagramas           | Reuniao onde fizemos diagramas de classes
+ 20/11/18 | 03:00 | Especificar módulos       | Reuniao onde definimos funcionalidades
+ 20/11/18 | 03:00 | Especificar as funções    | Reuniao onde definimos funcionalidades
+ 22/11/18 | 01:30 | Codificar módulo          | Botoes
+ 25/11/18 | 02:00 | Codificar módulo          | Desenvolver mode de colocar contadores de recursos em tela
+ 30/11/18 | 01:00 | Codificar módulo          | Adicionando tempo de jogo na tela do jogo
+ 01/11/18 | 04:35 | Documentar com Doxygen    | Revisando Doxygen de todos os modulos
+ 01/11/18 | 01:30 | revisar o código do modulo| Fazendo merge e revisando codigo
+ 02/11/18 | 02:00 | Design                    | Fazendo arte das vidas
+ 02/11/18 | 02:00 | Codificar modulo          | Implementar barra de vida
+ Total = 43:20
