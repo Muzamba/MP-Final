@@ -1,5 +1,5 @@
 Jankenpo:	include/Head.h	source/obj/main.o source/obj/Player.o source/obj/Botao.o source/obj/Fabrica.o source/obj/Predio.o source/obj/Unidade.o source/obj/GeraRecursos.o source/obj/Jogo.o source/obj/Objeto.o 
-	g++ -g -Og source/obj/main.o source/obj/Botao.o source/obj/Fabrica.o source/obj/Predio.o source/obj/Unidade.o source/obj/GeraRecursos.o source/obj/Jogo.o source/obj/Objeto.o source/obj/Player.o -o Jankenpo -lSDL2 -lSDL2_image -Iinclude -lSDL2_ttf -std=c++11
+	g++ -g -Og source/obj/main.o source/obj/Botao.o source/obj/Fabrica.o source/obj/Predio.o source/obj/Unidade.o source/obj/GeraRecursos.o source/obj/Jogo.o source/obj/Objeto.o source/obj/Player.o -o Jankenpo -lSDL2 -lSDL2_image -lSDL2_mixer -Iinclude -lSDL2_ttf -std=c++11
 	
 source/obj/main.o:	include/Jogo.h source/main.cpp include/Botao.h include/Fabrica.h include/Predio.h include/Unidade.h include/GeraRecursos.h include/Objeto.h include/Head.h	include/Player.h
 	g++ -c source/main.cpp -o source/obj/main.o -Iinclude -std=c++11

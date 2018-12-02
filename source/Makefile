@@ -1,6 +1,6 @@
 IDIR =../include
 CC=g++
-CFLAGS=-I$(IDIR) -lSDL2 -lSDL2_image -lSDL2_ttf -std=c++11
+CFLAGS=-I$(IDIR) -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -std=c++11
 
 
 ODIR= obj

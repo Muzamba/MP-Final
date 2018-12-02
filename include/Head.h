@@ -85,6 +85,20 @@ enum TIPO {
     U_FABRICA_PEDRA, 
     U_FABRICA_TESOURA
 };
+
+enum EFEITOS {
+    EXPLOSAO,
+    SOCO,
+    SEM_DINHEIRO,
+    SEM_RECURSO,
+    LUGAR_INV,
+    EFEITO_TOTAL
+};
+enum MUSICAS {
+    MUS_INICIAL,
+    MUS_JOGO_NARUTO,
+    MUS_TOTAL
+};
 /******************************************************************************
  *  Define Unidade
  *****************************************************************************/

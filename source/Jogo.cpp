@@ -470,6 +470,11 @@ void Jogo::init(const char* nome, int x, int y, int w, int h) {
                         TTF_GetError());
                 on = false;
             }
+
+            //Initialize SDL_mixer
+            if ( Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0 ) {
+                printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
+            }
             /* Set e get depois*/
             menu_inicial = true;
 
@@ -512,14 +517,27 @@ void Jogo::handleEvents() {
 
 void Jogo::renderizar() {
     int cont = 0;
+    static bool musica_parou = true;
     SDL_RenderClear(render);
     // Adione aqui as coisas para renderizar
     if (menu_inicial) {
+        // Se nao estiver tocando a musica
+        if (!Mix_PlayingMusic()) {
+            // Toca a musica Principal
+            Mix_PlayMusic(musicas[MUS_INICIAL], -1);
+        }
         menuInicial->render(render);
         bIniciar->render(render);
         bLoad->render(render);
         bSair->render(render);
     } else {
+        if (musica_parou) {
+            Mix_HaltMusic();
+            musica_parou = false;
+        }
+        if(!Mix_PlayingMusic()){
+            //Mix_PlayMusic(musicas[MUS_JOGO_NARUTO], -1);
+        }
         mapa->render(render);
         // compra->render(render);
         for (int i = 0; i < 6; ++i) {
@@ -558,6 +576,17 @@ void Jogo::fim() {
         SDL_DestroyTexture(texturas[i]);
         texturas[i] = NULL;
     }
+
+    for (int i = 0; i < MUSICAS ::MUS_TOTAL; ++i) {
+        Mix_FreeMusic(musicas[i]);
+        musicas[i] = NULL;
+    }
+
+    for (int i = 0; i < EFEITOS ::EFEITO_TOTAL; ++i) {
+        Mix_FreeChunk(efeitos[i]);
+        efeitos[i] = NULL;
+    }
+
     SDL_DestroyWindow(janela);
     janela = NULL;
     SDL_DestroyRenderer(render);
@@ -688,6 +717,49 @@ void Jogo::update() {
 bool Jogo::loadMidia() {
     // Loading success flag
     bool success = true;
+
+    // Load Chunk
+    efeitos[EXPLOSAO] = Mix_LoadWAV("music/explosao.wav");
+    if (efeitos[EXPLOSAO] == NULL) {
+        printf("Failed to load Chunk explosao.wav!\n");
+        success = false;
+    }
+
+    efeitos[SOCO] = Mix_LoadWAV("music/soco.wav");
+    if (efeitos[SOCO] == NULL) {
+        printf("Failed to load Chunk Soco.wav!\n");
+        success = false;
+    }
+
+    efeitos[LUGAR_INV] = Mix_LoadWAV("music/lugar_inv.wav");
+    if (efeitos[LUGAR_INV] == NULL) {
+        printf("Failed to load Chunk lugar_inv.wav!\n");
+        success = false;
+    }
+
+    efeitos[SEM_DINHEIRO] = Mix_LoadWAV("music/sem_dinheiro.wav");
+    if (efeitos[SEM_DINHEIRO] == NULL) {
+        printf("Failed to load Chunk sem_dinheiro.wav!\n");
+        success = false;
+    }
+
+    efeitos[SEM_RECURSO] = Mix_LoadWAV("music/sem_recurso.wav");
+    if (efeitos[SEM_RECURSO] == NULL) {
+        printf("Failed to load Chunk sem_recurso.wav!\n");
+        success = false;
+    }
+    // Load Music
+    musicas[MUS_INICIAL] = Mix_LoadMUS("music/SweetDreamsLoops.wav");
+    if (musicas[MUS_INICIAL] == NULL) {
+        printf("Failed to load Musica Sweet.wav!\n");
+        success = false;
+    }
+
+    musicas[MUS_JOGO_NARUTO] = Mix_LoadMUS("music/Naruto.mp3");
+    if (musicas[MUS_JOGO_NARUTO] == NULL) {
+        printf("Failed to load Musica Naruto.mp3!\n");
+        success = false;
+    }
 
     // Load PNG texture
     texturas[TEXTURAS::TROPA_PAPEL] =

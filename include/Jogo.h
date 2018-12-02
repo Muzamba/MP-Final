@@ -14,6 +14,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_mixer.h>
 #include <string>
 #include "Player.h"
 #include "Head.h"
@@ -148,7 +149,10 @@ class Jogo {
     GeraRecursos ***matriz_geraRecurso = NULL;
     Fabrica ***matriz_fabrica = NULL;
 
+    Mix_Music *musicas[MUSICAS::MUS_TOTAL];
+    Mix_Chunk *efeitos[EFEITOS::EFEITO_TOTAL];
     SDL_Texture* texturas[TEXTURAS::TEX_TOTAL];
+
     bool menu_inicial = false;
     SDL_Texture* aloo;
     bool paused = false;
