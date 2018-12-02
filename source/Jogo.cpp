@@ -708,10 +708,24 @@ bool Jogo::loadMidia() {
         success = false;
     }
 
+    texturas[TEXTURAS::FABRICA_PAPEL_UP] =
+            loadTexture("imagens/GeraTropaPapelUp.png");
+    if ( texturas[TEXTURAS::FABRICA_PAPEL_UP] == NULL ) {
+        printf("Failed to load texture GeraTropaPapelUp.png!\n");
+        success = false;
+    }
+
     texturas[TEXTURAS::FABRICA_PEDRA] =
             loadTexture("imagens/GeraTropaPedra.png");
     if ( texturas[TEXTURAS::FABRICA_PEDRA] == NULL ) {
         printf("Failed to load texture GeraTropaPedra.png!\n");
+        success = false;
+    }
+
+    texturas[TEXTURAS::FABRICA_PEDRA_UP] =
+            loadTexture("imagens/GeraTropaPedraUp.png");
+    if ( texturas[TEXTURAS::FABRICA_PEDRA_UP] == NULL ) {
+        printf("Failed to load texture GeraTropaPedraUp.png!\n");
         success = false;
     }
 
@@ -722,10 +736,24 @@ bool Jogo::loadMidia() {
         success = false;
     }
 
+    texturas[TEXTURAS::FABRICA_TESOURA_UP] =
+            loadTexture("imagens/GeraTropaTesouraUp.png");
+    if ( texturas[TEXTURAS::FABRICA_TESOURA_UP] == NULL ) {
+        printf("Failed to load texture GeraTropaTesouraUp.png!\n");
+        success = false;
+    }
+
     texturas[TEXTURAS::GERAR_PAPEL] =
             loadTexture("imagens/Gerador_Madeira.png");
     if ( texturas[TEXTURAS::GERAR_PAPEL] == NULL ) {
         printf("Failed to load texture Gerador_Madeira.png!\n");
+        success = false;
+    }
+
+    texturas[TEXTURAS::GERAR_PAPEL_UP] =
+            loadTexture("imagens/Gerador_Madeira_Upgrade.png");
+    if ( texturas[TEXTURAS::GERAR_PAPEL_UP] == NULL ) {
+        printf("Failed to load texture Gerador_Madeira_Upgrade.png!\n");
         success = false;
     }
 
@@ -735,9 +763,23 @@ bool Jogo::loadMidia() {
         success = false;
     }
 
+    texturas[TEXTURAS::GERAR_PEDRA_UP] =
+            loadTexture("imagens/Gerador_Pedra_Upgrade.png");
+    if ( texturas[TEXTURAS::GERAR_PEDRA] == NULL ) {
+        printf("Failed to load texture Gerador_Pedra_Upgrade.png!\n");
+        success = false;
+    }
+
     texturas[TEXTURAS::GERAR_TESOURA] =
             loadTexture("imagens/Gerador_Metal.png");
     if ( texturas[TEXTURAS::GERAR_TESOURA] == NULL ) {
+        printf("Failed to load texture Gerador_Metal.png!\n");
+        success = false;
+    }
+
+    texturas[TEXTURAS::GERAR_TESOURA_UP] =
+            loadTexture("imagens/Gerador_Metal_Upgrade.png");
+    if ( texturas[TEXTURAS::GERAR_TESOURA_UP] == NULL ) {
         printf("Failed to load texture Gerador_Metal.png!\n");
         success = false;
     }
