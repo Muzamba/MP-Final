@@ -52,6 +52,11 @@ TEST_CASE("Compra Unidades") {
     Player player1;
     delete jogo;
     jogo = new Jogo();
+    SECTION("Nivel invalido") {
+        int x = 3, y = 3;
+        REQUIRE(!player1.compra_Unidade(x, y, UNIDADE::PEDRA, 0));
+        REQUIRE(!player1.compra_Unidade(x, y, UNIDADE::PEDRA, 4));
+    }
     SECTION("Nivel 1") {
         int x = 5, y = 5;
         // Sem Recurso

@@ -310,7 +310,6 @@ void buttomEvents(SDL_Event* evento) {
                         jogo->tipoCompra = NADA;
                         break;
                     case UNIDADE_PAPEL:
-                        printf("Jogo nivel compra %d\n", jogo->nivelCompra);
                         if (jogador->compra_Unidade(y, x, UNIDADE::PAPEL,
                                 jogo->nivelCompra)) {
                             printf("Tropa papel comprada com sucesso \n");
@@ -320,8 +319,8 @@ void buttomEvents(SDL_Event* evento) {
                         jogo->comprando = false;
                         jogo->tipoCompra = NADA;
                         jogo->nivelCompra = 0;
+                        break;
                     case UNIDADE_PEDRA:
-                        printf("Jogo nivel compra %d\n", jogo->nivelCompra);
                         if (jogador->compra_Unidade(y, x, UNIDADE::PEDRA,
                                 jogo->nivelCompra)) {
                             printf("Tropa pedra comprada com sucesso \n");
@@ -331,8 +330,8 @@ void buttomEvents(SDL_Event* evento) {
                         jogo->comprando = false;
                         jogo->tipoCompra = NADA;
                         jogo->nivelCompra = 0;
+                        break;
                     case UNIDADE_TESOURA:
-                        printf("Jogo nivel compra %d\n", jogo->nivelCompra);
                         if (jogador->compra_Unidade(y, x, UNIDADE::TESOURA,
                                 jogo->nivelCompra)) {
                             printf("Tropa tesoura comprada com sucesso \n");
@@ -342,6 +341,7 @@ void buttomEvents(SDL_Event* evento) {
                         jogo->comprando = false;
                         jogo->tipoCompra = NADA;
                         jogo->nivelCompra = 0;
+                        break;
                     case U_FABRICA_PAPEL:
                         if (jogo->matriz_fabrica[y][x] != NULL) {
                             if (jogo->matriz_fabrica[y][x]->tipo ==
@@ -499,7 +499,7 @@ void buttomEvents(SDL_Event* evento) {
             }  // else
             printf("tipo: %d , comprando: %d, nivelCompra: %d \n",
                     jogo->tipoCompra, (jogo->comprando ? 1 : 0),
-                    jogo->tipoCompra);
+                    jogo->nivelCompra);
             // printf("x: %d , y: %d\n", x, y);
     }
 }

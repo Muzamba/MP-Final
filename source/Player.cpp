@@ -114,8 +114,8 @@ bool Player::possui_recursos_unidade(int tipo, int nivel) {
             custo = PRECO_UNIDADE_3;
             break;
         default:
-            custo = PRECO_UNIDADE_1;
-            //printf("ERRO : Nivel Invalido %d: compra unidade\n", nivel);
+            printf("ERRO : Nivel Invalido %d: compra unidade\n", nivel);
+            return false;
     }
 
     switch (tipo) {
