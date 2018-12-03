@@ -1284,7 +1284,7 @@ void Jogo::loadInfoCPU(FILE* arq) {
 void Jogo::load() {
     printf("Loading Game...\n");
     FILE* arq = fopen("saves/save.txt", "r");
-    char aux[30];
+    char aux[60];
     int x, y, vida, nivel, tipo, taxa, velocidade, dano;
     if (arq != NULL) {
         // Load no tempo do jogo
