@@ -31,7 +31,7 @@ bool Player::compra_GeraRecurso(int x, int y, RECURSO tipo) {
     /* Verifica se o jogador tem recursos suficientes */
     if (possui_recursos_geraRecurso(tipo)) {
         /*  Verifica se a matriz de posicao esta vazia */
-        if (verifica_espaco_ocupado(x, y) /*&& verifica_espaco_predio(x, y)*/) {
+        if (verifica_espaco_ocupado(x, y) && verifica_espaco_predio(x, y)) {
             /* Retira o dinheiro da compra */
             Player::retira_recurso_geraRecurso(tipo);
             /* Adiciona a fabrica na lista da classe Player*/
@@ -40,6 +40,29 @@ bool Player::compra_GeraRecurso(int x, int y, RECURSO tipo) {
             jogo->matriz_geraRecurso[x][y]->mudaTextura(jogo->texturas[text]);
             jogo->matriz_geraRecurso[x][y]->setDestRect
             ((y + 2) * 80 , (x + 2) * 72, 64, 64);
+            jogo->matriz_geraRecurso[x][y]->setSrcRect(0, 0, 64, 64);
+        } else {
+            return false;
+        }
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool Player::compra_GeraRecurso_CPU(int x, int y, RECURSO tipo) {
+    /* Verifica se o jogador tem recursos suficientes */
+    if (possui_recursos_geraRecurso(tipo)) {
+        /*  Verifica se a matriz de posicao esta vazia */
+        if (verifica_espaco_ocupado(x, y) /*&& verifica_espaco_predio(x, y)*/) {
+            /* Retira o dinheiro da compra */
+            Player::retira_recurso_geraRecurso(tipo);
+            /* Adiciona a fabrica na lista da classe Player*/
+            jogo->matriz_geraRecurso[x][y] = new GeraRecursos(x, y, tipo);
+            TEXTURAS text = retorna_textura_recurso(tipo);
+            jogo->matriz_geraRecurso[x][y]->mudaTextura(jogo->texturas[text]);
+            jogo->matriz_geraRecurso[x][y]->setDestRect
+                    ((y + 2) * 80 , (x + 2) * 72, 64, 64);
             jogo->matriz_geraRecurso[x][y]->setSrcRect(0, 0, 64, 64);
         } else {
             return false;
@@ -67,7 +90,7 @@ bool Player::compra_Fabrica(int x, int y, UNIDADE tipo) {
     if (possui_recursos_fabrica(tipo)) {
         /* Retira o dinheiro da compra */
         /*  Verifica se a matriz de posicao esta vazia */
-        if (verifica_espaco_ocupado(x, y) /*&& verifica_espaco_predio(x, y)*/) {
+        if (verifica_espaco_ocupado(x, y) && verifica_espaco_predio(x, y)) {
             /* Retira o dinheiro da compra */
             Player::retira_recurso_fabrica(tipo);
             /* Adiciona a fabrica na lista da classe Player*/
@@ -76,6 +99,29 @@ bool Player::compra_Fabrica(int x, int y, UNIDADE tipo) {
             jogo->matriz_fabrica[x][y]->mudaTextura(jogo->texturas[text]);
             jogo->matriz_fabrica[x][y]->setDestRect
             ((y + 2) * 80 , (x + 2) * 72, 64, 64);
+            jogo->matriz_fabrica[x][y]->setSrcRect(0, 0, 64, 64);
+            return true;
+        } else { /* Se a posicao e invalida */
+            return false;
+        }
+    } else { /* Se o jogador nao tiver recursos suficientes */
+        return false;
+    }
+}
+
+bool Player::compra_Fabrica_CPU(int x, int y, UNIDADE tipo) {
+    if (possui_recursos_fabrica(tipo)) {
+        /* Retira o dinheiro da compra */
+        /*  Verifica se a matriz de posicao esta vazia */
+        if (verifica_espaco_ocupado(x, y) /*&& verifica_espaco_predio(x, y)*/) {
+            /* Retira o dinheiro da compra */
+            Player::retira_recurso_fabrica(tipo);
+            /* Adiciona a fabrica na lista da classe Player*/
+            jogo->matriz_fabrica[x][y] = new Fabrica(x, y, tipo);
+            TEXTURAS text = retorna_textura_fabrica(tipo);
+            jogo->matriz_fabrica[x][y]->mudaTextura(jogo->texturas[text]);
+            jogo->matriz_fabrica[x][y]->setDestRect
+                    ((y + 2) * 80 , (x + 2) * 72, 64, 64);
             jogo->matriz_fabrica[x][y]->setSrcRect(0, 0, 64, 64);
             return true;
         } else { /* Se a posicao e invalida */
@@ -227,7 +273,7 @@ TEXTURAS retorna_textura_unidade_CPU(int nivel, int tipo) {
 
 bool Player::compra_Unidade(int x, int y, UNIDADE tipo, int nivel) {
     if (possui_recursos_unidade(tipo, nivel)) {
-        if (verifica_espaco_ocupado(x, y) /*&& verifica_espaco_unidade(x, y)*/) {
+        if (verifica_espaco_ocupado(x, y) && verifica_espaco_unidade(x, y)) {
             retira_recurso_unidade(tipo, nivel);
             switch (nivel) {
                 case 1:
@@ -550,11 +596,11 @@ bool Player::verifica_espaco_ocupado(int x, int y) {
             jogo->matriz_unidade[x][y] == NULL) {
             return true;
         } else {
-            Mix_PlayChannel(-1, jogo->efeitos[LUGAR_INV], 0);
+            //Mix_PlayChannel(-1, jogo->efeitos[LUGAR_INV], 0);
             return false;
         }
     }
-    Mix_PlayChannel(-1, jogo->efeitos[LUGAR_INV], 0);
+    //Mix_PlayChannel(-1, jogo->efeitos[LUGAR_INV], 0);
     return false;
 }
 

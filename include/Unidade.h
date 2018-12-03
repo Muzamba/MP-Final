@@ -186,9 +186,9 @@ protected:
      *************************************************************************/
     int vida;
 
-    int preco_recursos;
+    // int preco_recursos;
 
-    int preco_dinheiro;
+    // int preco_dinheiro;
 
     int velocidade;
 

@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/waliffcordeiro/UnB/MP/MP-Final/source/Botao.cpp" "/home/waliffcordeiro/UnB/MP/MP-Final/cmake-build-debug/CMakeFiles/Botao.dir/source/Botao.cpp.o"
+  "/home/pedro/MP-Final/source/Botao.cpp" "/home/pedro/MP-Final/cmake-build-debug/CMakeFiles/Botao.dir/source/Botao.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

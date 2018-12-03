@@ -34,19 +34,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /home/waliffcordeiro/Downloads/clion-2018.2.5/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /home/pedro/clion-2018.2.5/bin/cmake/linux/bin/cmake
 
 # The command to remove a file.
-RM = /home/waliffcordeiro/Downloads/clion-2018.2.5/bin/cmake/linux/bin/cmake -E remove -f
+RM = /home/pedro/clion-2018.2.5/bin/cmake/linux/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/waliffcordeiro/UnB/MP/MP-Final
+CMAKE_SOURCE_DIR = /home/pedro/MP-Final
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/waliffcordeiro/UnB/MP/MP-Final/cmake-build-debug
+CMAKE_BINARY_DIR = /home/pedro/MP-Final/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/Predio.dir/depend.make
@@ -59,16 +59,16 @@ include CMakeFiles/Predio.dir/flags.make
 
 CMakeFiles/Predio.dir/source/Predio.cpp.o: CMakeFiles/Predio.dir/flags.make
 CMakeFiles/Predio.dir/source/Predio.cpp.o: ../source/Predio.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waliffcordeiro/UnB/MP/MP-Final/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Predio.dir/source/Predio.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Predio.dir/source/Predio.cpp.o -c /home/waliffcordeiro/UnB/MP/MP-Final/source/Predio.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/pedro/MP-Final/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Predio.dir/source/Predio.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Predio.dir/source/Predio.cpp.o -c /home/pedro/MP-Final/source/Predio.cpp
 
 CMakeFiles/Predio.dir/source/Predio.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Predio.dir/source/Predio.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/waliffcordeiro/UnB/MP/MP-Final/source/Predio.cpp > CMakeFiles/Predio.dir/source/Predio.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/pedro/MP-Final/source/Predio.cpp > CMakeFiles/Predio.dir/source/Predio.cpp.i
 
 CMakeFiles/Predio.dir/source/Predio.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Predio.dir/source/Predio.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/waliffcordeiro/UnB/MP/MP-Final/source/Predio.cpp -o CMakeFiles/Predio.dir/source/Predio.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/pedro/MP-Final/source/Predio.cpp -o CMakeFiles/Predio.dir/source/Predio.cpp.s
 
 # Object files for target Predio
 Predio_OBJECTS = \
@@ -80,7 +80,7 @@ Predio_EXTERNAL_OBJECTS =
 libPredio.a: CMakeFiles/Predio.dir/source/Predio.cpp.o
 libPredio.a: CMakeFiles/Predio.dir/build.make
 libPredio.a: CMakeFiles/Predio.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/waliffcordeiro/UnB/MP/MP-Final/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library libPredio.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/pedro/MP-Final/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library libPredio.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/Predio.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Predio.dir/link.txt --verbose=$(VERBOSE)
 
@@ -94,6 +94,6 @@ CMakeFiles/Predio.dir/clean:
 .PHONY : CMakeFiles/Predio.dir/clean
 
 CMakeFiles/Predio.dir/depend:
-	cd /home/waliffcordeiro/UnB/MP/MP-Final/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/waliffcordeiro/UnB/MP/MP-Final /home/waliffcordeiro/UnB/MP/MP-Final /home/waliffcordeiro/UnB/MP/MP-Final/cmake-build-debug /home/waliffcordeiro/UnB/MP/MP-Final/cmake-build-debug /home/waliffcordeiro/UnB/MP/MP-Final/cmake-build-debug/CMakeFiles/Predio.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/pedro/MP-Final/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/pedro/MP-Final /home/pedro/MP-Final /home/pedro/MP-Final/cmake-build-debug /home/pedro/MP-Final/cmake-build-debug /home/pedro/MP-Final/cmake-build-debug/CMakeFiles/Predio.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/Predio.dir/depend
 

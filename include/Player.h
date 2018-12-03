@@ -41,7 +41,7 @@ class Player {
      * @return false - Falha na compra.
      */
     bool compra_GeraRecurso(int x, int y, RECURSO tipo);
-
+    bool compra_GeraRecurso_CPU(int x, int y, RECURSO tipo);
     /**
      * @brief Compra uma Fabrica.
      * 
@@ -52,7 +52,7 @@ class Player {
      * @return false - Falha na compra.
      */
     bool compra_Fabrica(int x, int y, UNIDADE tipo);
-
+    bool compra_Fabrica_CPU(int x, int y, UNIDADE tipo);
     /**
      * @brief Compra uma Unidade.
      * 

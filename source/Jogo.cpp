@@ -1578,9 +1578,9 @@ void Jogo::bota_no_mapa() {
     // printf("coord %d : %d\n", X, Y);
 
     if (counter >= 7 && counter <= 9) {
-        cpu->compra_Fabrica(Y, X, tipo_und);
+        cpu->compra_Fabrica_CPU(Y, X, tipo_und);
     } else if (counter >=4 && counter <= 6) {
-        cpu->compra_GeraRecurso(Y, X, tipo_rec);
+        cpu->compra_GeraRecurso_CPU(Y, X, tipo_rec);
     } else if (counter >=1 && counter <= 3) {
         printf("ENTROU PORRA UND\n");
         nivel = Jogo::qual_fbrc(tipo_und);
