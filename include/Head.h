@@ -123,7 +123,7 @@ enum MUSICAS {
  *  Define Fabrica
  *****************************************************************************/
 #define PRECO_RECURSO_FABRICA 100
-#define PRECO_DINHEIRO_FABRICA 100
+#define PRECO_DINHEIRO_FABRICA 30
 #define VIDA_INICIAL_FABRICA 100
 #define TEMPO_ESPERA_INICIAL_FABRICA 20
 #define CUSTO_INICIAL_UPGRADE_FABRICA 20
@@ -134,7 +134,7 @@ enum MUSICAS {
  *****************************************************************************/
 #define TAXA_COLETA 1
 #define PRECO_RECURSO_GERA 100
-#define PRECO_DINHEIRO_GERA 100
+#define PRECO_DINHEIRO_GERA 30
 #define PRECO_UPGRADE_GERA 20
 
 /******************************************************************************

@@ -301,6 +301,7 @@ void Jogo::movimentacao() {
                 if (Jogo::matriz_unidade[lin][col]->getVelocidade() > 0) {
                    if (Jogo::matriz_unidade[lin][col + 1] != NULL) {
                        // ataca tropa
+                       Mix_PlayChannel(-1, Jogo::efeitos[SOCO], 0);
                        switch (combate_unidade(&Jogo::matriz_unidade[lin][col],
                                &Jogo::matriz_unidade[lin][col + 1])) {
                            case 1:
@@ -327,6 +328,7 @@ void Jogo::movimentacao() {
                                break;
                        }
                    } else if (Jogo::matriz_geraRecurso[lin][col + 1] != NULL) {
+                       Mix_PlayChannel(-1, Jogo::efeitos[EXPLOSAO], 0);
                        // ataca geraRecurso
                        switch (ataca_geraRecurso
                        (&Jogo::matriz_unidade[lin][col],
@@ -344,6 +346,7 @@ void Jogo::movimentacao() {
                                break;
                        }
                    } else if (Jogo::matriz_fabrica[lin][col + 1] != NULL) {
+                       Mix_PlayChannel(-1, Jogo::efeitos[EXPLOSAO], 0);
                        // ataca fabrica
                        switch (ataca_fabrica
                        (&Jogo::matriz_unidade[lin][col],
@@ -378,6 +381,7 @@ void Jogo::movimentacao() {
                 if (Jogo::matriz_unidade[lin][col]->getVelocidade() < 0) {
                     if (Jogo::matriz_unidade[lin][col - 1] != NULL) {
                         // ataca tropa
+                        Mix_PlayChannel(-1, Jogo::efeitos[SOCO], 0);
                         switch (combate_unidade
                         (&Jogo::matriz_unidade[lin][col],
                                 &Jogo::matriz_unidade[lin][col - 1])) {
@@ -405,6 +409,7 @@ void Jogo::movimentacao() {
                                 break;
                         }
                     } else if (Jogo::matriz_geraRecurso[lin][col - 1] != NULL) {
+                        Mix_PlayChannel(-1, Jogo::efeitos[EXPLOSAO], 0);
                         // ataca geraRecurso
                         switch (ataca_geraRecurso
                         (&Jogo::matriz_unidade[lin][col],
@@ -422,6 +427,7 @@ void Jogo::movimentacao() {
                                 break;
                         }
                     } else if (Jogo::matriz_fabrica[lin][col - 1] != NULL) {
+                        Mix_PlayChannel(-1, Jogo::efeitos[EXPLOSAO], 0);
                         // ataca fabrica
                         switch (ataca_fabrica(&Jogo::matriz_unidade[lin][col],
                                 &Jogo::matriz_fabrica[lin][col - 1])) {
