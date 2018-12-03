@@ -45,6 +45,7 @@ class GeraRecursos : public Predio {
      * @return true - Upgrade realizado.
      * @return false - Nao e possivel realizar o upgrade.
      */
+    /* <EU 005> */
     bool upgrade(int *dinheiro);
 
     /**

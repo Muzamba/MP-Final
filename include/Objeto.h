@@ -23,7 +23,7 @@
  * por qualquer instância que precisar de tais atributos
  */
 class Objeto {
-public:
+ public:
     /**
      * @brief Constrói um objeto Objeto
      *   Recebe as coordenadas da imagem
@@ -105,7 +105,8 @@ public:
     SDL_Texture* textura = NULL;
     SDL_Rect* srcRect = NULL;
     SDL_Rect* destRect = NULL;
-protected:
+
+ protected:
     /**************************************************************************
      *  Variaveis Privadas
      *************************************************************************/

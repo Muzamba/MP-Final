@@ -66,6 +66,8 @@ class Jogo {
      * @return false - Houve uma falha durante a execuçao da funçao.
      */
     bool loadMidia();
+    /*<EU 010> e <EU 011> */
+
 
     /**
      * @brief Funçao auxiliar da loadMidia para o carregamento de imagens.
@@ -85,6 +87,7 @@ class Jogo {
      * @brief Salva estado atual do jogo em um arquivo.
      *
      */
+    /* <EU 002> */
     void save();
 
     /**
@@ -124,6 +127,7 @@ class Jogo {
      *
      */
     void handleEvents();
+    /* <EU 007> e <EU 008>*/
 
     /**
      * @brief Renderiza o estado do jogo atual.

@@ -168,7 +168,7 @@ class Unidade : public Objeto {
      *************************************************************************/
      int nivel;
 
-public:
+ public:
     /**
      * @brief Retorna Nivel.
      * 
@@ -183,7 +183,7 @@ public:
      */
     void setNivel(int nivel);
 
-protected:
+ protected:
     /**************************************************************************
      *  Variaveis Protegidas
      *************************************************************************/

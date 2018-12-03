@@ -1,0 +1,31 @@
+Trabalho Jankenpo:
+Grupo:  Guilherme Rodrigues Lodron Pires - 17/0011780
+        Pedro Augusto Ramalho Duarte - 17/0163717
+        João Pedro Assis dos Santos - 17/0146367
+        Ariel Batista da Silva - 17/0099776
+        Waliff Cordeiro Bandeira - 17/0115810
+GitHub: https://github.com/Muzamba/MP-Final
+São Necessárias as seguintes biblotecas:
+SDL
+SDL_image
+SDL_ttf
+SDL_mixer
+
+Para rodar os testes basta se dirigir para o diretorio source, usar o comando make e depois ./test
+Para o jogo basta se dirigir para o direitorio principal, usar o comando make de pois ./Jankenpo
+
+Regras do Jogo:
+    -Seu objetivo é destruir a base inimiga
+    -Seus recursos aparecem o canto esquerdo superior e o da CPU no canto direito superior
+    -Para comprar geradora de recursos é necessário clicar na imagem da geradora no canto inferior esquerdo
+e depois clicar em uma das 2 primeiras colunas da esquerda onde se localiza sua base, ela gerara uma
+quantidade de recurso por loop e é possível aumentar essa taxa dando upgrade nela no canto inferior direito.
+    -Cada geradora gera recurso do seu tipo indicado pela imagem
+    -Para comprar a fabrica de unidade é necessário seguir o mesmo padrão da geradora, é possível dar upgrade
+nas unidades no canto inferior direito.
+    -Para dar upgrade clique no ícone do upgrade e depois no prédio em que deseja upar.
+    -Cada fabrica so gera unidade do seu tipo indicado pela imagem
+    -Para comprar as uniadades, basta clicar em uma das suas fábricas e depois clicar no canto em que deseja
+poscisiona-las, lembrando que não é possível posicioná-las no campo inimigo e nem nas colunas destinadas aos 
+prédios.
+    -Bom jogo e boa sorte

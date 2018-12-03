@@ -311,8 +311,8 @@ void Jogo::movimentacao() {
                                break;
                            case 2:
                                // defensor morre
-                               Jogo::matriz_unidade[lin][col + 1];
-                               Jogo::matriz_unidade[lin][col] = NULL;
+                               delete Jogo::matriz_unidade[lin][col + 1];
+                               Jogo::matriz_unidade[lin][col + 1] = NULL;
                                Jogo::matriz_unidade[lin][col]->setDestRect
                                ((lin + 2) * 80 , (col + 2) * 72, 64, 64);
                                anda(&Jogo::matriz_unidade[lin][col],
@@ -323,8 +323,8 @@ void Jogo::movimentacao() {
                                delete Jogo::matriz_unidade[lin][col];
                                Jogo::matriz_unidade[lin][col] = NULL;
 
-                               Jogo::matriz_unidade[lin][col + 1];
-                               Jogo::matriz_unidade[lin][col] = NULL;
+                               delete Jogo::matriz_unidade[lin][col + 1];
+                               Jogo::matriz_unidade[lin][col + 1] = NULL;
                                break;
                        }
                    } else if (Jogo::matriz_geraRecurso[lin][col + 1] != NULL) {
@@ -392,10 +392,10 @@ void Jogo::movimentacao() {
                                 break;
                             case 2:
                                 // defensor morre
-                                Jogo::matriz_unidade[lin][col - 1];
-                                Jogo::matriz_unidade[lin][col] = NULL;
+                                delete Jogo::matriz_unidade[lin][col - 1];
+                                Jogo::matriz_unidade[lin][col - 1] = NULL;
                                 Jogo::matriz_unidade[lin][col]->setDestRect
-                                ((lin + 2) * 80 , (col + 1) * 72, 64, 64);
+                                ((lin + 2) * 80 , (col + 2) * 72, 64, 64);
                                 anda(&Jogo::matriz_unidade[lin][col],
                                         &Jogo::matriz_unidade[lin][col - 1]);
                                 break;
@@ -404,8 +404,8 @@ void Jogo::movimentacao() {
                                 delete Jogo::matriz_unidade[lin][col];
                                 Jogo::matriz_unidade[lin][col] = NULL;
 
-                                Jogo::matriz_unidade[lin][col - 1];
-                                Jogo::matriz_unidade[lin][col] = NULL;
+                                delete Jogo::matriz_unidade[lin][col - 1];
+                                Jogo::matriz_unidade[lin][col - 1] = NULL;
                                 break;
                         }
                     } else if (Jogo::matriz_geraRecurso[lin][col - 1] != NULL) {
@@ -634,6 +634,7 @@ void Jogo::update() {
         cont_mov -= 200;
         Jogo::movimentacao();
     }
+    /* <EU 003> */
     //  Pega os valores dos recursos do jogador e transforma em texturas
     SDL_DestroyTexture(texturas[RECURSO_DINHEIRO_PLAYER]);
     temp = TTF_RenderText_Solid
@@ -1279,6 +1280,7 @@ void Jogo::loadInfoCPU(FILE* arq) {
     fgetc(arq);
 }
 
+/* <EU 006> */
 void Jogo::load() {
     printf("Loading Game...\n");
     FILE* arq = fopen("saves/save.txt", "r");
@@ -1420,8 +1422,10 @@ int Jogo::counter(bool* ultima_compra) {
             if (i == 0) {
                 return 0;
             } else if (i%3 == 0 || i%3 == 2) {
+                // i%3 == 0 -> ação do tipo tesoura e i%3 == 2 -> açao do tipo pedra
                 return (i-1);
             } else {
+                // ação do tipo papel
                 return (i+2);
             }
         }
@@ -1501,18 +1505,14 @@ int Jogo::qual_fbrc(UNIDADE tipo) {
 void Jogo::menor_nivel(UNIDADE tipo, int* X, int* Y ) {
     int min_index = 0;
     int index_hist[6] = {0};
-    printf("MENOR\n");
     for (int col = 0; col < 6; col++) {
-        printf("LOOOOOP\n");
         if (Jogo::matriz_fabrica[col][10] != NULL) {
             switch (tipo) {
                 case UNIDADE::PAPEL:
                     index_hist[col] =
                             Jogo::matriz_fabrica[col][10]->get_nivel();
-                    printf("PAPEEEL\n");
                     break;
                 case UNIDADE::PEDRA:
-                    printf("TOOOOOP\n");
                     index_hist[col] =
                             Jogo::matriz_fabrica[col][10]->get_nivel();
                     break;
@@ -1539,8 +1539,9 @@ void Jogo::onde_botar(int* X, int* Y, int counter) {
     if (counter >= 4 && counter <= 6) {
         int posX = 11, posY = 0;
         while (jogador->verifica_espaco_ocupado(posY, posX) == false) {
-            // printf("loop\n");
+            // enquanto o espaço estiver indisponível
             if (posY == 5) {
+                // não posiciona nada
                 posY = posX = -1;
                 break;
             }
@@ -1551,7 +1552,9 @@ void Jogo::onde_botar(int* X, int* Y, int counter) {
     } else if (counter >= 7 && counter <= 9) {
         int posX = 10, posY = 0;
         while (jogador->verifica_espaco_ocupado(posY, posX) == false) {
+            // enquanto o espaço estiver indisponível
             if (posY == 5) {
+                // não posiciona nada
                 posY = posX = -1;
                 break;
             }
@@ -1562,7 +1565,9 @@ void Jogo::onde_botar(int* X, int* Y, int counter) {
     } else if (counter >= 1 && counter <= 3) {
         int posX = 9, posY = Jogo::ultima_acao.ondeY;
         while (jogador->verifica_espaco_ocupado(posY, posX) == false) {
+            // enquanto o espaço estiver indisponível
             if (posX == 7) {
+                // volta para o início, pois as unidades se movem
                 posX = 0;
             }
             posX++;
@@ -1582,25 +1587,28 @@ void Jogo::bota_no_mapa() {
     TEXTURAS textura;
 
     int X = -1, Y = -1;
+    // adquire as coordenadas da nova inserção
     if (counter > 0 && counter < 10) {
         Jogo::onde_botar(&X, &Y, counter);
     }
-    // printf("coord %d : %d\n", X, Y);
 
     if (counter >= 7 && counter <= 9) {
+        // ação da cpu é comprar fábrica
         cpu->compra_Fabrica_CPU(Y, X, tipo_und);
     } else if (counter >=4 && counter <= 6) {
+        // ação da cpu é comprar gera recursos
         cpu->compra_GeraRecurso_CPU(Y, X, tipo_rec);
     } else if (counter >=1 && counter <= 3) {
-        printf("ENTROU PORRA UND\n");
+        // ação é comprar unidades
         nivel = Jogo::qual_fbrc(tipo_und);
-        printf("JA TEMOS O NIVEL %d\n", nivel);
+        // checa a fábrica ótima
         cpu->compra_Unidade_CPU(Y, X, tipo_und, nivel);
     } else if (counter >= 13 && counter <= 15) {
         Jogo::menor_nivel(tipo_und, &X, &Y);
-        printf("OPAAAAA\n");
+        // dá upgrade sempre na fábrica de menor nível daquele tipo
         Jogo::matriz_fabrica[X][Y]->upgrade_fabrica(&cpu->dinheiro);
-        switch (tipo_und) {
+        switch (tipo_und) { 
+            // muda a textura ao dar o upgrade
             case UNIDADE::PAPEL:
                 Jogo::matriz_fabrica[X][Y]->
                 mudaTextura(Jogo::texturas[FABRICA_PAPEL_UP]);

@@ -163,4 +163,4 @@ enum MUSICAS {
  *****************************************************************************/
 #define PLAYER_MORREU 1
 #define PLAYER_N_MORREU 0
-#endif // HEAD
+#endif  // HEAD

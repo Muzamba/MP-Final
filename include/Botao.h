@@ -78,6 +78,7 @@ class Botao_Pause : public Objeto {
      * @param evento - Evento que esta sendo manipulado no momento.
      */
     void handleEvent(SDL_Event* evento);
+    /* <EU 001> */
 };
 
 /**

@@ -1,3 +1,4 @@
+
 /**
  * @file Fabrica.h
  * @author Nome do time (a definir)
@@ -9,7 +10,7 @@
  * 
  */
 // Copyright 2018 João Pedro Assis
-#ifndef  INCLUDE_FABRICA_H_
+#ifndef MP_FINAL_INCLUDE_FABRICA_H_
 #define  INCLUDE_FABRICA_H_
 #include "Predio.h"
 #include "Head.h"
@@ -93,6 +94,7 @@ class Fabrica : public Predio {
      * 
      * @param dinheiro - Ponteiro para o dinheiro do jogador.
      */
+    /* <EU 004> e <EU 005> */
     bool upgrade_fabrica(int* dinheiro);
 
     /**
@@ -151,4 +153,4 @@ class Fabrica : public Predio {
     UNIDADES custo_unidade = PRECO_INICIAL_UNIDADE;
 };
 
-#endif  // INCLUDE_FABRICA_H_
+#endif  // MP_FINAL_INCLUDE_FABRICA_H_
