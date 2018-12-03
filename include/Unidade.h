@@ -38,7 +38,8 @@ class Unidade : public Objeto {
      * @param dano - Dano desejado.
      * @param nivel - Nivel desejado.
      */
-    Unidade(int X, int Y, int tipo, int vida, int velocidade, int dano, int nivel);
+    Unidade(int X, int Y, int tipo, int vida, int velocidade,
+            int dano, int nivel);
 
     /**
      * @brief Destrutor do objeto Unidade.
@@ -160,11 +161,13 @@ class Unidade : public Objeto {
      *  Variaveis Publicas
      *************************************************************************/
     int tipo;
+
  protected:
     /**************************************************************************
      *  Variaveis Protegidas
      *************************************************************************/
-    int nivel;
+     int nivel;
+
 public:
     /**
      * @brief Retorna Nivel.

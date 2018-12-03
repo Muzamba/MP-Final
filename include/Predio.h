@@ -36,8 +36,7 @@ class Predio : public Objeto {
     * @param Y - Coordenada Y.
     */
     Predio(int X, int Y) : Objeto(X, Y) {}
-    
-    //provavel remoçao
+    // provavel remoçao
     void destroy();
     /**
     * @brief Destrói o objeto Predio

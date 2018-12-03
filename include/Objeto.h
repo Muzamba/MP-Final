@@ -31,7 +31,7 @@ public:
      * @param X - Coordenada X
      * @param Y - Coordenada Y
      */
-    Objeto(int X, int Y);
+     Objeto(int X, int Y);
 
     /**
      * @brief Renderiza o objeto
