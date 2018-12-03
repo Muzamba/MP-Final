@@ -30,7 +30,8 @@ bool Fabrica::can_upgrade_fabrica(int custo, int capital) {
 
 bool Fabrica::upgrade_fabrica(int* dinheiro) {
     if (Fabrica::nivel <= 2) {
-        if (Fabrica::can_upgrade_fabrica(Fabrica::custo_upgrade_fab, *dinheiro)) {
+        if (Fabrica::can_upgrade_fabrica(Fabrica::custo_upgrade_fab,
+                *dinheiro)) {
             *dinheiro = *dinheiro - Fabrica::custo_upgrade_fab;
             Fabrica::nivel++;
             Fabrica::custo_upgrade_fab += 20 * Fabrica::nivel;

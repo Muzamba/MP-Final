@@ -596,11 +596,12 @@ bool Player::verifica_espaco_ocupado(int x, int y) {
             jogo->matriz_unidade[x][y] == NULL) {
             return true;
         } else {
-            //Mix_PlayChannel(-1, jogo->efeitos[LUGAR_INV], 0);
+            // Mix_PlayChannel(-1,
+            // jogo->efeitos[LUGAR_INV], 0);
             return false;
         }
     }
-    //Mix_PlayChannel(-1, jogo->efeitos[LUGAR_INV], 0);
+    // Mix_PlayChannel(-1, jogo->efeitos[LUGAR_INV], 0);
     return false;
 }
 

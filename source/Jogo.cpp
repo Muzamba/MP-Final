@@ -161,22 +161,20 @@ int combate_unidade(Unidade** atacante, Unidade** defensor) {
         return 3;
     }
     if ((*defensor)->getVida() <= 0) {
-        if((*atacante)->getNivel() == 1){
-            if((*atacante)->getVida() < (1 * (VIDA_UNIDADE_1 / 3))) {
-
+        if ((*atacante)->getNivel() == 1) {
+            if ((*atacante)->getVida() < (1 * (VIDA_UNIDADE_1 / 3))) {
                 (*atacante)->setSrcRect(128, (*atacante)->srcRect->y,
-                (*atacante)->srcRect->w,(*atacante)->srcRect->h);
-            } else if((*atacante)->getVida() < (2 * (VIDA_UNIDADE_1 / 3))) {
+                (*atacante)->srcRect->w, (*atacante)->srcRect->h);
+            } else if ((*atacante)->getVida() < (2 * (VIDA_UNIDADE_1 / 3))) {
                 (*atacante)->setSrcRect(64, (*atacante)->srcRect->y,
                 (*atacante)->srcRect->w, (*atacante)->srcRect->h);
             }
 
-        } else if((*atacante)->getNivel() == 2) {
-            if((*atacante)->getVida() < (1 * (VIDA_UNIDADE_2 / 3))) {
-
+        } else if ((*atacante)->getNivel() == 2) {
+            if ((*atacante)->getVida() < (1 * (VIDA_UNIDADE_2 / 3))) {
                 (*atacante)->setSrcRect(128, (*atacante)->srcRect->y,
                 (*atacante)->srcRect->w, (*atacante)->srcRect->h);
-            } else if((*atacante)->getVida() < (2 * (VIDA_UNIDADE_2 / 3))) {
+            } else if ((*atacante)->getVida() < (2 * (VIDA_UNIDADE_2 / 3))) {
                 (*atacante)->setSrcRect(64, (*atacante)->srcRect->y,
                 (*atacante)->srcRect->w, (*atacante)->srcRect->h);
             }
@@ -276,7 +274,8 @@ void Jogo::movimentacao() {
         if (Jogo::matriz_unidade[lin][11] != NULL
         && Jogo::matriz_unidade[lin][11]->getVelocidade() > 0) {
             // ataca base cpu, e despois se auto destroi
-            if (ataca_base(Jogo::matriz_unidade[lin][11], cpu) == PLAYER_MORREU) {
+            if (ataca_base(Jogo::matriz_unidade[lin][11], cpu)
+            == PLAYER_MORREU) {
                 ganhou = true;
                 printf("CPU Perdeu...");
             }
@@ -286,7 +285,8 @@ void Jogo::movimentacao() {
         if (Jogo::matriz_unidade[lin][0] != NULL
         && Jogo::matriz_unidade[lin][0]->getVelocidade() < 0) {
             // ataca base player, e despois se auto destroi
-            if (ataca_base(Jogo::matriz_unidade[lin][0], jogador) == PLAYER_MORREU) {
+            if (ataca_base(Jogo::matriz_unidade[lin][0], jogador)
+            == PLAYER_MORREU) {
                 perdeu = true;
                 printf("Jogador Perdeu...");
             }
@@ -1287,7 +1287,7 @@ void Jogo::load() {
     if (arq != NULL) {
         // Load no tempo do jogo
         fscanf(arq, "%[^\n]s", aux);
-        //Jogo::tempo_val = (std::string) aux;
+        // Jogo::tempo_val = (std::string) aux;
         fgetc(arq);
         // Load nas informacoes dos jogador
         Jogo::loadInfoPlayer(arq);
@@ -1296,7 +1296,8 @@ void Jogo::load() {
         fscanf(arq, "%[^\n]s", aux);  // Divao Matriz gera Recuso
         fgetc(arq);
         while (!feof(arq) && fgetc(arq) != '#') {
-            fscanf(arq, "%d %d %d %d %d %d", &x, &y, &vida, &nivel, &tipo, &taxa);
+            fscanf(arq, "%d %d %d %d %d %d",
+                    &x, &y, &vida, &nivel, &tipo, &taxa);
             printf("%d %d %d %d %d %d\n", x, y, vida, nivel, tipo, taxa);
             Jogo::matriz_geraRecurso[x][y] = new GeraRecursos(x, y, tipo);
             Jogo::matriz_geraRecurso[x][y]->setNivel(nivel);
@@ -1506,15 +1507,18 @@ void Jogo::menor_nivel(UNIDADE tipo, int* X, int* Y ) {
         if (Jogo::matriz_fabrica[col][10] != NULL) {
             switch (tipo) {
                 case UNIDADE::PAPEL:
-                    index_hist[col] = Jogo::matriz_fabrica[col][10]->get_nivel();
+                    index_hist[col] =
+                            Jogo::matriz_fabrica[col][10]->get_nivel();
                     printf("PAPEEEL\n");
                     break;
                 case UNIDADE::PEDRA:
                     printf("TOOOOOP\n");
-                    index_hist[col] = Jogo::matriz_fabrica[col][10]->get_nivel();
+                    index_hist[col] =
+                            Jogo::matriz_fabrica[col][10]->get_nivel();
                     break;
                 case UNIDADE::TESOURA:
-                    index_hist[col] = Jogo::matriz_fabrica[col][10]->get_nivel();
+                    index_hist[col] =
+                            Jogo::matriz_fabrica[col][10]->get_nivel();
                     break;
             }
         } else {
